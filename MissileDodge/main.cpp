@@ -2,6 +2,14 @@
 	- made with SDL
 */
 
+#define DEBUG 0
+
+#if DEBUG
+#define LOG(x) std::cout << x << std::endl;
+#else
+#define LOG(x)
+#endif
+
 #include <iostream>
 #include <string>
 #include <SDL.h>
