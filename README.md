@@ -27,6 +27,7 @@ Game created in C++ with SDL
   * Menu
   * Pause Menu
   * Options
+
 ### ASSETS
 1. Art
   * Sprite
@@ -36,8 +37,10 @@ Game created in C++ with SDL
 2. Music
   * Background music
   * Sound effects
+
 ### EXPORT
   * Installer with NSIS
+
 ### PORT TO PLATFORMS
   * Android
   * IOS
