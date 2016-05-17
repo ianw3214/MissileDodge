@@ -8,39 +8,39 @@ Game created in C++ with SDL
 
 ### SDL ENGINE
 1. Core engine
-..* Sprite loading
-..* Key inputs
-..* Hero movement
-..* Missile Spawning
-..* Missile Movement
-..* Collision
-..* Points
-..* Health
+  * Sprite loading
+  * Key inputs
+  * Hero movement
+  * Missile Spawning
+  * Missile Movement
+  * Collision
+  * Points
+  * Health
 2. Game improvements
-..* Randomize fall speeds
-..* Difficulty increase
-..* Power-ups
-..* Missile types
+  * Randomize fall speeds
+  * Difficulty increase
+  * Power-ups
+  * Missile types
 3. Misc
-..* High Score
-..* Game Over
-..* Menu
-..* Pause Menu
-..* Options
+  * High Score
+  * Game Over
+  * Menu
+  * Pause Menu
+  * Options
 ### ASSETS
 1. Art
-..* Sprite
-..* Splash Art
-..* Logo
-..* Icon
+  * Sprite
+  * Splash Art
+  * Logo
+  * Icon
 2. Music
-..* Background music
-..* Sound effects
+  * Background music
+  * Sound effects
 ### EXPORT
-..* Installer with NSIS
+  * Installer with NSIS
 ### PORT TO PLATFORMS
-..* Android
-..* IOS
+  * Android
+  * IOS
 
 ***
 
@@ -63,3 +63,4 @@ Game created in C++ with SDL
 ***
 
 Creator: Ian Wang
+Created on: May 16th 2016
