@@ -2,7 +2,7 @@
 	- made with SDL
 */
 
-#define DEBUG 0
+#define DEBUG 1
 
 #if DEBUG
 #define LOG(x) std::cout << x << std::endl;
@@ -47,10 +47,64 @@ int main(int argc, char* argv[]) {
 	addImage(missile, 400, 40, screenSurface);
 	addImage(heart, 0, 0, screenSurface);
 
-	// update the screen
-	SDL_UpdateWindowSurface(window);
+	// main loop flag
+	bool quit = false;		// true when user quits game
+	SDL_Event e;			// SDL Event handler
 
-	system("PAUSE");
+	// TODO	
+	// create an velocity tracker for the hero movement
+	// set a speed constant for hero movement
+	// set booleans to see if left/right keys are held down
+
+	// main game loop
+	while (!quit) {
+		// handle events on queue
+		while (SDL_PollEvent(&e) != 0 ) {
+			// if the user quits
+			if (e.type == SDL_QUIT) {
+				// set the quit flag to true
+				quit = true;
+			}
+			// if the user presses a key
+			else if (e.type == SDL_KEYDOWN) {
+				// cases for each key press
+				switch (e.key.keysym.sym) {
+				case SDLK_a:		// A key
+				case SDLK_LEFT:		// left key
+					LOG("LEFT DOWN")
+					// set the left down boolean to true
+					break;
+				case SDLK_d:		// D key
+				case SDLK_RIGHT:	// right key
+					LOG("RIGHT DOWN")
+					// set the right down boolean to true
+					break;
+				}
+			}
+			// if the user releases a key
+			else if (e.type == SDL_KEYUP) {
+				// cases for each key press
+				switch (e.key.keysym.sym) {
+				case SDLK_a:		// A key
+				case SDLK_LEFT:		// left key
+					LOG("LEFT UP")
+					// set the left down boolean to false
+					break;
+				case SDLK_d:		// D key
+				case SDLK_RIGHT:	// right key
+					LOG("RIGHT UP")
+					// set the right down boolean to false
+					break;
+				}
+			}
+
+			// update the hero velocity based on the key press booleans
+			// if both keys are pressed then there is no movement
+
+			// update the screen
+			SDL_UpdateWindowSurface(window);
+		}
+	}
 
 	// Destroy the window
 	SDL_DestroyWindow(window);
