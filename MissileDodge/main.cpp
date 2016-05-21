@@ -14,11 +14,10 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
+#include "sprite.h"
 
 // function declarations
 bool init(SDL_Window**, SDL_Surface**);
-bool addImage(SDL_Surface*, int, int, SDL_Surface*);
-SDL_Surface * loadImage(std::string, SDL_Surface**);
 
 // screen dimension constants
 const int SCREEN_WIDTH = 800;
@@ -34,18 +33,11 @@ int main(int argc, char* argv[]) {
 
 	// initialize the SDL window and screen surface
 	init(&window, &screenSurface);
-
-	// load the images
-	SDL_Surface* background = loadImage("assets/BG.png", &screenSurface);
-	SDL_Surface* hero = loadImage("assets/HERO.png", &screenSurface);
-	SDL_Surface* missile = loadImage("assets/MISSILE.png", &screenSurface);
-	SDL_Surface* heart = loadImage("assets/HEART.png", &screenSurface);
-
-	// add the images to the screen
-	addImage(background, 0, 0, screenSurface);
-	addImage(hero, 200, 400, screenSurface);
-	addImage(missile, 400, 40, screenSurface);
-	addImage(heart, 0, 0, screenSurface);
+	
+	sprite background("assets/BG.png", screenSurface);
+	sprite hero(200, 400, "assets/HERO.png", screenSurface);
+	sprite missile(400, 40, "assets/MISSILE.png", screenSurface);
+	sprite heart("assets/HEART.png", screenSurface);
 
 	// main loop flag
 	bool quit = false;		// true when user quits game
@@ -157,38 +149,4 @@ bool init(SDL_Window** window, SDL_Surface** surface) {
 	// return the initialization flag
 	return success;
 
-}
-
-// function to add loaded image to screen
-bool addImage(SDL_Surface* image, int xInit, int yInit, SDL_Surface* gSurface) {
-	
-	// success flag
-	bool success = true;
-
-	// rect struct to put coordinates in and pass to blit function
-	SDL_Rect Rect = { xInit, yInit, 0, 0 };
-
-	// if the function failed
-	if (SDL_BlitSurface(image, NULL, gSurface, &Rect) < 0) {
-		// output the error
-		std::cout << "Image unable to blit to surface, SDL_image ERROR : " << IMG_GetError() << std::endl;
-		success = false;
-	}
-
-	// return the success boolean
-	return success;
-
-}
-
-// function to load image
-SDL_Surface * loadImage(std::string path, SDL_Surface** gSurface) {
-
-	// call the image load function
-	SDL_Surface *image = IMG_Load(path.c_str());
-	if (!image) {	// if the image failed to load
-		// output the error
-		std::cout << "Failed to load image: " << path << ", SDL_image ERROR : " << IMG_GetError() << std::endl;
-	}
-
-	return image;
 }
