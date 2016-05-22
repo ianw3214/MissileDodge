@@ -14,9 +14,6 @@ sprite::sprite(std::string path, SDL_Surface* gSurface) {
 		std::cout << "Failed to load image: " << path << ", SDL_image ERROR : " << IMG_GetError() << std::endl;
 	}
 
-	// load the sprite surface to the screen
-	setImage(gSurface);
-
 }
 
 // constructor with path and positions
@@ -33,9 +30,6 @@ sprite::sprite(int inputX, int inputY, std::string path, SDL_Surface* gSurface) 
 		std::cout << "Failed to load image: " << path << ", SDL_image ERROR : " << IMG_GetError() << std::endl;
 	}
 
-	// load the sprite surface to the screen
-	setImage(gSurface);
-
 }
 
 // getter/setter methods
@@ -43,7 +37,7 @@ int sprite::getX() { return this->x; }
 int sprite::getY() { return this->y; }
 
 // function to set the position of the image
-bool sprite::setImage(SDL_Surface* gSurface) {
+bool sprite::drawImage(SDL_Surface* gSurface) {
 
 	// success flag
 	bool success = true;
@@ -62,3 +56,4 @@ bool sprite::setImage(SDL_Surface* gSurface) {
 	return success;
 
 }
+
