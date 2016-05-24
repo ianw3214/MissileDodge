@@ -18,6 +18,7 @@
 
 #include "sprite.h"
 #include "player.h"
+#include "missile.h"
 
 // function declarations
 bool init(SDL_Window**, SDL_Surface**);
@@ -43,13 +44,14 @@ int main(int argc, char* argv[]) {
 	// add the sprites to the game and push them to the sprites list
 	sprite background("assets/BG.png", screenSurface);
 	sprites.push_back(background);
-	sprite missile(400, 40, "assets/MISSILE.png", screenSurface);
-	sprites.push_back(missile);
 	sprite heart("assets/HEART.png", screenSurface);
 	sprites.push_back(heart);
 
 	// add a player character to the game
 	player hero(200, 400, "assets/HERO.png", screenSurface);
+
+	// add a missile to the game
+	missile missile(400, 40, "assets/MISSILE.png", screenSurface);
 
 	// main loop flag
 	bool quit = false;		// true when user quits game
@@ -82,6 +84,8 @@ int main(int argc, char* argv[]) {
 
 		// update the hero
 		hero.update(screenSurface);
+		// update the missile
+		missile.update(screenSurface);
 
 		// update the screen
 		SDL_UpdateWindowSurface(window);

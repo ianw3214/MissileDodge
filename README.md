@@ -11,12 +11,16 @@ Game created in C++ with SDL
   * Sprite loading
   * Key inputs
   * Hero movement
-  * Missile Spawning
+  * Sprite Class
+  * Hero Class
+  * Missile Class
   * Missile Movement
+  * Missile Spawning
   * Collision
   * Points
   * Health
 2. Game improvements
+  * Organize game parts into specific classes
   * Randomize fall speeds
   * Difficulty increase
   * Power-ups
@@ -49,6 +53,7 @@ Game created in C++ with SDL
 
 ## POSSIBLE ADD-ONS
 * Levels
+* Lasers
 * Boss fights
 * Intro music
 * Loading Screen
@@ -66,4 +71,4 @@ Game created in C++ with SDL
 ***
 
 Creator: Ian Wang
-Created on: May 16th 2016
+Created: May 16th 2016
