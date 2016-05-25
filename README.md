@@ -8,19 +8,21 @@ Game created in C++ with SDL
 
 ### SDL ENGINE
 1. Core engine
-  * Sprite loading
-  * Key inputs
-  * Hero movement
-  * Sprite Class
-  * Hero Class
-  * Missile Class
-  * Missile Movement
-  * Missile Spawning
+  * ~~Sprite loading~~
+  * ~~Key inputs~~
+  * ~~Hero movement~~
+  * ~~Sprite Class~~
+  * ~~Hero Class~~
+  * ~~Missile Class~~
+  * ~~Missile Movement~~
+  * ~~Missile Spawning~~
   * Collision
   * Points
   * Health
+  * Health Sprite Update
+  * Garbage Handling System
 2. Game improvements
-  * Organize game parts into specific classes
+  * Game Class
   * Randomize fall speeds
   * Difficulty increase
   * Power-ups
@@ -31,6 +33,8 @@ Game created in C++ with SDL
   * Menu
   * Pause Menu
   * Options
+    * Music/Sound Volume
+    * Key Bindings
 
 ### ASSETS
 1. Art
@@ -38,7 +42,7 @@ Game created in C++ with SDL
   * Splash Art
   * Logo
   * Icon
-2. Music
+2. Music/Sound
   * Background music
   * Sound effects
 

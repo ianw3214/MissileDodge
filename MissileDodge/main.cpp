@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -23,14 +24,20 @@
 // function declarations
 bool init(SDL_Window**, SDL_Surface**);
 void close(SDL_Window*);
+missile* spawnMissile(SDL_Surface*);
 
 // screen dimension constants
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 // vector containing the all sprites in the game
 std::vector<sprite> sprites;
+// vector containing the missiles in the game
+std::vector<missile*> missiles;
 
 int main(int argc, char* argv[]) {
+
+	// intialize randomization seed
+	srand(time(NULL));
 
 	// SDL window to refer to
 	SDL_Window* window = NULL;
@@ -50,12 +57,12 @@ int main(int argc, char* argv[]) {
 	// add a player character to the game
 	player hero(200, 400, "assets/HERO.png", screenSurface);
 
-	// add a missile to the game
-	missile missile(400, 40, "assets/MISSILE.png", screenSurface);
-
 	// main loop flag
 	bool quit = false;		// true when user quits game
 	SDL_Event e;			// SDL Event handler
+
+	// missile spawn conter
+	int spawnCounter = 50;
 
 	// main game loop
 	while (!quit) {
@@ -69,6 +76,16 @@ int main(int argc, char* argv[]) {
 			sprites[i].drawImage(screenSurface);
 		}
 
+		// spawn missiles
+		if (spawnCounter == 0) {
+			// add a new missile to the vector
+			missiles.push_back(spawnMissile(screenSurface));
+			// reset the spawn counter
+			spawnCounter = 50;
+		}
+		// decrement the spawn counter
+		spawnCounter--;
+
 		// handle events on queue
 		while (SDL_PollEvent(&e) != 0 ) {
 			// if the user quits
@@ -81,11 +98,15 @@ int main(int argc, char* argv[]) {
 			}
 
 		}
+		
+		// update the missiles
+		for (int i = 0; i < missiles.size(); i++) {
+			// call the missile update function
+			missiles.at(i)->update(screenSurface);
+		}
 
 		// update the hero
 		hero.update(screenSurface);
-		// update the missile
-		missile.update(screenSurface);
 
 		// update the screen
 		SDL_UpdateWindowSurface(window);
@@ -150,5 +171,22 @@ void close(SDL_Window* window) {
 
 	// Quit SDL subsystems
 	SDL_Quit();
+
+}
+
+// function that spawns a missile on the screen
+missile* spawnMissile(SDL_Surface* screenSurface) {
+
+	// variable to calculate offest for missile spawning
+	int x_offset;
+
+	// randomize the offset to a random number between the screen sizes
+	x_offset = rand() % (SCREEN_WIDTH - 20) + 10;	// take margins into account
+
+	// add a missile to the game
+	missile * temp = new missile(x_offset, -20, "assets/MISSILE.png", screenSurface);
+
+	// return the pointer
+	return temp;
 
 }
