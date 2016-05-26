@@ -27,8 +27,8 @@ void close(SDL_Window*);
 missile* spawnMissile(SDL_Surface*);
 
 // screen dimension constants
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1200;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 // vector containing the all sprites in the game
 std::vector<sprite> sprites;
 // vector containing the missiles in the game
@@ -92,17 +92,7 @@ int main(int argc, char* argv[]) {
 			if (e.type == SDL_QUIT) {
 				// set the quit flag to true
 				quit = true;
-			}
-			// see if the user presses a key
-			else if (e.type == SDL_KEYDOWN) {
-				// see if the key is escape
-				if (e.key.keysym.sym == SDLK_ESCAPE) {
-					// set the quit flag to true
-					quit = true;
-				}
-			}
-			// then run the code
-			else {
+			} else {
 				// call the event handler for each sprite
 				hero.eventHandler(e);
 			}
@@ -145,18 +135,13 @@ bool init(SDL_Window** window, SDL_Surface** surface) {
 	}
 	else {								// SDL initialization was successful
 		// create window
-		*window = SDL_CreateWindow("Missile Dodge", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		*window = SDL_CreateWindow("Missile Dodge", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (*window == NULL) {			// failed to create window
 			// print the error to the console
 			std::cout << "Window was not created!, SDL ERROR: " << SDL_GetError() << std::endl;
 			success = false;			// set the initialization flag to false
 		}
 		else {							// window successfully created
-			// set the window to fullscreen
-			if (SDL_SetWindowFullscreen(*window, SDL_WINDOW_FULLSCREEN) < 0) {
-				// output the error
-				std::cout << "Window could not be set to full screen, SDL ERROR: " << SDL_GetError() << std::endl;
-			}
 			// initialize PNG loading
 			int imgFlags = IMG_INIT_PNG;
 			if (!(IMG_Init(imgFlags)&imgFlags)) {
