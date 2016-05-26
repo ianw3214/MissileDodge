@@ -13,13 +13,11 @@ void player::eventHandler(SDL_Event e) {
 		switch (e.key.keysym.sym) {
 		case SDLK_a:		// A key
 		case SDLK_LEFT:		// left key
-			std::cout << "LEFT DOWN" << std::endl;
 			// set the left down boolean to true
 			leftDown = true;
 			break;
 		case SDLK_d:		// D key
 		case SDLK_RIGHT:	// right key
-			std::cout << "RIGHT DOWN" << std::endl;
 			// set the right down boolean to true
 			rightDown = true;
 			break;
@@ -49,10 +47,10 @@ void player::update(SDL_Surface* gSurface) {
 
 	// add to the players x coordinates if keys are pressed
 	if (leftDown && !rightDown) {
-		this->x -= speed;
+		this->rect.x -= speed;
 	}
 	if (rightDown && !leftDown) {
-		this->x += speed;
+		this->rect.x += speed;
 	}
 	
 	// draw the image for this sprite

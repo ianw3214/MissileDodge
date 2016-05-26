@@ -4,7 +4,7 @@
 void missile::update(SDL_Surface* gSurface) {
 
 	// move the missile down and apply the modifier
-	this->y += speed;
+	this->rect.y += speed;
 
 	// draw the image for this sprite
 	drawImage(gSurface);
@@ -12,10 +12,13 @@ void missile::update(SDL_Surface* gSurface) {
 }
 
 // function to initialize values for the missile
-void missile::init() {
+void missile::init(int x, int y) {
 
 	// initialize speed
 	this->speed = 10;
+
+	// initialize missile rect
+	this->rect = { x, y, MISSILE_WIDTH, MISSILE_HEIGHT };
 
 	return;
 

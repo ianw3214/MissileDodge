@@ -16,7 +16,8 @@ Game created in C++ with SDL
   * ~~Missile Class~~
   * ~~Missile Movement~~
   * ~~Missile Spawning~~
-  * Collision
+  * ~~Collision~~
+  * Missile Removal
   * Points
   * Health
   * Health Sprite Update

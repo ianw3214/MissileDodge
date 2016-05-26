@@ -37,13 +37,13 @@ std::vector<missile*> missiles;
 int main(int argc, char* argv[]) {
 
 	// intialize randomization seed
-	srand(time(NULL));
+	srand(time(nullptr));
 
 	// SDL window to refer to
-	SDL_Window* window = NULL;
+	SDL_Window* window = nullptr;
 
 	// the surface contained by the window
-	SDL_Surface * screenSurface = NULL;
+	SDL_Surface * screenSurface = nullptr;
 
 	// initialize the SDL window and screen surface
 	init(&window, &screenSurface);
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 	while (!quit) {
 
 		// clear the screen at the beginning of each loop
-		SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 255, 255, 255));
+		SDL_FillRect(screenSurface, nullptr, SDL_MapRGB(screenSurface->format, 255, 255, 255));
 
 		// loop through the sprite vector and draw each one
 		for (unsigned int i = 0; i < sprites.size(); i++) {
@@ -99,10 +99,14 @@ int main(int argc, char* argv[]) {
 
 		}
 		
-		// update the missiles
-		for (int i = 0; i < missiles.size(); i++) {
+		// update the missiles and check for collisions between missiles and player
+		for (unsigned int i = 0; i < missiles.size(); i++) {
 			// call the missile update function
 			missiles.at(i)->update(screenSurface);
+			// if the hero is colliding with a missile
+			if (SDL_HasIntersection(&(hero.getRect()), &(missiles.at(i)->getRect()))) {
+				LOG("COLLISION");
+			}
 		}
 
 		// update the hero
@@ -136,7 +140,7 @@ bool init(SDL_Window** window, SDL_Surface** surface) {
 	else {								// SDL initialization was successful
 		// create window
 		*window = SDL_CreateWindow("Missile Dodge", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (*window == NULL) {			// failed to create window
+		if (*window == nullptr) {			// failed to create window
 			// print the error to the console
 			std::cout << "Window was not created!, SDL ERROR: " << SDL_GetError() << std::endl;
 			success = false;			// set the initialization flag to false
@@ -167,7 +171,7 @@ void close(SDL_Window* window) {
 
 	// Destroy the window
 	SDL_DestroyWindow(window);
-	window = NULL;
+	window = nullptr;
 
 	// Quit SDL subsystems
 	SDL_Quit();
