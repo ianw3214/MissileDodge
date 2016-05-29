@@ -9,11 +9,11 @@ class missile : public sprite {
 
 public:
 	// inherit constructors
-	missile(std::string s, SDL_Surface* g) : sprite(s, g) {
+	missile(std::string s) : sprite(s) {
 		// intialize missile
 		init(0,0);
 	};
-	missile(int x, int y, std::string s, SDL_Surface* g) : sprite(x, y, s, g) {
+	missile(int x, int y, std::string s) : sprite(x, y, s) {
 		// intialize missile
 		init(x,y);
 	};
@@ -26,5 +26,6 @@ private:
 	void init(int, int);
 	const int MISSILE_WIDTH = 40;
 	const int MISSILE_HEIGHT = 80;
+	const int BASE_SPEED = 10;
 
 };

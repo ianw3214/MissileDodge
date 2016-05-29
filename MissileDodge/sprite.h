@@ -8,8 +8,8 @@ class sprite {
 
 public:
 	// constructors
-	sprite(std::string, SDL_Surface*);
-	sprite(int, int, std::string, SDL_Surface*);
+	sprite(std::string);
+	sprite(int, int, std::string);
 	// getter/setter functions
 	int getX();
 	int getY();
@@ -24,4 +24,6 @@ protected:
 private:
 	// SDL surface to contain image of sprite
 	SDL_Surface * img;
+	// initialize function
+	void init(int, int, std::string);
 };

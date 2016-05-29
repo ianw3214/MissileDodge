@@ -17,17 +17,22 @@ Game created in C++ with SDL
   * ~~Missile Movement~~
   * ~~Missile Spawning~~
   * ~~Collision~~
-  * Missile Removal
-  * Points
-  * Health
+  * ~~Missile Removal~~
+  * ~~Points~~
+  * Show Points
+  * ~~Health~~
   * Health Sprite Update
+  * Jump
   * Garbage Handling System
 2. Game improvements
   * Game Class
+  * Game State System
   * Randomize fall speeds
   * Difficulty increase
   * Power-ups
+  * Different Missile Damage
   * Missile types
+  * Implement Custom Fonts
 3. Misc
   * High Score
   * Game Over
@@ -36,6 +41,8 @@ Game created in C++ with SDL
   * Options
     * Music/Sound Volume
     * Key Bindings
+  * Intro Screen
+  * Loading Screen
 
 ### ASSETS
 1. Art
@@ -43,6 +50,7 @@ Game created in C++ with SDL
   * Splash Art
   * Logo
   * Icon
+  * Font
 2. Music/Sound
   * Background music
   * Sound effects

@@ -1,6 +1,6 @@
 #include "missile.h"
 
-// function that updates the player every frame
+// function that updates the missile every frame
 void missile::update(SDL_Surface* gSurface) {
 
 	// move the missile down and apply the modifier
@@ -15,7 +15,7 @@ void missile::update(SDL_Surface* gSurface) {
 void missile::init(int x, int y) {
 
 	// initialize speed
-	this->speed = 10;
+	this->speed = BASE_SPEED;
 
 	// initialize missile rect
 	this->rect = { x, y, MISSILE_WIDTH, MISSILE_HEIGHT };

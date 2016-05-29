@@ -1,9 +1,7 @@
 #include "player.h"
 
-// TODO	
-// create an velocity tracker for the hero movement
-// set a speed constant for hero movement
-// set booleans to see if left/right keys are held down
+// getter functions
+int player::getHealth() { return this->health; }
 
 //function that calls for every update
 void player::eventHandler(SDL_Event e) {
@@ -55,5 +53,41 @@ void player::update(SDL_Surface* gSurface) {
 	
 	// draw the image for this sprite
 	drawImage(gSurface);
+
+}
+
+// function that handles damage, returns false upon death
+bool player::takeDamage(int dmg) {
+
+	// boolean to return death state
+	bool alive = true;
+
+	// apply the damage to the health
+	this->health -= dmg;
+
+	// test if the player is alive
+	if (health < 0) {
+		// change the return boolean if not
+		alive = false;
+	}
+
+	// return the life state boolean
+	return alive;
+
+}
+
+// function to initialize values for the missile
+void player::init(int x, int y) {
+
+	// initialize speed
+	this->speed = BASE_SPEED;
+
+	// initialize health
+	this->health = BASE_HEALTH;
+
+	// initialize missile rect
+	this->rect = { x, y, PLAYER_WIDTH, PLAYER_HEIGHT };
+
+	return;
 
 }

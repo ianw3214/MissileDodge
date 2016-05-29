@@ -1,34 +1,18 @@
 #include "sprite.h"
 
 // constructor with path
-sprite::sprite(std::string path, SDL_Surface* gSurface) {
+sprite::sprite(std::string path) {
 
-	// initialize the x and y coordinates if they are not specified
-	this->rect.x = 0;
-	this->rect.y = 0;
-
-	// load the image from the path for the sprite
-	img = IMG_Load(path.c_str());
-	if (!img) {	// if the image failed to load
-				// output the error
-		std::cout << "Failed to load image: " << path << ", SDL_image ERROR : " << IMG_GetError() << std::endl;
-	}
+	// intialize sprite at 0,0
+	init(0, 0, path);
 
 }
 
 // constructor with path and positions
-sprite::sprite(int inputX, int inputY, std::string path, SDL_Surface* gSurface) {
+sprite::sprite(int inputX, int inputY, std::string path) {
 
-	// set the x and y of this sprite to the specified input
-	this->rect.x = inputX;
-	this->rect.y = inputY;
-
-	// load the image from the path for the sprite
-	img = IMG_Load(path.c_str());
-	if (!img) {	// if the image failed to load
-				// output the error
-		std::cout << "Failed to load image: " << path << ", SDL_image ERROR : " << IMG_GetError() << std::endl;
-	}
+	// initialize sprite at input poisition
+	init(inputX, inputY, path);
 	
 }
 
@@ -55,3 +39,16 @@ bool sprite::drawImage(SDL_Surface* gSurface) {
 
 }
 
+void sprite::init(int x, int y, std::string path) {
+
+	// initialize the x and y coordinates if they are not specified
+	this->rect.x = x;
+	this->rect.y = y;
+
+	// load the image from the path for the sprite
+	img = IMG_Load(path.c_str());
+	if (!img) {	// if the image failed to load
+				// output the error
+		std::cout << "Failed to load image: " << path << ", SDL_image ERROR : " << IMG_GetError() << std::endl;
+	}
+}
