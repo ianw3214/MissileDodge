@@ -56,8 +56,6 @@ int main(int argc, char* argv[]) {
 	// add the sprites to the game and push them to the sprites list
 	sprite background("assets/BG.png");
 	sprites.push_back(background);
-	sprite heart("assets/HEART.png");
-	sprites.push_back(heart);
 
 	// add a player character to the game
 	player hero(200, 400, "assets/HERO.png");
@@ -137,6 +135,14 @@ int main(int argc, char* argv[]) {
 
 		// update the hero
 		hero.update(screenSurface);
+
+		// update the hearts on screen
+		for (int i = 0; i < hero.getHealth(); i++) {
+			// add a heart to the screen
+			sprite heart((20+i * 45), 20, "assets/HEART.png");
+			// draw the heart to the screen
+			heart.drawImage(screenSurface);
+		}
 
 		// update the screen
 		SDL_UpdateWindowSurface(window);

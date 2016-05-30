@@ -21,8 +21,9 @@ Game created in C++ with SDL
   * ~~Points~~
   * Show Points
   * ~~Health~~
-  * Health Sprite Update
+  * ~~Health Sprite Update~~
   * Jump
+  * End Game/Hero Death
   * Garbage Handling System
 2. Game improvements
   * Game Class
