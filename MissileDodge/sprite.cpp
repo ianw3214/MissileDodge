@@ -16,10 +16,25 @@ sprite::sprite(int inputX, int inputY, std::string path) {
 	
 }
 
+// virtual destructor to make class polymorphic
+sprite::~sprite(){ }
+
 // getter/setter methods
 int sprite::getX() { return this->rect.x; }
 int sprite::getY() { return this->rect.y; }
+types sprite::getType() { return this->type; }
 SDL_Rect sprite::getRect() { return this->rect; }
+
+
+// function that is called each frame by the game
+void sprite::update(SDL_Surface* gSurface) {
+
+	// default to drawing the sprite
+	drawImage(gSurface);
+
+	return;
+
+}
 
 // function to set the position of the image
 bool sprite::drawImage(SDL_Surface* gSurface) {
@@ -39,6 +54,7 @@ bool sprite::drawImage(SDL_Surface* gSurface) {
 
 }
 
+// function to initialize loading a sprite
 void sprite::init(int x, int y, std::string path) {
 
 	// initialize the x and y coordinates if they are not specified
@@ -51,4 +67,10 @@ void sprite::init(int x, int y, std::string path) {
 				// output the error
 		std::cout << "Failed to load image: " << path << ", SDL_image ERROR : " << IMG_GetError() << std::endl;
 	}
+
+	// initialize sprite type
+	type = SPRITE;
+
+	return;
+
 }

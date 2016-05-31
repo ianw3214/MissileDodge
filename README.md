@@ -26,7 +26,8 @@ Game created in C++ with SDL
   * End Game/Hero Death
   * Garbage Handling System
 2. Game improvements
-  * Game Class
+  * ~~Game Class~~
+  * Battle Intro/Countdown
   * Game State System
   * Randomize fall speeds
   * Difficulty increase
@@ -35,6 +36,7 @@ Game created in C++ with SDL
   * Missile types
   * Implement Custom Fonts
 3. Misc
+  * Sprite Animation
   * High Score
   * Game Over
   * Menu
@@ -52,6 +54,7 @@ Game created in C++ with SDL
   * Logo
   * Icon
   * Font
+  * Animations
 2. Music/Sound
   * Background music
   * Sound effects

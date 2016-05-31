@@ -19,6 +19,9 @@ void missile::init(int x, int y) {
 
 	// initialize missile rect
 	this->rect = { x, y, MISSILE_WIDTH, MISSILE_HEIGHT };
+	
+	// intialize sprite type
+	type = MISSILE;
 
 	return;
 
