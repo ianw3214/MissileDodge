@@ -88,6 +88,9 @@ void player::init(int x, int y) {
 	// initialize missile rect
 	this->rect = { x, y, PLAYER_WIDTH, PLAYER_HEIGHT };
 
+	// initialize sprite type
+	type = PLAYER;
+
 	return;
 
 }
