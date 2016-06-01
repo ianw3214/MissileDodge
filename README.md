@@ -22,9 +22,10 @@ Game created in C++ with SDL
   * Show Points
   * ~~Health~~
   * ~~Health Sprite Update~~
-  * Jump
+  * ~~Jump~~
   * End Game/Hero Death
   * Garbage Handling System
+  * Delta Time based update functions
 2. Game improvements
   * ~~Game Class~~
   * Battle Intro/Countdown
@@ -35,6 +36,7 @@ Game created in C++ with SDL
   * Different Missile Damage
   * Missile types
   * Implement Custom Fonts
+  * Sprite sheet loading
 3. Misc
   * Sprite Animation
   * High Score

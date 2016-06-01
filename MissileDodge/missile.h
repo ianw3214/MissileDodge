@@ -25,8 +25,5 @@ private:
 
 	int speed;
 	void init(int, int);
-	const int MISSILE_WIDTH = 40;
-	const int MISSILE_HEIGHT = 80;
-	const int BASE_SPEED = 10;
 
 };

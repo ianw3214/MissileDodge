@@ -21,14 +21,12 @@
 #include "player.h"
 #include "missile.h"
 #include "game.h"
+#include "gameVars.h"
 
 // function declarations
 bool init(SDL_Window**, SDL_Surface**);
 void close(SDL_Window*);
 
-// screen dimension constants
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
 
 // entry point
 int main(int argc, char* argv[]) {
@@ -46,7 +44,7 @@ int main(int argc, char* argv[]) {
 	init(&window, &screenSurface);
 
 	// start a new game
-	game * battle = new game(window, screenSurface, SCREEN_WIDTH, SCREEN_HEIGHT);
+	game * battle = new game(window, screenSurface);
 	battle->startGame();
 
 	// call the SDL exit function
@@ -71,7 +69,7 @@ bool init(SDL_Window** window, SDL_Surface** surface) {
 	}
 	else {								// SDL initialization was successful
 		// create window
-		*window = SDL_CreateWindow("Missile Dodge", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		*window = SDL_CreateWindow("Missile Dodge", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (*window == nullptr) {			// failed to create window
 			// print the error to the console
 			std::cout << "Window was not created!, SDL ERROR: " << SDL_GetError() << std::endl;

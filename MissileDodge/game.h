@@ -13,17 +13,12 @@
 #include "missile.h"
 #include "gameVars.h"
 
-// constants
-constexpr int BASE_SCORE = 10;
-constexpr int BASE_SPAWN_TIME = 50;
-
-
 class game {
 
 public:
 
 	// constructor
-	game(SDL_Window*, SDL_Surface*, int, int);
+	game(SDL_Window*, SDL_Surface*);
 	// function to start the game
 	void startGame();
 
@@ -41,7 +36,7 @@ private:
 	int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 	// game functions
-	void init(int, int);
+	void init();
 	void updateSprites();
 	void spawnMissile();
 	void handleCollision();

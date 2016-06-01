@@ -26,12 +26,11 @@ public:
 	bool takeDamage(int);
 
 private:
+	// integers to keep track of player stats
 	int speed, health;
-	bool leftDown, rightDown;
-	const int PLAYER_WIDTH = 40;
-	const int PLAYER_HEIGHT = 80;
-	const int BASE_SPEED = 7;
-	const int BASE_HEALTH = 3;
+	// variables to handle game logic
+	bool leftDown, rightDown, spaceDown;
+	int jumpCounter, yMove;
 	// init function
 	void init(int, int);
 };

@@ -15,10 +15,10 @@ void missile::update(SDL_Surface* gSurface) {
 void missile::init(int x, int y) {
 
 	// initialize speed
-	this->speed = BASE_SPEED;
+	this->speed = missileConstants::BASE_SPEED;
 
 	// initialize missile rect
-	this->rect = { x, y, MISSILE_WIDTH, MISSILE_HEIGHT };
+	this->rect = { x, y, missileConstants::WIDTH, missileConstants::HEIGHT };
 	
 	// intialize sprite type
 	type = MISSILE;
