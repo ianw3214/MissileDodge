@@ -18,35 +18,41 @@ void game::startGame() {
 	// start the game loop
 	while (!quit) {	// keep looping as long as the player doesn't quit
 
-					// clear the screen at the beginning of each loop
-		SDL_FillRect(gSurface, nullptr, SDL_MapRGB(gSurface->format, 255, 255, 255));
+		// while the game isn't paused
+		if (!pause) {
 
-		// missile spawning function
-		spawnMissile();
+			// clear the screen at the beginning of each loop
+			SDL_FillRect(gSurface, nullptr, SDL_MapRGB(gSurface->format, 255, 255, 255));
 
-		// handle events on queue
-		while (SDL_PollEvent(&e) != 0) {
-			// if the user quits
-			if (e.type == SDL_QUIT) {
-				// set the quit flag to true
-				quit = true;
+			// missile spawning function
+			spawnMissile();
+
+			// handle events on queue
+			while (SDL_PollEvent(&e) != 0) {
+				// if the user quits
+				if (e.type == SDL_QUIT) {
+					// end the game
+					pause = true;
+				}
+				else {
+					// call the event handler for each sprite
+					hero->eventHandler(e);
+				}
 			}
-			else {
-				// call the event handler for each sprite
-				hero->eventHandler(e);
-			}
+
+			// handle collisions
+			handleCollision();
+
+			// update game sprites
+			updateSprites();
+
+			// update the screen surface
+			SDL_UpdateWindowSurface(gWindow);
+
 		}
 
-		// handle collisions
-		handleCollision();
-
-		// update game sprites
-		updateSprites();
-
-		// update the screen surface
-		SDL_UpdateWindowSurface(gWindow);
-
 	}
+
 }
 
 // initialization function
@@ -55,6 +61,7 @@ void game::init() {
 	// initialize variables
 	this->score = 0;
 	this->quit = false;
+	this->pause = false;
 	this->missileSpawnCounter = constants::BASE_SPAWN_TIME;
 	SCREEN_WIDTH = constants::SCREEN_WIDTH;
 	SCREEN_HEIGHT = constants::SCREEN_HEIGHT;
@@ -148,8 +155,8 @@ void game::handleCollision() {
 				}
 				// the player is dead
 				else {
-					// TEMPORARY DEBUG CODE
-					std::cout << "PLAYER DEAD" << std::endl;
+					// set the game over flag to be true
+					pause = true;
 				}
 				// break the current for loop so the missile doesn't get checked any further
 				break;
