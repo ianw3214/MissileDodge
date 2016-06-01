@@ -1,14 +1,14 @@
 #include "game.h"
 
 // constructor
-game::game(SDL_Window* iWindow, SDL_Surface* iSurface, int w, int h) {
+game::game(SDL_Window* iWindow, SDL_Surface* iSurface) {
 
 	// set the class window and surface pointers
 	this->gWindow = iWindow;
 	this->gSurface = iSurface;
 
 	// call the initialization function
-	init(w,h);
+	init();
 
 }
 
@@ -50,21 +50,21 @@ void game::startGame() {
 }
 
 // initialization function
-void game::init(int w, int h) {
+void game::init() {
 
 	// initialize variables
 	this->score = 0;
 	this->quit = false;
-	this->missileSpawnCounter = BASE_SPAWN_TIME;
-	SCREEN_HEIGHT = w;
-	SCREEN_WIDTH = h;
+	this->missileSpawnCounter = constants::BASE_SPAWN_TIME;
+	SCREEN_WIDTH = constants::SCREEN_WIDTH;
+	SCREEN_HEIGHT = constants::SCREEN_HEIGHT;
 
 	// add a background and push it to the sprite vector
 	sprite * background = new sprite("assets/BG.png");
 	sprites.push_back(background);
 
 	// add a hero to the game
-	hero = new player(200, 400, "assets/HERO.png");
+	hero = new player(200, constants::GROUND_LEVEL, "assets/HERO.png");
 
 }
 
@@ -84,6 +84,7 @@ void game::updateSprites() {
 			case MISSILE:
 				// dynamic cast from sprite to missile class
 				missile * temp = dynamic_cast<missile*>(sprites[i]);
+				// call the missile update function
 				temp->update(gSurface);
 				break;
 			}
@@ -113,7 +114,7 @@ void game::spawnMissile() {
 		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png");
 
 		// reset the spawn counter
-		missileSpawnCounter = BASE_SPAWN_TIME;
+		missileSpawnCounter = constants::BASE_SPAWN_TIME;
 
 		// add the missile to the vector
 		sprites.push_back(temp);
@@ -159,7 +160,7 @@ void game::handleCollision() {
 				// remove the missile pointer from the vector
 				sprites.erase(sprites.begin() + i - 1);
 				// add to the score
-				score += BASE_SCORE;
+				score += constants::BASE_SCORE;
 				// TEMPORARY DEUBG CODE
 				std::cout << score << std::endl;
 				// break the current for loop so the missile doesn't get checked any further

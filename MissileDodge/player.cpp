@@ -19,6 +19,10 @@ void player::eventHandler(SDL_Event e) {
 			// set the right down boolean to true
 			rightDown = true;
 			break;
+		case SDLK_SPACE:
+			// set the space down boolean to true
+			spaceDown = true;
+			break;
 		}
 	}
 	// if the user releases a key
@@ -34,6 +38,10 @@ void player::eventHandler(SDL_Event e) {
 		case SDLK_RIGHT:	// right key
 			// set the right down boolean to false
 			rightDown = false;
+			break;
+		case SDLK_SPACE:
+			// set the space down boolean to false
+			spaceDown = false;
 			break;
 		}
 	}
@@ -51,6 +59,32 @@ void player::update(SDL_Surface* gSurface) {
 		this->rect.x += speed;
 	}
 	
+	// handle the jump for the player
+	if (spaceDown) {
+		// if the counter is 0, let the player jump
+		if (jumpCounter == 0) {
+			// set the ymove variable to the desired velocity
+			yMove = playerConstants::BASE_JUMP_VELOCITY;
+			// reset the jump counter
+			jumpCounter = playerConstants::BASE_JUMP_TIME;
+		}
+	}
+
+	// update the y coordinates of the player
+	this->rect.y -= yMove;
+	// make sure it doesn't go beneath the ground
+	if (this->rect.y > constants::GROUND_LEVEL) {
+		// set the y to the ground level
+		this->rect.y = constants::GROUND_LEVEL;
+		// set ymove to 0
+	}
+	// apply gravity
+	yMove -= constants::GRAVITY;
+	// decrement the jump counter
+	if (jumpCounter>0) {
+		jumpCounter--;
+	}
+
 	// draw the image for this sprite
 	drawImage(gSurface);
 
@@ -80,13 +114,13 @@ bool player::takeDamage(int dmg) {
 void player::init(int x, int y) {
 
 	// initialize speed
-	this->speed = BASE_SPEED;
-
+	this->speed = playerConstants::BASE_SPEED;
 	// initialize health
-	this->health = BASE_HEALTH;
-
-	// initialize missile rect
-	this->rect = { x, y, PLAYER_WIDTH, PLAYER_HEIGHT };
+	this->health = playerConstants::BASE_HEALTH;
+	// initialize jump counter
+	jumpCounter = 0;
+	// initialize player rect
+	this->rect = { x, y, playerConstants::WIDTH, playerConstants::HEIGHT };
 
 	// initialize sprite type
 	type = PLAYER;
