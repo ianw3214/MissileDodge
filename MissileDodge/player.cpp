@@ -85,8 +85,7 @@ void player::update(SDL_Surface* gSurface) {
 		jumpCounter--;
 	}
 
-	// draw the image for this sprite
-	drawImage(gSurface);
+	return;
 
 }
 
@@ -100,7 +99,7 @@ bool player::takeDamage(int dmg) {
 	this->health -= dmg;
 
 	// test if the player is alive
-	if (health < 0) {
+	if (health <= 0) {
 		// change the return boolean if not
 		alive = false;
 	}

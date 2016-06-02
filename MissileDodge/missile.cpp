@@ -6,8 +6,7 @@ void missile::update(SDL_Surface* gSurface) {
 	// move the missile down and apply the modifier
 	this->rect.y += speed;
 
-	// draw the image for this sprite
-	drawImage(gSurface);
+	return;
 
 }
 

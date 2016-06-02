@@ -30,17 +30,18 @@ private:
 
 	// game variables
 	int score;		// int to keep track of points
-	bool quit;		// flag to see if user wants to quit
+	bool pause, quit;		// flag to see if the game should be stopped or exited
 	SDL_Event e;	// SDL event handler
 	int missileSpawnCounter;	// integer to keep track of when to spawn missiles.
 	int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 	// game functions
-	void init();
-	void updateSprites();
-	void spawnMissile();
-	void handleCollision();
-	void updateHearts();
+	void init();			// initialization function
+	void updateSprites();	// sprite logic update function
+	void renderSprites();	// sprite render function
+	void spawnMissile();	// missile spawning logic
+	void handleCollision();	// collision detection function
+	void countDown();		// function to transition into gameplay
 
 	// game sprite storage
 	std::vector<sprite*> sprites;

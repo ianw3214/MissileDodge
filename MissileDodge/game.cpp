@@ -15,38 +15,60 @@ game::game(SDL_Window* iWindow, SDL_Surface* iSurface) {
 // function that runs the game
 void game::startGame() {
 
+	// render the initial sprites and transition into battle
+	renderSprites();
+	countDown();
+
 	// start the game loop
 	while (!quit) {	// keep looping as long as the player doesn't quit
 
-					// clear the screen at the beginning of each loop
-		SDL_FillRect(gSurface, nullptr, SDL_MapRGB(gSurface->format, 255, 255, 255));
+		// while the game isn't paused
+		if (!pause) {
 
-		// missile spawning function
-		spawnMissile();
+			// clear the screen at the beginning of each loop
+			SDL_FillRect(gSurface, nullptr, SDL_MapRGB(gSurface->format, 255, 255, 255));
 
-		// handle events on queue
-		while (SDL_PollEvent(&e) != 0) {
-			// if the user quits
-			if (e.type == SDL_QUIT) {
-				// set the quit flag to true
-				quit = true;
+			// missile spawning function
+			spawnMissile();
+
+			// handle events on queue
+			while (SDL_PollEvent(&e) != 0) {
+				// if the user quits
+				if (e.type == SDL_QUIT) {
+					// end the game
+					quit = true;
+				}
+				else {
+					// call the event handler for each sprite
+					hero->eventHandler(e);
+				}
 			}
-			else {
-				// call the event handler for each sprite
-				hero->eventHandler(e);
+
+			// handle collisions
+			handleCollision();
+
+			// update game sprites
+			updateSprites();
+
+		}
+		// if the game is paused
+		else {
+			// let the program sit and not do anything until the user quits or unpauses
+			SDL_WaitEvent(&e);
+			// if the user quits the game
+			if (e.type == SDL_QUIT) {
+				// end the game
+				quit = true;
 			}
 		}
 
-		// handle collisions
-		handleCollision();
-
-		// update game sprites
-		updateSprites();
-
-		// update the screen surface
-		SDL_UpdateWindowSurface(gWindow);
+		// render the images
+		renderSprites();
 
 	}
+
+	return;
+
 }
 
 // initialization function
@@ -55,6 +77,7 @@ void game::init() {
 	// initialize variables
 	this->score = 0;
 	this->quit = false;
+	this->pause = false;
 	this->missileSpawnCounter = constants::BASE_SPAWN_TIME;
 	SCREEN_WIDTH = constants::SCREEN_WIDTH;
 	SCREEN_HEIGHT = constants::SCREEN_HEIGHT;
@@ -93,6 +116,32 @@ void game::updateSprites() {
 
 	// update the hero
 	hero->update(gSurface);
+
+	return;
+
+}
+
+// function to handle sprite renderting
+void game::renderSprites() {
+
+	// loop through the sprites vector and render each one
+	for (unsigned int i = 0; i < sprites.size(); i++) {
+		sprites[i]->render(gSurface);
+	}
+
+	// render a visual for the players health
+	for (int i = 0; i < hero->getHealth(); i++) {
+		// add a heart to the screen
+		sprite heart((20 + i * 45), 20, "assets/HEART.png");
+		// draw the heart to the screen
+		heart.render(gSurface);
+	}
+
+	// render the hero
+	hero->render(gSurface);
+
+	// update the screen surface
+	SDL_UpdateWindowSurface(gWindow);
 
 	return;
 
@@ -148,8 +197,8 @@ void game::handleCollision() {
 				}
 				// the player is dead
 				else {
-					// TEMPORARY DEBUG CODE
-					std::cout << "PLAYER DEAD" << std::endl;
+					// set the game over flag to be true
+					pause = true;
 				}
 				// break the current for loop so the missile doesn't get checked any further
 				break;
@@ -174,15 +223,15 @@ void game::handleCollision() {
 
 }
 
-// function that handles the heart updates on the screen
-void game::updateHearts() {
+// countdown function to transition into the game
+void game::countDown() {
 
-	// update the hearts on screen
-	for (int i = 0; i < hero->getHealth(); i++) {
-		// add a heart to the screen
-		sprite heart((20 + i * 45), 20, "assets/HEART.png");
-		// draw the heart to the screen
-		heart.drawImage(gSurface);
+	// loop through the countdown numbers
+	for (int i = 3; i >= 1; i--) {
+
+		std::cout << i << std::endl;
+		// show the number and set a delay
+		SDL_Delay(999);
 	}
 
 	return;

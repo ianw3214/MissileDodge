@@ -22,7 +22,7 @@ public:
 
 	// sprite class functions
 	void update(SDL_Surface*);
-	bool drawImage(SDL_Surface*);
+	bool render(SDL_Surface*);
 
 protected:
 
