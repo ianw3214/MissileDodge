@@ -37,10 +37,11 @@ private:
 
 	// game functions
 	void init();			// initialization function
-	void updateSprites();	// graphics render/update function
+	void updateSprites();	// sprite logic update function
+	void renderSprites();	// sprite render function
 	void spawnMissile();	// missile spawning logic
 	void handleCollision();	// collision detection function
-	void updateHearts();	// update/render the visuals for health
+	void countDown();		// function to transition into gameplay
 
 	// game sprite storage
 	std::vector<sprite*> sprites;

@@ -23,12 +23,12 @@ Game created in C++ with SDL
   * ~~Health~~
   * ~~Health Sprite Update~~
   * ~~Jump~~
-  * End Game/Hero Death
+  * ~~End Game/Hero Death~~
   * Garbage Handling System
   * Delta Time based update functions
 2. Game improvements
   * ~~Game Class~~
-  * Battle Intro/Countdown
+  * ~~Battle Intro/Countdown~~
   * Game State System
   * Randomize fall speeds
   * Difficulty increase
@@ -38,6 +38,7 @@ Game created in C++ with SDL
   * Implement Custom Fonts
   * Sprite sheet loading
 3. Misc
+  * GUI
   * Sprite Animation
   * High Score
   * Game Over

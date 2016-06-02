@@ -29,15 +29,14 @@ SDL_Rect sprite::getRect() { return this->rect; }
 // function that is called each frame by the game
 void sprite::update(SDL_Surface* gSurface) {
 
-	// default to drawing the sprite
-	drawImage(gSurface);
+	// default sprite has no updates
 
 	return;
 
 }
 
 // function to set the position of the image
-bool sprite::drawImage(SDL_Surface* gSurface) {
+bool sprite::render(SDL_Surface* gSurface) {
 
 	// success flag
 	bool success = true;

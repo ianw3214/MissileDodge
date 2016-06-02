@@ -85,8 +85,7 @@ void player::update(SDL_Surface* gSurface) {
 		jumpCounter--;
 	}
 
-	// draw the image for this sprite
-	drawImage(gSurface);
+	return;
 
 }
 
