@@ -19,7 +19,7 @@ public:
 		init(x,y);
 	};
 	// class functions
-	void update(SDL_Surface*);
+	void update(SDL_Surface*, double);
 
 private:
 

@@ -25,7 +25,7 @@ Game created in C++ with SDL
   * ~~Jump~~
   * ~~End Game/Hero Death~~
   * Garbage Handling System
-  * Delta Time based update functions
+  * ~~Delta Time based update functions~~
 2. Game improvements
   * ~~Game Class~~
   * ~~Battle Intro/Countdown~~

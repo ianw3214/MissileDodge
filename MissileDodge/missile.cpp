@@ -1,10 +1,10 @@
 #include "missile.h"
 
 // function that updates the missile every frame
-void missile::update(SDL_Surface* gSurface) {
-
+void missile::update(SDL_Surface* gSurface, double delta) {
+	
 	// move the missile down and apply the modifier
-	this->rect.y += speed;
+	this->rect.y += speed * delta;
 
 	return;
 

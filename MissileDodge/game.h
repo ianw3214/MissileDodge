@@ -16,11 +16,13 @@
 class game {
 
 public:
-
+	
 	// constructor
 	game(SDL_Window*, SDL_Surface*);
 	// function to start the game
 	void startGame();
+	// game loop function
+	void gameLoop(double);
 
 private:
 
@@ -33,11 +35,11 @@ private:
 	bool pause, quit;		// flag to see if the game should be stopped or exited
 	SDL_Event e;	// SDL event handler
 	int missileSpawnCounter;	// integer to keep track of when to spawn missiles.
-	int SCREEN_WIDTH, SCREEN_HEIGHT;
+	Uint32 cTime, lTime;		// integers to keep track of time difference
 
 	// game functions
 	void init();			// initialization function
-	void updateSprites();	// sprite logic update function
+	void updateSprites(double);	// sprite logic update function
 	void renderSprites();	// sprite render function
 	void spawnMissile();	// missile spawning logic
 	void handleCollision();	// collision detection function

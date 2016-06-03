@@ -27,7 +27,7 @@ SDL_Rect sprite::getRect() { return this->rect; }
 
 
 // function that is called each frame by the game
-void sprite::update(SDL_Surface* gSurface) {
+void sprite::update(SDL_Surface* gSurface, double delta) {
 
 	// default sprite has no updates
 
