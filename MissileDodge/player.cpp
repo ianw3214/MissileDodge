@@ -49,14 +49,22 @@ void player::eventHandler(SDL_Event e) {
 }
 
 // function that updates the player every frame
-void player::update(SDL_Surface* gSurface) {
+void player::update(SDL_Surface* gSurface, double delta) {
 
 	// add to the players x coordinates if keys are pressed
 	if (leftDown && !rightDown) {
-		this->rect.x -= speed;
+		this->rect.x -= speed * delta;
+		// make sure to leave a margin from the side
+		if(rect.x < 10){
+			this->rect.x = 10;
+		}
 	}
 	if (rightDown && !leftDown) {
-		this->rect.x += speed;
+		this->rect.x += speed * delta;
+		// leave a margin
+		if (rect.x > (constants::SCREEN_WIDTH - playerConstants::WIDTH - 10)) {
+			this->rect.x = constants::SCREEN_WIDTH - playerConstants::WIDTH - 10;
+		}
 	}
 	
 	// handle the jump for the player
@@ -71,7 +79,7 @@ void player::update(SDL_Surface* gSurface) {
 	}
 
 	// update the y coordinates of the player
-	this->rect.y -= yMove;
+	this->rect.y -= yMove*delta;
 	// make sure it doesn't go beneath the ground
 	if (this->rect.y > constants::GROUND_LEVEL) {
 		// set the y to the ground level
@@ -79,7 +87,7 @@ void player::update(SDL_Surface* gSurface) {
 		// set ymove to 0
 	}
 	// apply gravity
-	yMove -= constants::GRAVITY;
+	yMove -= constants::GRAVITY*delta;
 	// decrement the jump counter
 	if (jumpCounter>0) {
 		jumpCounter--;

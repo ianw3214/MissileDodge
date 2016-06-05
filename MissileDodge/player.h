@@ -22,7 +22,7 @@ public:
 	int getHealth();
 	// class functions
 	void eventHandler(SDL_Event);
-	void update(SDL_Surface*);
+	void update(SDL_Surface*, double);
 	bool takeDamage(int);
 
 private:

@@ -1,5 +1,13 @@
 #pragma once
 
+#define DEBUG 1
+
+#if DEBUG
+#define LOG(x) std::cout << x << std::endl;
+#else
+#define LOG(x)
+#endif
+
 // enumeration to store sprite type
 enum types {
 	SPRITE,
@@ -14,7 +22,7 @@ namespace constants {
 	constexpr int SCREEN_WIDTH = 800;
 	constexpr int SCREEN_HEIGHT = 600;
 
-	constexpr int GRAVITY = 2;
+	constexpr int GRAVITY = 1200;
 	constexpr int GROUND_LEVEL = 400;
 
 	// base score unit
@@ -28,10 +36,10 @@ namespace playerConstants {
 	// size of player
 	constexpr int WIDTH = 40;
 	constexpr int HEIGHT = 80;
-	constexpr int BASE_SPEED = 7;
+	constexpr int BASE_SPEED = 500;
 	constexpr int BASE_HEALTH = 3;
 	// constants for jumping
-	constexpr int BASE_JUMP_VELOCITY = 25;
+	constexpr int BASE_JUMP_VELOCITY = 600;
 	constexpr int BASE_JUMP_TIME = 30;
 }
 // namespace for missile constants
@@ -39,5 +47,5 @@ namespace missileConstants {
 	// size of missile
 	constexpr int WIDTH = 40;
 	constexpr int HEIGHT = 80;
-	constexpr int BASE_SPEED = 10;
+	constexpr int BASE_SPEED = 500;
 }

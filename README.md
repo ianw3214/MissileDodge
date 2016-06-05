@@ -25,11 +25,10 @@ Game created in C++ with SDL
   * ~~Jump~~
   * ~~End Game/Hero Death~~
   * Garbage Handling System
-  * Delta Time based update functions
+  * ~~Delta Time based update functions~~
 2. Game improvements
   * ~~Game Class~~
   * ~~Battle Intro/Countdown~~
-  * Game State System
   * Randomize fall speeds
   * Difficulty increase
   * Power-ups
@@ -42,7 +41,8 @@ Game created in C++ with SDL
   * Sprite Animation
   * High Score
   * Game Over
-  * Menu
+  * ~~Menu~~
+  * Game State System
   * Pause Menu
   * Options
     * Music/Sound Volume
@@ -53,6 +53,10 @@ Game created in C++ with SDL
 ### ASSETS
 1. Art
   * Sprite
+    * Hero
+    * Missiles
+    * Hearts (In Progress)
+    * Background
   * Splash Art
   * Logo
   * Icon

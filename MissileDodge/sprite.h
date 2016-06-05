@@ -21,7 +21,7 @@ public:
 	SDL_Rect getRect();
 
 	// sprite class functions
-	void update(SDL_Surface*);
+	void update(SDL_Surface*, double);
 	bool render(SDL_Surface*);
 
 protected:

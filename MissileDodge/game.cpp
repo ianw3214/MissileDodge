@@ -17,38 +17,23 @@ void game::startGame() {
 
 	// render the initial sprites and transition into battle
 	renderSprites();
-	countDown();
+	// countDown();
+
+	// initialize the time variables
+	cTime = SDL_GetTicks();
+	lTime = cTime;
 
 	// start the game loop
 	while (!quit) {	// keep looping as long as the player doesn't quit
 
+		// set the current time
+		cTime = SDL_GetTicks();
+
 		// while the game isn't paused
 		if (!pause) {
 
-			// clear the screen at the beginning of each loop
-			SDL_FillRect(gSurface, nullptr, SDL_MapRGB(gSurface->format, 255, 255, 255));
-
-			// missile spawning function
-			spawnMissile();
-
-			// handle events on queue
-			while (SDL_PollEvent(&e) != 0) {
-				// if the user quits
-				if (e.type == SDL_QUIT) {
-					// end the game
-					quit = true;
-				}
-				else {
-					// call the event handler for each sprite
-					hero->eventHandler(e);
-				}
-			}
-
-			// handle collisions
-			handleCollision();
-
-			// update game sprites
-			updateSprites();
+			// call the game loop function every time
+			gameLoop(((double)(cTime - lTime))/1000);
 
 		}
 		// if the game is paused
@@ -65,7 +50,42 @@ void game::startGame() {
 		// render the images
 		renderSprites();
 
+		// set the last time to this time to calculate difference
+		lTime = cTime;
+
 	}
+
+	return;
+
+}
+
+// function that handles central game logic
+void game::gameLoop(double delta) {
+
+	// clear the screen at the beginning of each loop
+	SDL_FillRect(gSurface, nullptr, SDL_MapRGB(gSurface->format, 255, 255, 255));
+
+	// missile spawning function
+	spawnMissile();
+
+	// handle events on queue
+	while (SDL_PollEvent(&e) != 0) {
+		// if the user quits
+		if (e.type == SDL_QUIT) {
+			// end the game
+			quit = true;
+		}
+		else {
+			// call the event handler for each sprite
+			hero->eventHandler(e);
+		}
+	}
+
+	// handle collisions
+	handleCollision();
+
+	// update game sprites
+	updateSprites(delta);
 
 	return;
 
@@ -79,8 +99,6 @@ void game::init() {
 	this->quit = false;
 	this->pause = false;
 	this->missileSpawnCounter = constants::BASE_SPAWN_TIME;
-	SCREEN_WIDTH = constants::SCREEN_WIDTH;
-	SCREEN_HEIGHT = constants::SCREEN_HEIGHT;
 
 	// add a background and push it to the sprite vector
 	sprite * background = new sprite("assets/BG.png");
@@ -92,7 +110,7 @@ void game::init() {
 }
 
 // function to handle sprite logic and update graphics each frame
-void game::updateSprites() {
+void game::updateSprites(double delta) {
 
 	// loop through the sprites vector and update each one
 	for (unsigned int i = 0; i < sprites.size(); i++) {
@@ -102,20 +120,20 @@ void game::updateSprites() {
 			switch (sprites[i]->getType()) {
 			case SPRITE:
 				// default update function for normal sprite
-				sprites[i]->update(gSurface);
+				sprites[i]->update(gSurface, delta);
 				break;
 			case MISSILE:
 				// dynamic cast from sprite to missile class
 				missile * temp = dynamic_cast<missile*>(sprites[i]);
 				// call the missile update function
-				temp->update(gSurface);
+				temp->update(gSurface, delta);
 				break;
 			}
 		}
 	}
 
 	// update the hero
-	hero->update(gSurface);
+	hero->update(gSurface, delta);
 
 	return;
 
@@ -157,7 +175,7 @@ void game::spawnMissile() {
 		int x_offset;
 
 		// randomize the offset to a random number between the screen sizes
-		x_offset = rand() % (SCREEN_WIDTH - 20) + 10;	// take margins into account
+		x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;	// take margins into account
 
 		// add a missile to the game
 		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png");
