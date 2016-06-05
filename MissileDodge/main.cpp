@@ -2,14 +2,6 @@
 	- made with SDL
 */
 
-#define DEBUG 1
-
-#if DEBUG
-#define LOG(x) std::cout << x << std::endl;
-#else
-#define LOG(x)
-#endif
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -21,6 +13,7 @@
 #include "player.h"
 #include "missile.h"
 #include "game.h"
+#include "menu.h"
 #include "gameVars.h"
 
 // function declarations
@@ -43,9 +36,18 @@ int main(int argc, char* argv[]) {
 	// initialize the SDL window and screen surface
 	init(&window, &screenSurface);
 
-	// start a new game
-	game * battle = new game(window, screenSurface);
-	battle->startGame();
+	// make a menu
+	menu * mainMenu = new menu(window, screenSurface);
+
+	// start a game if the user wants to play
+	if (mainMenu->getFlag()) {
+
+		// start a new game
+		game * battle = new game(window, screenSurface);
+		battle->startGame();
+
+	}
+
 
 	// call the SDL exit function
 	close(window);

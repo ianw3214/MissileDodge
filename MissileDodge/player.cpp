@@ -54,10 +54,17 @@ void player::update(SDL_Surface* gSurface, double delta) {
 	// add to the players x coordinates if keys are pressed
 	if (leftDown && !rightDown) {
 		this->rect.x -= speed * delta;
+		// make sure to leave a margin from the side
+		if(rect.x < 10){
+			this->rect.x = 10;
+		}
 	}
 	if (rightDown && !leftDown) {
-		std::cout << "FLAG" << delta << std::endl;
 		this->rect.x += speed * delta;
+		// leave a margin
+		if (rect.x > (constants::SCREEN_WIDTH - playerConstants::WIDTH - 10)) {
+			this->rect.x = constants::SCREEN_WIDTH - playerConstants::WIDTH - 10;
+		}
 	}
 	
 	// handle the jump for the player

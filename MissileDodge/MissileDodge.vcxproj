@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="missile.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="sprite.cpp" />
@@ -127,6 +128,7 @@
   <ItemGroup>
     <ClInclude Include="game.h" />
     <ClInclude Include="gameVars.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="missile.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="sprite.h" />

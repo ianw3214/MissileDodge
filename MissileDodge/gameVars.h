@@ -1,5 +1,13 @@
 #pragma once
 
+#define DEBUG 1
+
+#if DEBUG
+#define LOG(x) std::cout << x << std::endl;
+#else
+#define LOG(x)
+#endif
+
 // enumeration to store sprite type
 enum types {
 	SPRITE,
@@ -14,7 +22,7 @@ namespace constants {
 	constexpr int SCREEN_WIDTH = 800;
 	constexpr int SCREEN_HEIGHT = 600;
 
-	constexpr int GRAVITY = 900;
+	constexpr int GRAVITY = 1200;
 	constexpr int GROUND_LEVEL = 400;
 
 	// base score unit
