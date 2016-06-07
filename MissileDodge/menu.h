@@ -16,14 +16,13 @@ public:
 	// getter function
 	bool getFlag();
 
-protected:
-	// structure that holds menuitem
+private:
+
+	// structure to store different text for menus
 	struct menuItem {
 		sprite normal;
 		sprite hover;
 	};
-
-private:
 
 	// the screen and window to update the game onto
 	SDL_Window * gWindow;

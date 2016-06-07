@@ -15,9 +15,8 @@ game::game(SDL_Window* iWindow, SDL_Surface* iSurface) {
 // function that runs the game
 void game::startGame() {
 
-	// render the initial sprites and transition into battle
-	renderSprites();
-	// countDown();
+	// countdown into the game
+	countDown();
 
 	// initialize the time variables
 	cTime = SDL_GetTicks();
@@ -29,26 +28,26 @@ void game::startGame() {
 		// set the current time
 		cTime = SDL_GetTicks();
 
-		// while the game isn't paused
-		if (!pause) {
-
-			// call the game loop function every time
-			gameLoop(((double)(cTime - lTime))/1000);
-
-		}
 		// if the game is paused
+		if (pause) {
+			// update the pause menu to the screen
+			menuUpdate();
+		}
 		else {
-			// let the program sit and not do anything until the user quits or unpauses
-			SDL_WaitEvent(&e);
-			// if the user quits the game
-			if (e.type == SDL_QUIT) {
-				// end the game
-				quit = true;
-			}
+			// call the game loop function every time
+			gameLoop(((double)(cTime - lTime)) / 1000);
 		}
 
 		// render the images
 		renderSprites();
+
+		// render the menu if it is paused
+		if (pause) {
+			menuRender();
+		}
+
+		// update the screen surface
+		SDL_UpdateWindowSurface(gWindow);
 
 		// set the last time to this time to calculate difference
 		lTime = cTime;
@@ -75,6 +74,11 @@ void game::gameLoop(double delta) {
 			// end the game
 			quit = true;
 		}
+		// if the user pressed the escape key
+		else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
+			// enter the pause menu
+			pause = true;
+		}
 		else {
 			// call the event handler for each sprite
 			hero->eventHandler(e);
@@ -99,10 +103,30 @@ void game::init() {
 	this->quit = false;
 	this->pause = false;
 	this->missileSpawnCounter = constants::BASE_SPAWN_TIME;
+	this->gameOver = false;
 
 	// add a background and push it to the sprite vector
 	sprite * background = new sprite("assets/BG.png");
 	sprites.push_back(background);
+
+	// initialize menu text
+	sprite * normal = new sprite(300, 200, "assets/TEXT/RESUME.png");
+	sprite * hover = new sprite(300, 200, "assets/TEXT/RESUME_SELECTED.png");
+	menuItem resume = { *normal, *hover };
+	menuItems.push_back(resume);
+
+	normal = new sprite(300, 350, "assets/TEXT/QUIT.png");
+	hover = new sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png");
+	menuItem quit = { *normal, *hover };
+	menuItems.push_back(quit);
+
+	// initialize countdown number text
+	sprite * num = new sprite(300, 300, "assets/TEXT/1.png");
+	countDownNums.push_back(*num);
+	num = new sprite(300, 300, "assets/TEXT/2.png");
+	countDownNums.push_back(*num);
+	num = new sprite(300, 300, "assets/TEXT/3.png");
+	countDownNums.push_back(*num);
 
 	// add a hero to the game
 	hero = new player(200, constants::GROUND_LEVEL, "assets/HERO.png");
@@ -157,9 +181,6 @@ void game::renderSprites() {
 
 	// render the hero
 	hero->render(gSurface);
-
-	// update the screen surface
-	SDL_UpdateWindowSurface(gWindow);
 
 	return;
 
@@ -216,6 +237,13 @@ void game::handleCollision() {
 				// the player is dead
 				else {
 					// set the game over flag to be true
+					gameOver = true;
+					// reset the menu items
+					menuItems.clear();
+					// add the new ones for game over
+					menuItems.push_back({ sprite(300, 200, "assets/TEXT/PLAY_AGAIN.png"), sprite(300, 200, "assets/TEXT/PLAY_AGAIN_SELECTED.png") });
+					menuItems.push_back({ sprite(300, 350, "assets/TEXT/QUIT.png"), sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png") });
+					// pause the game
 					pause = true;
 				}
 				// break the current for loop so the missile doesn't get checked any further
@@ -245,11 +273,129 @@ void game::handleCollision() {
 void game::countDown() {
 
 	// loop through the countdown numbers
-	for (int i = 3; i >= 1; i--) {
+	for (unsigned int i = 0; i < countDownNums.size(); i++) {
 
-		std::cout << i << std::endl;
-		// show the number and set a delay
+		// render sprites under the numbers
+		renderSprites();
+
+		// call the render function of the number
+		countDownNums.at(countDownNums.size()-i-1).render(gSurface);
+
+		// update the window surface
+		SDL_UpdateWindowSurface(gWindow);
+
+		// set a one second delay until the next number
 		SDL_Delay(999);
+	}
+
+	return;
+
+}
+
+// update function
+void game::menuUpdate() {
+
+	// get the inputs from the user
+	while (SDL_PollEvent(&e) != 0) {
+		// if the user quits
+		if (e.type == SDL_QUIT) {
+			// end the game
+			this->quit = true;
+		}
+		// if the user presses a key
+		if (e.type == SDL_KEYDOWN) {
+			switch (e.key.keysym.sym) {
+				// if the user pressese a down button
+			case SDLK_s:
+			case SDLK_DOWN:
+				// if the current selected item is less than the total amount of items
+				if (selected < (menuItems.size() - 1)) {
+					// add one to selected
+					selected++;
+				}
+				break;
+				// if the user presses an up button
+			case SDLK_w:
+			case SDLK_UP:
+				// if the current selected item is higher than 0
+				if (selected > 0) {
+					// minus one to selected
+					selected--;
+				}
+				break;
+			case SDLK_RETURN:
+			case SDLK_SPACE:
+				// call the select function when the user pressed a select key
+				select();
+				break;
+			case SDLK_ESCAPE:
+				// return to the game if the user quits the menu
+				pause = false;
+				// reset the selected menu item
+				selected = 0;
+				break;
+			}
+		}
+
+	}
+
+	return;
+
+}
+
+// function called upon user pressing enter
+void game::select() {
+
+	// if the menu is the gameover menu
+	if (gameOver) {
+		switch (selected) {
+		case 0:
+			// play a new game
+			LOG("PLAY NEW GAME");
+			break;
+		case 1:
+			// quit the game
+			quit = true;
+			break;
+		}
+
+		// exit the function
+		return;
+
+	}
+
+	// if function runs to here then the game isn't over yet
+	// see what item is currently selected
+	switch (selected) {
+	case 0:
+		// resume the game and unpause
+		this->pause = false;
+		break;
+	case 1:
+		// quit the game and dont go into battle
+		quit = true;
+		break;
+	}
+
+	return;
+
+}
+
+// function that renders menu text
+void game::menuRender() {
+
+	// loop through all the menu items
+	for (int i = 0; i < menuItems.size(); i++) {
+		// if the current loop is the selected item
+		if (selected == i) {
+			// render the selected sprite
+			menuItems.at(i).hover.render(gSurface);
+		}
+		// if it is not the selected one
+		else {
+			// render the normal sprite
+			menuItems.at(i).normal.render(gSurface);
+		}
 	}
 
 	return;

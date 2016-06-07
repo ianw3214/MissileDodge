@@ -26,9 +26,25 @@ public:
 
 private:
 
+	// structure to store different text for menus
+	struct menuItem {
+		sprite normal;
+		sprite hover;
+	};
+
 	// the screen and window to update the game onto
 	SDL_Window * gWindow;
 	SDL_Surface * gSurface;
+
+	// vector that holds the countdown numbers
+	std::vector<sprite> countDownNums;
+
+	// vector to hold the items in the pause menu
+	std::vector<menuItem> menuItems;
+	void menuUpdate();			// update function for the pause menu
+	void select();				// function that triggers when enter or space is hit on pause menu
+	void menuRender();			// function that renders menu elements when paused
+	int selected;				// integer to hold current menu selection
 
 	// game variables
 	int score;		// int to keep track of points
@@ -36,6 +52,7 @@ private:
 	SDL_Event e;	// SDL event handler
 	int missileSpawnCounter;	// integer to keep track of when to spawn missiles.
 	Uint32 cTime, lTime;		// integers to keep track of time difference
+	bool gameOver;				// boolean to keep track of whether the user has lost
 
 	// game functions
 	void init();			// initialization function
