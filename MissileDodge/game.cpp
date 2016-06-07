@@ -15,9 +15,8 @@ game::game(SDL_Window* iWindow, SDL_Surface* iSurface) {
 // function that runs the game
 void game::startGame() {
 
-	// render the initial sprites and transition into battle
-	renderSprites();
-	// countDown();
+	// countdown into the game
+	countDown();
 
 	// initialize the time variables
 	cTime = SDL_GetTicks();
@@ -119,6 +118,14 @@ void game::init() {
 	hover = new sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png");
 	menuItem quit = { *normal, *hover };
 	menuItems.push_back(quit);
+
+	// initialize countdown number text
+	sprite * num = new sprite(300, 300, "assets/TEXT/1.png");
+	countDownNums.push_back(*num);
+	num = new sprite(300, 300, "assets/TEXT/2.png");
+	countDownNums.push_back(*num);
+	num = new sprite(300, 300, "assets/TEXT/3.png");
+	countDownNums.push_back(*num);
 
 	// add a hero to the game
 	hero = new player(200, constants::GROUND_LEVEL, "assets/HERO.png");
@@ -258,10 +265,18 @@ void game::handleCollision() {
 void game::countDown() {
 
 	// loop through the countdown numbers
-	for (int i = 3; i >= 1; i--) {
+	for (unsigned int i = 0; i < countDownNums.size(); i++) {
 
-		std::cout << i << std::endl;
-		// show the number and set a delay
+		// render sprites under the numbers
+		renderSprites();
+
+		// call the render function of the number
+		countDownNums.at(countDownNums.size()-i-1).render(gSurface);
+
+		// update the window surface
+		SDL_UpdateWindowSurface(gWindow);
+
+		// set a one second delay until the next number
 		SDL_Delay(999);
 	}
 

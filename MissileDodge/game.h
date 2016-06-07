@@ -36,6 +36,9 @@ private:
 	SDL_Window * gWindow;
 	SDL_Surface * gSurface;
 
+	// vector that holds the countdown numbers
+	std::vector<sprite> countDownNums;
+
 	// vector to hold the items in the pause menu
 	std::vector<menuItem> menuItems;
 	void menuUpdate();			// update function for the pause menu
