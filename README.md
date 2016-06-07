@@ -40,7 +40,7 @@ Game created in C++ with SDL
   * GUI
   * Sprite Animation
   * High Score
-  * Game Over
+  * Game Over (In Progress)
   * ~~Menu~~
   * Game State System
   * ~~Pause Menu~~

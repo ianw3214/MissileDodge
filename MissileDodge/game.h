@@ -52,6 +52,7 @@ private:
 	SDL_Event e;	// SDL event handler
 	int missileSpawnCounter;	// integer to keep track of when to spawn missiles.
 	Uint32 cTime, lTime;		// integers to keep track of time difference
+	bool gameOver;				// boolean to keep track of whether the user has lost
 
 	// game functions
 	void init();			// initialization function
