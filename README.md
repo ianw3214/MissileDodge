@@ -43,7 +43,7 @@ Game created in C++ with SDL
   * Game Over
   * ~~Menu~~
   * Game State System
-  * Pause Menu
+  * ~~Pause Menu~~
   * Options
     * Music/Sound Volume
     * Key Bindings

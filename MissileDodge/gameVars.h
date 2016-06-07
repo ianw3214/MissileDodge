@@ -15,6 +15,7 @@ enum types {
 	PLAYER,
 	HEART
 };
+
 // namespace that contains all the constants that the game needs
 namespace constants {
 

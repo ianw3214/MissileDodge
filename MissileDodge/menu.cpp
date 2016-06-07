@@ -35,13 +35,13 @@ bool menu::getFlag() {
 void menu::init() {
 
 	// initialize sprites
-	sprite * normal = new sprite(300, 200, "assets/MENU/START.png");
-	sprite * hover = new sprite(300, 200, "assets/MENU/START_SELECTED.png");
+	sprite * normal = new sprite(300, 200, "assets/TEXT/START.png");
+	sprite * hover = new sprite(300, 200, "assets/TEXT/START_SELECTED.png");
 	menuItem start = { *normal, *hover};
 	menuItems.push_back(start);
 
-	normal = new sprite(300, 350, "assets/MENU/QUIT.png");
-	hover = new sprite(300, 350, "assets/MENU/QUIT_SELECTED.png");
+	normal = new sprite(300, 350, "assets/TEXT/QUIT.png");
+	hover = new sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png");
 	menuItem quit = { *normal, *hover};
 	menuItems.push_back(quit);
 
