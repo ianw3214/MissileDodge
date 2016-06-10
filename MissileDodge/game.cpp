@@ -12,6 +12,11 @@ game::game(SDL_Window* iWindow, SDL_Surface* iSurface) {
 
 }
 
+// getter function for flag
+int game::getFlag() {
+	return this->flag;
+}
+
 // function that runs the game
 void game::startGame() {
 
@@ -147,6 +152,9 @@ void game::init() {
 	// add a hero to the game
 	hero = new player(200, constants::GROUND_LEVEL, "assets/HERO.png");
 
+	// default flag to quit
+	this->flag = -1;
+
 }
 
 // function to handle sprite logic and update graphics each frame
@@ -233,7 +241,7 @@ void game::renderSprites() {
 			break;
 		}
 		// set the position of the number
-		temp.setPos(450 + i * 50, 20);
+		temp.setPos(450 + i * 40, 20);
 		// call the render function for the sprite
 		temp.render(gSurface);
 	}
@@ -414,10 +422,16 @@ void game::select() {
 		case 0:
 			// play a new game
 			LOG("PLAY NEW GAME");
+			// set the flag to play again
+			flag = 0;
+			// quit the game loop
+			quit = true;
 			break;
 		case 1:
 			// quit the game
 			quit = true;
+			// set the flag to quit 
+			flag = -1;
 			break;
 		}
 

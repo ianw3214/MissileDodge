@@ -40,9 +40,9 @@ Game created in C++ with SDL
   * GUI
   * Sprite Animation
   * High Score
-  * Game Over (In Progress)
+  * ~~Game Over~~
   * ~~Menu~~
-  * Game State System
+  * Game State System (In Progress)
   * ~~Pause Menu~~
   * Options
     * Music/Sound Volume
@@ -61,7 +61,13 @@ Game created in C++ with SDL
   * Logo
   * Icon
   * Font
+    * ~~Numbers~~
+    * Text
   * Animations
+    * Hero
+    * Missiles
+    * Explosions
+    * Tweens
 2. Music/Sound
   * Background music
   * Sound effects

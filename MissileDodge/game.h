@@ -23,6 +23,8 @@ public:
 	void startGame();
 	// game loop function
 	void gameLoop(double);
+	// function to get the resultant flag of the game
+	int getFlag();
 
 private:
 
@@ -65,5 +67,8 @@ private:
 	// game sprite storage
 	std::vector<sprite*> sprites;
 	player * hero;
+
+	// variable to store the flag to return to determine the state of game
+	int flag;
 
 };

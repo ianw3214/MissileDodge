@@ -24,6 +24,9 @@ void close(SDL_Window*);
 // entry point
 int main(int argc, char* argv[]) {
 
+	// integer to hold the state of the game
+	int gameState = 0;
+	
 	// intialize randomization seed
 	srand(time(nullptr));
 
@@ -45,6 +48,17 @@ int main(int argc, char* argv[]) {
 		// start a new game
 		game * battle = new game(window, screenSurface);
 		battle->startGame();
+
+		// see what the player wants to do 
+		while (battle->getFlag() != -1) {
+			switch (battle->getFlag()) {
+			case 0:
+				// start a new game if the flag is 0
+				battle = new game(window, screenSurface);
+				battle->startGame();
+				break;
+			}
+		}
 
 	}
 
