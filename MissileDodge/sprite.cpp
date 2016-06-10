@@ -24,7 +24,7 @@ int sprite::getX() { return this->rect.x; }
 int sprite::getY() { return this->rect.y; }
 types sprite::getType() { return this->type; }
 SDL_Rect sprite::getRect() { return this->rect; }
-
+void sprite::setPos(int x, int y) { this->rect.x = x, this->rect.y = y; }
 
 // function that is called each frame by the game
 void sprite::update(SDL_Surface* gSurface, double delta) {

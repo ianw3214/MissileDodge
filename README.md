@@ -19,7 +19,7 @@ Game created in C++ with SDL
   * ~~Collision~~
   * ~~Missile Removal~~
   * ~~Points~~
-  * Show Points
+  * ~~Show Points~~
   * ~~Health~~
   * ~~Health Sprite Update~~
   * ~~Jump~~

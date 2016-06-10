@@ -19,6 +19,7 @@ public:
 	int getY();
 	types getType();
 	SDL_Rect getRect();
+	void setPos(int, int);
 
 	// sprite class functions
 	void update(SDL_Surface*, double);

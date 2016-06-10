@@ -2,6 +2,9 @@
 
 #define DEBUG 1
 
+#include <vector>
+#include "sprite.h"
+
 #if DEBUG
 #define LOG(x) std::cout << x << std::endl;
 #else

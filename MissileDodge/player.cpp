@@ -117,6 +117,12 @@ bool player::takeDamage(int dmg) {
 
 }
 
+// function to clear the key inputs of player
+void player::setKeysNone() {
+	this->leftDown = false;
+	this->rightDown = false;
+}
+
 // function to initialize values for the missile
 void player::init(int x, int y) {
 

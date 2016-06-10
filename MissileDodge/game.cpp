@@ -78,6 +78,8 @@ void game::gameLoop(double delta) {
 		else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
 			// enter the pause menu
 			pause = true;
+			// clear the players input keys
+			hero->setKeysNone();
 		}
 		else {
 			// call the event handler for each sprite
@@ -121,12 +123,26 @@ void game::init() {
 	menuItems.push_back(quit);
 
 	// initialize countdown number text
-	sprite * num = new sprite(300, 300, "assets/TEXT/1.png");
-	countDownNums.push_back(*num);
-	num = new sprite(300, 300, "assets/TEXT/2.png");
-	countDownNums.push_back(*num);
-	num = new sprite(300, 300, "assets/TEXT/3.png");
-	countDownNums.push_back(*num);
+	sprite * num = new sprite("assets/TEXT/0.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/1.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/2.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/3.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/4.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/5.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/6.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/7.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/8.png");
+	numSprites.push_back(*num);
+	num = new sprite("assets/TEXT/9.png");
+	numSprites.push_back(*num);
 
 	// add a hero to the game
 	hero = new player(200, constants::GROUND_LEVEL, "assets/HERO.png");
@@ -155,7 +171,7 @@ void game::updateSprites(double delta) {
 			}
 		}
 	}
-
+	
 	// update the hero
 	hero->update(gSurface, delta);
 
@@ -179,6 +195,48 @@ void game::renderSprites() {
 		heart.render(gSurface);
 	}
 
+	// render the points with numbers onto the screen
+	std::string scoreString = std::to_string(score);
+	// loop through numbers and print them
+	for (int i = 0; i < scoreString.size(); i++) {
+		sprite temp("assets/TEXT/0.png");
+		switch (scoreString[i]) {
+		case '0':
+			temp = numSprites.at(0);
+			break;
+		case '1':
+			temp = numSprites.at(1);
+			break;
+		case '2':
+			temp = numSprites.at(2);
+			break;
+		case '3':
+			temp = numSprites.at(3);
+			break;
+		case '4':
+			temp = numSprites.at(4);
+			break;
+		case '5':
+			temp = numSprites.at(5);
+			break;
+		case '6':
+			temp = numSprites.at(6);
+			break;
+		case '7':
+			temp = numSprites.at(7);
+			break;
+		case '8':
+			temp = numSprites.at(8);
+			break;
+		case '9':
+			temp = numSprites.at(9);
+			break;
+		}
+		// set the position of the number
+		temp.setPos(450 + i * 50, 20);
+		// call the render function for the sprite
+		temp.render(gSurface);
+	}
 	// render the hero
 	hero->render(gSurface);
 
@@ -273,19 +331,23 @@ void game::handleCollision() {
 void game::countDown() {
 
 	// loop through the countdown numbers
-	for (unsigned int i = 0; i < countDownNums.size(); i++) {
+	for (int i = 3; i > 0; i--) {
 
 		// render sprites under the numbers
 		renderSprites();
 
+		// create a new number sprite from the vector
+		sprite temp = numSprites.at(i);
+		temp.setPos(300, 300);	// set a new position for the number
+
 		// call the render function of the number
-		countDownNums.at(countDownNums.size()-i-1).render(gSurface);
+		temp.render(gSurface);
 
 		// update the window surface
 		SDL_UpdateWindowSurface(gWindow);
 
 		// set a one second delay until the next number
-		SDL_Delay(999);
+		SDL_Delay(990);
 	}
 
 	return;
@@ -368,8 +430,13 @@ void game::select() {
 	// see what item is currently selected
 	switch (selected) {
 	case 0:
+		// enter a countdown
+		countDown();
 		// resume the game and unpause
-		this->pause = false;
+		this->pause = false;	
+		// reset current time and last time
+		cTime = SDL_GetTicks();
+		lTime = cTime;
 		break;
 	case 1:
 		// quit the game and dont go into battle
