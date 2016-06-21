@@ -4,6 +4,7 @@
 #include "gameVars.h"
 #include <string>
 #include <SDL.h>
+#include <ctime>
 #include <SDL_image.h>
 
 class missile : public sprite {

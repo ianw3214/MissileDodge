@@ -37,7 +37,7 @@ If any errors occur, please open an issue on the repository.
 2. Game improvements
   * ~~Game Class~~
   * ~~Battle Intro/Countdown~~
-  * Randomize fall speeds
+  * ~~Randomize fall speeds~~
   * Difficulty increase
   * Power-ups
   * Different Missile Damage

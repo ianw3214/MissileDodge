@@ -44,7 +44,7 @@ namespace playerConstants {
 	constexpr int BASE_HEALTH = 3;
 	// constants for jumping
 	constexpr int BASE_JUMP_VELOCITY = 600;
-	constexpr int BASE_JUMP_TIME = 30;
+	constexpr int BASE_JUMP_TIME = 50;
 }
 // namespace for missile constants
 namespace missileConstants {

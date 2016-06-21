@@ -13,8 +13,9 @@ void missile::update(SDL_Surface* gSurface, double delta) {
 // function to initialize values for the missile
 void missile::init(int x, int y) {
 
-	// initialize speed
-	this->speed = missileConstants::BASE_SPEED;
+	// initialize speed with random modifier
+	this->speed = missileConstants::BASE_SPEED + std::rand() % 500;
+	// LOG(this->speed);		DEBUG CODE
 
 	// initialize missile rect
 	this->rect = { x, y, missileConstants::WIDTH, missileConstants::HEIGHT };

@@ -105,6 +105,9 @@ void game::gameLoop(double delta) {
 // initialization function
 void game::init() {
 
+	// initialize random seed
+	std::srand(std::time(0));
+
 	// initialize variables
 	this->score = 0;
 	this->quit = false;
@@ -195,12 +198,20 @@ void game::renderSprites() {
 		sprites[i]->render(gSurface);
 	}
 
-	// render a visual for the players health
-	for (int i = 0; i < hero->getHealth(); i++) {
-		// add a heart to the screen
-		sprite heart((20 + i * 45), 20, "assets/HEART.png");
-		// draw the heart to the screen
-		heart.render(gSurface);
+	// render the hearts according to player health
+	switch (hero->getHealth()) {
+	case 1:{
+		sprite temp(20, 20, "assets/HEALTH1.png");
+		temp.render(gSurface);
+	}	break;
+	case 2: {
+		sprite temp(20, 20, "assets/HEALTH2.png");
+		temp.render(gSurface);
+	}	break;
+	case 3: {
+		sprite temp(20, 20, "assets/HEALTH3.png");
+		temp.render(gSurface);
+	}	break;
 	}
 
 	// render the points with numbers onto the screen
@@ -322,8 +333,6 @@ void game::handleCollision() {
 				sprites.erase(sprites.begin() + i - 1);
 				// add to the score
 				score += constants::BASE_SCORE;
-				// TEMPORARY DEUBG CODE
-				std::cout << score << std::endl;
 				// break the current for loop so the missile doesn't get checked any further
 				break;
 			}
@@ -419,15 +428,13 @@ void game::select() {
 	// if the menu is the gameover menu
 	if (gameOver) {
 		switch (selected) {
-		case 0:
-			// play a new game
-			LOG("PLAY NEW GAME");
+		case 0:		// PLAY AGAIN
 			// set the flag to play again
 			flag = 0;
 			// quit the game loop
 			quit = true;
 			break;
-		case 1:
+		case 1:		// QUIT GAME
 			// quit the game
 			quit = true;
 			// set the flag to quit 

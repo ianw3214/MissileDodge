@@ -5,6 +5,7 @@
 #include <vector>
 #include <time.h>
 #include <typeinfo>
+#include <ctime>
 #include <SDL.h>
 #include <SDL_image.h>
 
