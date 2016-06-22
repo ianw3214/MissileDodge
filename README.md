@@ -39,8 +39,12 @@ If any errors occur, please open an issue on the repository.
   * ~~Battle Intro/Countdown~~
   * ~~Randomize fall speeds~~
   * Difficulty increase
+    * Missile speed
+    * Missile spawn rate
   * Power-ups
-  * Different Missile Damage
+    * ~~Health~~
+    * Speed
+    * Invincibility
   * Missile types
   * Implement Custom Fonts
   * Sprite sheet loading

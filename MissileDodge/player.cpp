@@ -108,12 +108,26 @@ bool player::takeDamage(int dmg) {
 
 	// test if the player is alive
 	if (health <= 0) {
-		// change the return boolean if not
 		alive = false;
 	}
 
-	// return the life state boolean
+	// true if alive, false if dead
 	return alive;
+
+}
+
+// function that restores player health
+void player::heal(int inp) {
+
+	this->health += inp;
+
+	// if the resultant health is higher than base health
+	if (this->health > playerConstants::BASE_HEALTH) {
+		// set the health to the max
+		this->health = playerConstants::BASE_HEALTH;
+	}
+
+	return;
 
 }
 

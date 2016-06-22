@@ -16,9 +16,13 @@ enum types {
 	SPRITE,
 	MISSILE,
 	PLAYER,
-	HEART
+	HEART,
+	BOON
 };
-
+// enumeration to seperate the types of boons
+enum boonTypes {
+	HEALTH
+};
 // namespace that contains all the constants that the game needs
 namespace constants {
 
@@ -52,4 +56,9 @@ namespace missileConstants {
 	constexpr int WIDTH = 40;
 	constexpr int HEIGHT = 80;
 	constexpr int BASE_SPEED = 500;
+}
+// namespace for boon constants
+namespace boonConstants {
+	constexpr int WIDTH = 40;
+	constexpr int HEIGHT = 40;
 }

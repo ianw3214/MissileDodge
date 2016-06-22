@@ -24,6 +24,7 @@ public:
 	void eventHandler(SDL_Event);
 	void update(SDL_Surface*, double);
 	bool takeDamage(int);
+	void heal(int);
 	void setKeysNone();
 
 private:

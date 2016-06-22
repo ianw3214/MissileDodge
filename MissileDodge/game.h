@@ -12,6 +12,7 @@
 #include "sprite.h"
 #include "player.h"
 #include "missile.h"
+#include "boon.h"
 #include "gameVars.h"
 
 class game {

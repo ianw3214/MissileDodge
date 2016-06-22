@@ -152,6 +152,11 @@ void game::init() {
 	num = new sprite("assets/TEXT/9.png");
 	numSprites.push_back(*num);
 
+	// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
+	boon * healthPack = new boon(400, constants::GROUND_LEVEL, "assets/HEALTHPACK.png");
+	sprites.push_back(healthPack);
+	// -------------------------------------------------------------------------------------------------------------------------
+
 	// add a hero to the game
 	hero = new player(200, constants::GROUND_LEVEL, "assets/HERO.png");
 
@@ -217,7 +222,7 @@ void game::renderSprites() {
 	// render the points with numbers onto the screen
 	std::string scoreString = std::to_string(score);
 	// loop through numbers and print them
-	for (int i = 0; i < scoreString.size(); i++) {
+	for (unsigned int i = 0; i < scoreString.size(); i++) {
 		sprite temp("assets/TEXT/0.png");
 		switch (scoreString[i]) {
 		case '0':
@@ -338,6 +343,15 @@ void game::handleCollision() {
 			}
 		}
 		
+		// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
+		if (sprites[i - 1]->getType() == BOON) {
+			if (SDL_HasIntersection(&(hero->getRect()), &(sprites.at(i - 1)->getRect()))) {
+				hero->heal(2);
+				sprites.erase(sprites.begin() + i - 1);
+			}
+		}
+		// -------------------------------------------------------------------------------------------------------------------------
+
 	}
 
 	return;
@@ -473,7 +487,7 @@ void game::select() {
 void game::menuRender() {
 
 	// loop through all the menu items
-	for (int i = 0; i < menuItems.size(); i++) {
+	for (unsigned int i = 0; i < menuItems.size(); i++) {
 		// if the current loop is the selected item
 		if (selected == i) {
 			// render the selected sprite
