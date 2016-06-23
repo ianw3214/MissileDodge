@@ -52,7 +52,7 @@ If any errors occur, please open an issue on the repository.
   * Power-ups
     * ~~Health~~
     * Speed
-    * Invincibility
+    * ~~Invincibility~~
   * Missile types
   * Implement Custom Fonts
   * Sprite sheet loading
