@@ -2,6 +2,7 @@
 
 // getter functions
 int player::getHealth() { return this->health; }
+bool player::getInvincibility() { return this->invincible; }
 
 //function that calls for every update
 void player::eventHandler(SDL_Event e) {
@@ -93,6 +94,15 @@ void player::update(SDL_Surface* gSurface, double delta) {
 		jumpCounter--;
 	}
 
+	// update invincible counter
+	if (invincibleCounter > 0) {
+		invincibleCounter--;
+		if (invincibleCounter == 0) {
+			LOG("NOT INVINCIBLE");
+			this->invincible = false;
+		}
+	}
+
 	return;
 
 }
@@ -103,17 +113,26 @@ bool player::takeDamage(int dmg) {
 	// boolean to return death state
 	bool alive = true;
 
-	// apply the damage to the health
-	this->health -= dmg;
+	// take damage if the player isn't invincible
+	if(!invincible){
+		// apply the damage to the health
+		this->health -= dmg;
 
-	// test if the player is alive
-	if (health <= 0) {
-		alive = false;
+		// test if the player is alive
+		if (health <= 0) {
+			alive = false;
+		}
 	}
 
 	// true if alive, false if dead
 	return alive;
 
+}
+
+// function to clear the key inputs of player
+void player::setKeysNone() {
+	this->leftDown = false;
+	this->rightDown = false;
 }
 
 // function that restores player health
@@ -131,19 +150,21 @@ void player::heal(int inp) {
 
 }
 
-// function to clear the key inputs of player
-void player::setKeysNone() {
-	this->leftDown = false;
-	this->rightDown = false;
+// function that turns the player invincible and sets the counter off
+void player::turnInvincible() {
+	this->invincible = true;
+	this->invincibleCounter = playerConstants::boonDuration;
+	return;
 }
 
 // function to initialize values for the missile
 void player::init(int x, int y) {
 
-	// initialize speed
+	// initialize player stats
 	this->speed = playerConstants::BASE_SPEED;
-	// initialize health
 	this->health = playerConstants::BASE_HEALTH;
+	this->invincible = false;
+	this->invincibleCounter = 0;
 	// initialize jump counter
 	jumpCounter = 0;
 	// initialize player rect

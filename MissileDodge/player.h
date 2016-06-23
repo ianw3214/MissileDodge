@@ -20,19 +20,23 @@ public:
 	};
 	// getter function
 	int getHealth();
+	bool getInvincibility();
 	// class functions
 	void eventHandler(SDL_Event);
 	void update(SDL_Surface*, double);
 	bool takeDamage(int);
-	void heal(int);
 	void setKeysNone();
+	void heal(int);
+	void turnInvincible();
 
 private:
-	// integers to keep track of player stats
+	// variables to keep track of player stats
 	int speed, health;
+	bool invincible;
 	// variables to handle game logic
 	bool leftDown, rightDown, spaceDown;
 	int jumpCounter, yMove;
+	int invincibleCounter;
 	// init function
 	void init(int, int);
 };

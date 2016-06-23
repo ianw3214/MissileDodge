@@ -12,6 +12,14 @@ If any errors occur, please open an issue on the repository.
 
 ***
 
+##Code Cleanup TODOs:
+  * Organize collision function to match function name
+  * improve game logic behind boons and boon duration
+  * Break down update function in game class to smaller parts
+  * Change player sprite when boon is activated
+
+***
+
 ##GAME CREATION TASK FLOW:
 
 ### SDL ENGINE

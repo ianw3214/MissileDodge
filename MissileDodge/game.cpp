@@ -153,8 +153,10 @@ void game::init() {
 	numSprites.push_back(*num);
 
 	// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
-	boon * healthPack = new boon(400, constants::GROUND_LEVEL, "assets/HEALTHPACK.png");
+	boon * healthPack = new boon(400, constants::GROUND_LEVEL, "assets/HEALTHPACK.png", HEALTH);
 	sprites.push_back(healthPack);
+	boon * invincible = new boon(500, constants::GROUND_LEVEL, "assets/INVINCIBLE.png", INVINCIBLE);
+	sprites.push_back(invincible);
 	// -------------------------------------------------------------------------------------------------------------------------
 
 	// add a hero to the game
@@ -345,13 +347,21 @@ void game::handleCollision() {
 		
 		// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
 		if (sprites[i - 1]->getType() == BOON) {
-			if (SDL_HasIntersection(&(hero->getRect()), &(sprites.at(i - 1)->getRect()))) {
-				hero->heal(2);
-				sprites.erase(sprites.begin() + i - 1);
+			boon * temp = dynamic_cast<boon*>(sprites[i-1]);
+			if (SDL_HasIntersection(&(hero->getRect()), &(temp->getRect()))) {
+				LOG("TEST");
+				if (temp->getBoonType() == HEALTH) {
+					hero->heal(2);
+					sprites.erase(sprites.begin() + i - 1);
+				}
+				if (temp->getBoonType() == INVINCIBLE) {
+					hero->turnInvincible();
+					sprites.erase(sprites.begin() + i - 1);
+				}
 			}
 		}
 		// -------------------------------------------------------------------------------------------------------------------------
-
+		
 	}
 
 	return;

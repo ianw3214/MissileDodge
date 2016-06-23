@@ -10,17 +10,18 @@ class boon : public sprite{
 
 public:
 	// inherit constructors
-	boon(std::string s) : sprite(s) {
+	boon(std::string s, boonTypes b) : sprite(s) {
 		// intialize missile
-		init(0, 0);
+		init(0, 0, b);
 	};
-	boon(int x, int y, std::string s) : sprite(x, y, s) {
+	boon(int x, int y, std::string s, boonTypes b) : sprite(x, y, s) {
 		// intialize missile
-		init(x, y);
+		init(x, y, b);
 	};
-	boonTypes boonType;
+	boonTypes getBoonType();
 private:
 
-	void init(int, int);
+	void init(int, int, boonTypes);
+	boonTypes boonType;
 
 };

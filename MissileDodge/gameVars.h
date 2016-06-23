@@ -21,7 +21,8 @@ enum types {
 };
 // enumeration to seperate the types of boons
 enum boonTypes {
-	HEALTH
+	HEALTH,
+	INVINCIBLE
 };
 // namespace that contains all the constants that the game needs
 namespace constants {
@@ -49,6 +50,8 @@ namespace playerConstants {
 	// constants for jumping
 	constexpr int BASE_JUMP_VELOCITY = 600;
 	constexpr int BASE_JUMP_TIME = 50;
+	// other constants
+	constexpr int boonDuration = 300;
 }
 // namespace for missile constants
 namespace missileConstants {
