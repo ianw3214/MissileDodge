@@ -6,6 +6,7 @@
 #include <time.h>
 #include <typeinfo>
 #include <ctime>
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -26,7 +27,7 @@ public:
 	// game loop function
 	void gameLoop(double);
 	// function to get the resultant flag of the game
-	int getFlag();
+	state getFlag();
 
 private:
 
@@ -71,6 +72,6 @@ private:
 	player * hero;
 
 	// variable to store the flag to return to determine the state of game
-	int flag;
+	state flag;
 
 };

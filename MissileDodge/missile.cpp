@@ -1,5 +1,8 @@
 #include "missile.h"
 
+// getter function
+int missile::getSpeed() { return this->speed; }
+
 // function that updates the missile every frame
 void missile::update(SDL_Surface* gSurface, double delta) {
 	

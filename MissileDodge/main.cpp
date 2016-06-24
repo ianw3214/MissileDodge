@@ -43,14 +43,14 @@ int main(int argc, char* argv[]) {
 	menu * mainMenu = new menu(window, screenSurface);
 
 	// start a game if the user wants to play
-	if (mainMenu->getFlag()) {
+	if (mainMenu->getFlag() == GAME) {
 
 		// start a new game
 		game * battle = new game(window, screenSurface);
 		battle->startGame();
 
 		// see what the player wants to do 
-		while (battle->getFlag() != -1) {
+		while (battle->getFlag() != QUIT) {
 			switch (battle->getFlag()) {
 			case 0:
 				// start a new game if the flag is 0

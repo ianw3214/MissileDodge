@@ -27,8 +27,8 @@ menu::menu(SDL_Window* iWindow, SDL_Surface* iSurface) {
 }
 
 // getter function
-bool menu::getFlag() {
-	return this->play;
+state menu::getFlag() {
+	return this->menuState;
 }
 
 // intitialize menu elements
@@ -47,8 +47,8 @@ void menu::init() {
 
 	// initialize menu variables
 	this->selected = 0;
+	this->menuState = GAME;
 	this->quit = false;
-	this->play = false;
 
 }
 
@@ -60,7 +60,7 @@ void menu::update() {
 		// if the user quits
 		if (e.type == SDL_QUIT) {
 			// end the game
-			this->quit = true;
+			menuState = QUIT;
 		}
 		// if the user presses a key
 		if (e.type == SDL_KEYDOWN) {
@@ -121,12 +121,12 @@ void menu::select() {
 	switch (selected) {
 	case 0:
 		// start game by quitting and setting play flag to true
-		this->play = true;
+		menuState = GAME;
 		quit = true;
 		break;
 	case 1:
 		// quit the game and dont go into battle
-		this->play = false;
+		menuState = QUIT;
 		quit = true;
 		break;
 	}

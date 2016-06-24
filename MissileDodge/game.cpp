@@ -13,7 +13,7 @@ game::game(SDL_Window* iWindow, SDL_Surface* iSurface) {
 }
 
 // getter function for flag
-int game::getFlag() {
+state game::getFlag() {
 	return this->flag;
 }
 
@@ -153,17 +153,17 @@ void game::init() {
 	numSprites.push_back(*num);
 
 	// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
-	boon * healthPack = new boon(400, constants::GROUND_LEVEL, "assets/HEALTHPACK.png", HEALTH);
+	boon * healthPack = new boon(400, constants::GROUND_LEVEL-boonConstants::HEIGHT, "assets/HEALTHPACK.png", HEALTH);
 	sprites.push_back(healthPack);
-	boon * invincible = new boon(500, constants::GROUND_LEVEL, "assets/INVINCIBLE.png", INVINCIBLE);
+	boon * invincible = new boon(500, constants::GROUND_LEVEL - boonConstants::HEIGHT, "assets/INVINCIBLE.png", INVINCIBLE);
 	sprites.push_back(invincible);
 	// -------------------------------------------------------------------------------------------------------------------------
 
 	// add a hero to the game
-	hero = new player(200, constants::GROUND_LEVEL, "assets/HERO.png");
+	hero = new player(200, (constants::GROUND_LEVEL-playerConstants::HEIGHT), "assets/HERO.png");
 
 	// default flag to quit
-	this->flag = -1;
+	this->flag = QUIT;
 
 }
 
@@ -171,21 +171,30 @@ void game::init() {
 void game::updateSprites(double delta) {
 
 	// loop through the sprites vector and update each one
-	for (unsigned int i = 0; i < sprites.size(); i++) {
+	for (unsigned int i = sprites.size(); i > 0; i--) {
 		// draw the sprite to the screen
-		if (sprites[i] != nullptr) {	// make sure the pointer isn't null
+		if (sprites[i-1] != nullptr) {	// make sure the pointer isn't null
 			// call different update functions for each sprite
-			switch (sprites[i]->getType()) {
-			case SPRITE:
+			switch (sprites[i-1]->getType()) {
+			case SPRITE:{
 				// default update function for normal sprite
-				sprites[i]->update(gSurface, delta);
-				break;
-			case MISSILE:
+				sprites[i-1]->update(gSurface, delta);
+			} break;
+			case MISSILE:{
 				// dynamic cast from sprite to missile class
-				missile * temp = dynamic_cast<missile*>(sprites[i]);
-				// call the missile update function
-				temp->update(gSurface, delta);
-				break;
+				missile * temp = dynamic_cast<missile*>(sprites[i-1]);
+
+				// remove the missile if it hits the ground
+				if (temp->getY() > (constants::GROUND_LEVEL-missileConstants::HEIGHT)) {
+					sprites.erase(sprites.begin() + i - 1);
+					// add to the score
+					score += constants::BASE_SCORE;
+				} else {
+					// call the missile update function if the missile hasn't hit the ground
+					temp->update(gSurface, delta);
+				}
+
+			} break;
 			}
 		}
 	}
@@ -302,20 +311,20 @@ void game::spawnMissile() {
 // function that handles collisions between the hero and missiles
 void game::handleCollision() {
 
-	// check for collisions between missiles and player
+	// loop through all the sprites in the game
 	for (unsigned int i = sprites.size(); i > 0; i--) {
 		
-		// check if the sprite is a missile
-		if (sprites[i-1]->getType() == MISSILE) {
+		// check if the hero is colliding with the current sprite
+		if (SDL_HasIntersection(&(hero->getRect()), &(sprites.at(i - 1)->getRect()))) {
 
-			// if the hero is colliding with a missile
-			if (SDL_HasIntersection(&(hero->getRect()), &(sprites.at(i - 1)->getRect()))) {
-				
+			// go through all the different types of collisions
+			switch (sprites[i - 1]->getType()) {
+			case MISSILE: {
 				// remove the pointer from the vector
 				sprites.erase(sprites.begin() + i - 1);
 				// apply damage to the player
 				if (hero->takeDamage(1)) {	// the player is alive
-					// TEMPORARY DEBUG CODE
+											// TEMPORARY DEBUG CODE
 					std::cout << "HEALTH" << hero->getHealth() << std::endl;
 				}
 				// the player is dead
@@ -330,37 +339,25 @@ void game::handleCollision() {
 					// pause the game
 					pause = true;
 				}
-				// break the current for loop so the missile doesn't get checked any further
-				break;
-				
-			}
-			// if the missile hits the ground
-			if (sprites.at(i - 1)->getY() > 450) {
-				// remove the missile pointer from the vector
-				sprites.erase(sprites.begin() + i - 1);
-				// add to the score
-				score += constants::BASE_SCORE;
-				// break the current for loop so the missile doesn't get checked any further
-				break;
-			}
-		}
-		
-		// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
-		if (sprites[i - 1]->getType() == BOON) {
-			boon * temp = dynamic_cast<boon*>(sprites[i-1]);
-			if (SDL_HasIntersection(&(hero->getRect()), &(temp->getRect()))) {
-				LOG("TEST");
-				if (temp->getBoonType() == HEALTH) {
-					hero->heal(2);
-					sprites.erase(sprites.begin() + i - 1);
+
+			} break;
+			case BOON: {
+				// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
+				if (sprites[i - 1]->getType() == BOON) {
+					boon * temp = dynamic_cast<boon*>(sprites[i - 1]);
+					if (temp->getBoonType() == HEALTH) {
+						hero->heal(2);
+						sprites.erase(sprites.begin() + i - 1);
+					}
+					if (temp->getBoonType() == INVINCIBLE) {
+						hero->turnInvincible();
+						sprites.erase(sprites.begin() + i - 1);
+					}
 				}
-				if (temp->getBoonType() == INVINCIBLE) {
-					hero->turnInvincible();
-					sprites.erase(sprites.begin() + i - 1);
-				}
+				// -------------------------------------------------------------------------------------------------------------------------
+			} break;
 			}
-		}
-		// -------------------------------------------------------------------------------------------------------------------------
+		}		
 		
 	}
 
@@ -377,9 +374,11 @@ void game::countDown() {
 		// render sprites under the numbers
 		renderSprites();
 
-		// create a new number sprite from the vector
+		// create a new number sprite from the vector 
 		sprite temp = numSprites.at(i);
-		temp.setPos(300, 300);	// set a new position for the number
+		// set the position of the number to be the middle of the screen
+		temp.setPos((constants::SCREEN_WIDTH/2-constants::FONT_WIDTH/2), 
+					(constants::SCREEN_HEIGHT/2-constants::FONT_HEIGHT/2));
 
 		// call the render function of the number
 		temp.render(gSurface);
@@ -453,16 +452,14 @@ void game::select() {
 	if (gameOver) {
 		switch (selected) {
 		case 0:		// PLAY AGAIN
-			// set the flag to play again
-			flag = 0;
+			flag = GAME;
 			// quit the game loop
 			quit = true;
 			break;
 		case 1:		// QUIT GAME
 			// quit the game
 			quit = true;
-			// set the flag to quit 
-			flag = -1;
+			flag = QUIT;
 			break;
 		}
 

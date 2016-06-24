@@ -82,9 +82,9 @@ void player::update(SDL_Surface* gSurface, double delta) {
 	// update the y coordinates of the player
 	this->rect.y -= yMove*delta;
 	// make sure it doesn't go beneath the ground
-	if (this->rect.y > constants::GROUND_LEVEL) {
+	if (this->rect.y > (constants::GROUND_LEVEL-playerConstants::HEIGHT)) {
 		// set the y to the ground level
-		this->rect.y = constants::GROUND_LEVEL;
+		this->rect.y = constants::GROUND_LEVEL - playerConstants::HEIGHT;
 		// set ymove to 0
 	}
 	// apply gravity
@@ -153,7 +153,7 @@ void player::heal(int inp) {
 // function that turns the player invincible and sets the counter off
 void player::turnInvincible() {
 	this->invincible = true;
-	this->invincibleCounter = playerConstants::boonDuration;
+	this->invincibleCounter = boonConstants::DURATION;
 	return;
 }
 

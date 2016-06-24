@@ -14,7 +14,7 @@ public:
 	// constructor
 	menu(SDL_Window*, SDL_Surface*);
 	// getter function
-	bool getFlag();
+	state getFlag();
 
 private:
 
@@ -42,8 +42,9 @@ private:
 	int selected;
 	SDL_Event e;
 
-	// menu flags
+	// used to determine what the player wants to do next
+	state menuState;
+	// boolean to determine when to quit the menu
 	bool quit;
-	bool play;
 
 };

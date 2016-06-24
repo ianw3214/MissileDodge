@@ -13,10 +13,11 @@ If any errors occur, please open an issue on the repository.
 ***
 
 ##Code Cleanup TODOs:
-  * Organize collision function to match function name
-  * improve game logic behind boons and boon duration
+  * ~~Organize collision function to match function name~~
+  * Improve game logic behind boons and boon duration
   * Break down update function in game class to smaller parts
   * Change player sprite when boon is activated
+  * Adjust main.cpp to better match the new game state system
 
 ***
 
@@ -62,7 +63,7 @@ If any errors occur, please open an issue on the repository.
   * High Score
   * ~~Game Over~~
   * ~~Menu~~
-  * Game State System (In Progress)
+  * ~~Game State System~~
   * ~~Pause Menu~~
   * Options
     * Music/Sound Volume

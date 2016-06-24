@@ -11,6 +11,12 @@
 #define LOG(x)
 #endif
 
+// enumeration for game state
+enum state {
+	MENU,
+	GAME,
+	QUIT
+};
 // enumeration to store sprite type
 enum types {
 	SPRITE,
@@ -32,7 +38,10 @@ namespace constants {
 	constexpr int SCREEN_HEIGHT = 600;
 
 	constexpr int GRAVITY = 1200;
-	constexpr int GROUND_LEVEL = 400;
+	constexpr int GROUND_LEVEL = 450;
+
+	constexpr int FONT_HEIGHT = 60;
+	constexpr int FONT_WIDTH = 40;
 
 	// base score unit
 	constexpr int BASE_SCORE = 10;
@@ -50,18 +59,20 @@ namespace playerConstants {
 	// constants for jumping
 	constexpr int BASE_JUMP_VELOCITY = 600;
 	constexpr int BASE_JUMP_TIME = 50;
-	// other constants
-	constexpr int boonDuration = 300;
 }
 // namespace for missile constants
 namespace missileConstants {
 	// size of missile
 	constexpr int WIDTH = 40;
 	constexpr int HEIGHT = 80;
+	// speed of missile that calculations are based off of
 	constexpr int BASE_SPEED = 500;
 }
 // namespace for boon constants
 namespace boonConstants {
+	// size of boon sprite
 	constexpr int WIDTH = 40;
 	constexpr int HEIGHT = 40;
+
+	constexpr int DURATION = 300;
 }
