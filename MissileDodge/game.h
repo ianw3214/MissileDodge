@@ -52,6 +52,8 @@ private:
 	int selected;				// integer to hold current menu selection
 
 	// game variables
+	int difficultyCounter;
+	int diffucultyScale;
 	int score;		// int to keep track of points
 	bool pause, quit;		// flag to see if the game should be stopped or exited
 	SDL_Event e;	// SDL event handler

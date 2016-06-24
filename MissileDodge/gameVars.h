@@ -47,6 +47,8 @@ namespace constants {
 	constexpr int BASE_SCORE = 10;
 	// number to put in counter for missile spawning
 	constexpr int BASE_SPAWN_TIME = 50;
+	// number to put in counter for difficulty scaling
+	constexpr int BASE_DIFFICULTY_TIME = 500;
 
 }
 // namespace for player constants

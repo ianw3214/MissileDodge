@@ -98,6 +98,16 @@ void game::gameLoop(double delta) {
 	// update game sprites
 	updateSprites(delta);
 
+	// update difficulty
+	if (difficultyCounter > 0) {
+		difficultyCounter--;
+	}
+	else {
+		LOG(diffucultyScale);
+		difficultyCounter = constants::BASE_DIFFICULTY_TIME;
+		diffucultyScale++;
+	}
+
 	return;
 
 }
@@ -114,6 +124,8 @@ void game::init() {
 	this->pause = false;
 	this->missileSpawnCounter = constants::BASE_SPAWN_TIME;
 	this->gameOver = false;
+	this->diffucultyScale = 1;
+	this->difficultyCounter = constants::BASE_DIFFICULTY_TIME;
 
 	// add a background and push it to the sprite vector
 	sprite * background = new sprite("assets/BG.png");
@@ -295,7 +307,7 @@ void game::spawnMissile() {
 		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png");
 
 		// reset the spawn counter
-		missileSpawnCounter = constants::BASE_SPAWN_TIME;
+		missileSpawnCounter = constants::BASE_SPAWN_TIME/diffucultyScale;
 
 		// add the missile to the vector
 		sprites.push_back(temp);
@@ -409,33 +421,32 @@ void game::menuUpdate() {
 			switch (e.key.keysym.sym) {
 				// if the user pressese a down button
 			case SDLK_s:
-			case SDLK_DOWN:
+			case SDLK_DOWN: {
 				// if the current selected item is less than the total amount of items
 				if (selected < (menuItems.size() - 1)) {
 					// add one to selected
 					selected++;
 				}
-				break;
+			}break;
 				// if the user presses an up button
 			case SDLK_w:
-			case SDLK_UP:
+			case SDLK_UP: {
 				// if the current selected item is higher than 0
 				if (selected > 0) {
 					// minus one to selected
 					selected--;
 				}
-				break;
+			} break;
 			case SDLK_RETURN:
-			case SDLK_SPACE:
+			case SDLK_SPACE: {
 				// call the select function when the user pressed a select key
 				select();
-				break;
-			case SDLK_ESCAPE:
-				// return to the game if the user quits the menu
+			} break;
+			case SDLK_ESCAPE: {				// return to the game if the user quits the menu
 				pause = false;
 				// reset the selected menu item
 				selected = 0;
-				break;
+			} break;
 			}
 		}
 

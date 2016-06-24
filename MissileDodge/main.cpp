@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 		// see what the player wants to do 
 		while (battle->getFlag() != QUIT) {
 			switch (battle->getFlag()) {
-			case 0:
+			case GAME:
 				// start a new game if the flag is 0
 				battle = new game(window, screenSurface);
 				battle->startGame();

@@ -18,6 +18,7 @@ If any errors occur, please open an issue on the repository.
   * Break down update function in game class to smaller parts
   * Change player sprite when boon is activated
   * Adjust main.cpp to better match the new game state system
+  * Improve logic behind difficulty scaling
 
 ***
 
@@ -49,7 +50,7 @@ If any errors occur, please open an issue on the repository.
   * ~~Randomize fall speeds~~
   * Difficulty increase
     * Missile speed
-    * Missile spawn rate
+    * ~~Missile spawn rate~~
   * Power-ups
     * ~~Health~~
     * Speed
