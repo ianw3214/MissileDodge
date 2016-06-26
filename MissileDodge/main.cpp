@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 	int gameState = 0;
 	
 	// intialize randomization seed
-	srand(time(nullptr));
+	srand(static_cast<int>(time(nullptr)));
 
 	// SDL window to refer to
 	SDL_Window* window = nullptr;
@@ -78,7 +78,7 @@ bool init(SDL_Window** window, SDL_Surface** surface) {
 	bool success = false;
 
 	// Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {	// if SDL failed to initialize
+	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0) {	// if SDL failed to initialize
 		// print the error to the console
 		std::cout << "SDL could not initialize, SDL ERROR: " << SDL_GetError() << std::endl;
 		success = false;				// set the initialization flag to false

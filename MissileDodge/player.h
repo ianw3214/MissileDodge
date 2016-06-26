@@ -29,7 +29,7 @@ public:
 	bool takeDamage(int);
 	void setKeysNone();
 	void heal(int);
-	void turnInvincible();
+	void boonHandler(boonTypes);
 
 private:
 	// variables to keep track of player stats
@@ -42,4 +42,9 @@ private:
 	int invincibleCounter;
 	// init function
 	void init(int, int);
+
+	// timer functions for boon handling
+	static Uint32 boon_invincible(Uint32, void *);
+	static Uint32 boon_speed(Uint32, void *);
+
 };

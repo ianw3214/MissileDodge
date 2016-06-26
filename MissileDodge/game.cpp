@@ -27,6 +27,9 @@ void game::startGame() {
 	cTime = SDL_GetTicks();
 	lTime = cTime;
 
+	// start the boon spawning timer
+	SDL_TimerID boonSpawnTimer = SDL_AddTimer(1000, boonTimer, this);
+
 	// start the game loop
 	while (!quit) {	// keep looping as long as the player doesn't quit
 
@@ -58,6 +61,8 @@ void game::startGame() {
 		lTime = cTime;
 
 	}
+
+	SDL_RemoveTimer(boonSpawnTimer);
 
 	return;
 
@@ -118,9 +123,6 @@ void game::gameLoop(double delta) {
 // initialization function
 void game::init() {
 
-	// initialize random seed
-	std::srand(static_cast<unsigned int>(std::time(0)));
-
 	// initialize variables
 	this->score = 0;
 	this->quit = false;
@@ -169,13 +171,6 @@ void game::init() {
 	num = new sprite("assets/TEXT/9.png");
 	numSprites.push_back(*num);
 
-	// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
-	boon * healthPack = new boon(400, constants::GROUND_LEVEL-boonConstants::HEIGHT, "assets/HEALTHPACK.png", HEALTH);
-	sprites.push_back(healthPack);
-	boon * invincible = new boon(500, constants::GROUND_LEVEL - boonConstants::HEIGHT, "assets/INVINCIBLE.png", INVINCIBLE);
-	sprites.push_back(invincible);
-	// -------------------------------------------------------------------------------------------------------------------------
-
 	// add a hero to the game
 	hero = new player(200, (constants::GROUND_LEVEL-playerConstants::HEIGHT), "assets/HERO.png");
 
@@ -212,6 +207,23 @@ void game::updateSprites(double delta) {
 				}
 
 			} break;
+			case BOON: {
+				// dynamic cast from sprite to boon class
+				boon * temp = dynamic_cast<boon*>(sprites[i - 1]);
+
+				// remove the boon if it hits the ground
+				if (temp->getY() > (constants::GROUND_LEVEL - missileConstants::HEIGHT)) {
+					sprites.erase(sprites.begin() + i - 1);
+					// add to the score
+					score += constants::BASE_SCORE;
+				}
+				else {
+					// call the missile update function if the missile hasn't hit the ground
+					temp->update(delta);
+				}
+
+			} break;
+
 			}
 		}
 	}
@@ -359,19 +371,10 @@ void game::handleCollision() {
 
 			} break;
 			case BOON: {
-				// ---------------------------------------------------TESTING CODE ---------------------------------------------------------
-				if (sprites[i - 1]->getType() == BOON) {
-					boon * temp = dynamic_cast<boon*>(sprites[i - 1]);
-					if (temp->getBoonType() == HEALTH) {
-						hero->heal(2);
-						sprites.erase(sprites.begin() + i - 1);
-					}
-					if (temp->getBoonType() == INVINCIBLE) {
-						hero->turnInvincible();
-						sprites.erase(sprites.begin() + i - 1);
-					}
-				}
-				// -------------------------------------------------------------------------------------------------------------------------
+				// call the boon handling function from the hero class according to the boon consumed
+				boon * temp = dynamic_cast<boon*>(sprites[i - 1]);
+				hero->boonHandler(dynamic_cast<boon*>(sprites[i - 1])->getBoonType());
+				sprites.erase(sprites.begin() + i - 1);
 			} break;
 			}
 		}		
@@ -527,5 +530,48 @@ void game::menuRender() {
 	}
 
 	return;
+
+}
+
+// timer functions
+Uint32 game::boonTimer(Uint32 time, void * ptr) {
+
+	game * cGame = (game*)ptr;
+
+	// only spawn boons if the game is not paused
+	if (!cGame->pause) {
+		// have a 1 in 10 change to spawn boons every second
+		int randomKey = rand() % 10;
+		if (randomKey == 0) {
+			// randomly decide the type of boon to spawn
+			int key = rand() % 3;
+			// randomly decide the x coordinate
+			int x_offset = rand() % (constants::SCREEN_WIDTH - 100);
+			switch (key) {
+			case 0: {
+				// spawn a health pack 
+				boon * healthPack = new boon(50 + x_offset, 0, "assets/HEALTHPACK.png", HEALTH);
+				cGame->sprites.push_back(healthPack);
+			} break;
+			case 1: {
+				// spawn an invincibility boost
+				boon * invincible = new boon(50 + x_offset, 0, "assets/INVINCIBLE.png", INVINCIBLE);
+				cGame->sprites.push_back(invincible);
+			} break;
+			case 2: {
+				// spawn a speed boost
+				boon * speed = new boon(10 + x_offset, 0, "assets/SPEED.png", SPEED);
+				cGame->sprites.push_back(speed);
+			} break;
+			default: {
+				LOG("HI");
+			} break;
+
+			}
+
+		}
+	}
+
+	return time;
 
 }

@@ -94,6 +94,7 @@ void player::update(SDL_Surface* gSurface, double delta) {
 		jumpCounter--;
 	}
 
+	/*
 	// update invincible counter
 	if (invincibleCounter > 0) {
 		invincibleCounter--;
@@ -102,7 +103,7 @@ void player::update(SDL_Surface* gSurface, double delta) {
 			this->invincible = false;
 		}
 	}
-
+	*/
 	return;
 
 }
@@ -151,9 +152,30 @@ void player::heal(int inp) {
 }
 
 // function that turns the player invincible and sets the counter off
-void player::turnInvincible() {
-	this->invincible = true;
-	this->invincibleCounter = boonConstants::DURATION;
+void player::boonHandler(boonTypes type) {
+
+	switch (type) {
+	case HEALTH: {
+		// call the heal function with a default of 2 health
+		heal(boonConstants::BASE_HEAL);
+	} break;
+
+	case INVINCIBLE: {
+		// turn the hero invincible and set a timer to revert to normal
+		this->invincible = true;
+		LOG("INVINCIBLE");
+		SDL_TimerID temp = SDL_AddTimer( boonConstants::DURATION, boon_invincible, this);
+	} break;
+
+	case SPEED: {
+		// turn the hero invincible and set a timer to revert to normal
+		this->speed *= boonConstants::BASE_SPEED_MULTIPLIER;
+		LOG(speed);
+		SDL_TimerID temp = SDL_AddTimer(boonConstants::DURATION, boon_speed, this);
+	} break;
+
+	}
+
 	return;
 }
 
@@ -174,5 +196,25 @@ void player::init(int x, int y) {
 	type = PLAYER;
 
 	return;
+
+}
+
+Uint32 player::boon_invincible(Uint32 interval, void * ptr) {
+
+	player * temp = (player*)ptr;
+	temp->invincible = false;
+	LOG("NOT INVINCIBLE");
+
+	return 0;
+
+}
+
+Uint32 player::boon_speed(Uint32 interval, void * ptr) {
+
+	player * temp = (player*)ptr;
+	temp->speed = playerConstants::BASE_SPEED;
+	LOG(temp->speed);
+
+	return 0;
 
 }

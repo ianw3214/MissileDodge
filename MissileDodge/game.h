@@ -9,6 +9,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_thread.h>
 
 #include "sprite.h"
 #include "player.h"
@@ -77,5 +78,8 @@ private:
 
 	// variable to store the flag to return to determine the state of game
 	state flag;
+
+	// timer functions
+	static Uint32 boonTimer(Uint32, void *);
 
 };

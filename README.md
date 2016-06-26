@@ -14,11 +14,12 @@ If any errors occur, please open an issue on the repository.
 
 ##Code Cleanup TODOs:
   * ~~Organize collision function to match function name~~
-  * Improve game logic behind boons and boon duration
+  * ~~Improve game logic behind boons and boon duration~~
   * Break down update function in game class to smaller parts
   * Change player sprite when boon is activated
   * Adjust main.cpp to better match the new game state system
   * Improve logic behind difficulty scaling
+  * Change missile spawning rates to coordinate to time instead of frames
 
 ***
 
@@ -53,7 +54,7 @@ If any errors occur, please open an issue on the repository.
     * ~~Missile spawn rate~~
   * Power-ups
     * ~~Health~~
-    * Speed
+    * ~~Speed~~
     * ~~Invincibility~~
   * Missile types
   * Implement Custom Fonts

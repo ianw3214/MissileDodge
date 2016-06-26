@@ -39,7 +39,7 @@ private:
 	void select();
 
 	// menu variables
-	int selected;
+	unsigned int selected;
 	SDL_Event e;
 
 	// used to determine what the player wants to do next

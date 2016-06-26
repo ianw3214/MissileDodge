@@ -93,7 +93,7 @@ void menu::update() {
 	}
 
 	// update the sprites
-	for (int i = 0; i < menuItems.size(); i++) {
+	for (unsigned int i = 0; i < menuItems.size(); i++) {
 		// if the current loop is the selected item
 		if (selected == i) {
 			// render the selected sprite

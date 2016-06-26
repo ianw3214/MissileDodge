@@ -28,7 +28,8 @@ enum types {
 // enumeration to seperate the types of boons
 enum boonTypes {
 	HEALTH,
-	INVINCIBLE
+	INVINCIBLE,
+	SPEED
 };
 // namespace that contains all the constants that the game needs
 namespace constants {
@@ -45,7 +46,7 @@ namespace constants {
 
 	// base score unit
 	constexpr int BASE_SCORE = 10;
-	// number to put in counter for missile spawning
+	// number to put in counter for spawning objects
 	constexpr int BASE_SPAWN_TIME = 50;
 	// number to put in counter for difficulty scaling
 	constexpr int BASE_DIFFICULTY_TIME = 200;
@@ -76,5 +77,11 @@ namespace boonConstants {
 	constexpr int WIDTH = 40;
 	constexpr int HEIGHT = 40;
 
-	constexpr int DURATION = 300;
+	// boon duration in milliseconds
+	constexpr Uint32 DURATION = 3000;
+
+	// other constants
+	constexpr int BOON_SPEED = 200;
+	constexpr int BASE_HEAL = 2;
+	constexpr float BASE_SPEED_MULTIPLIER = 1.8f;
 }

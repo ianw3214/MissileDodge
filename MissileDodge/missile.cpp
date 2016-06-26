@@ -7,7 +7,7 @@ int missile::getSpeed() { return this->speed; }
 void missile::update(SDL_Surface* gSurface, double delta) {
 	
 	// move the missile down and apply the modifier
-	this->rect.y += speed * delta;
+	this->rect.y += static_cast<int>(speed * delta);
 
 	return;
 
@@ -18,7 +18,7 @@ void missile::init(int x, int y, float speedModifier) {
 
 	// initialize speed with random modifier
 	this->speed = static_cast<int>(missileConstants::BASE_SPEED * speedModifier + std::rand() % 300);
-
+	
 	// initialize missile rect
 	this->rect = { x, y, missileConstants::WIDTH, missileConstants::HEIGHT };
 	

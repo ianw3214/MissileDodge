@@ -21,6 +21,8 @@ public:
 		init(x, y, b);
 	};
 	boonTypes getBoonType();
+	void update(double);
+
 private:
 
 	void init(int, int, boonTypes);
