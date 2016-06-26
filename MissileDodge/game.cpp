@@ -39,8 +39,8 @@ void game::startGame() {
 			menuUpdate();
 		}
 		else {
-			// call the game loop function every time
-			gameLoop(((double)(cTime - lTime)) / 1000);
+			// pass the difference in time to the game loop function
+			gameLoop(static_cast<double>(cTime - lTime) / 1000);
 		}
 
 		// render the images
@@ -106,6 +106,9 @@ void game::gameLoop(double delta) {
 		LOG(diffucultyScale);
 		difficultyCounter = constants::BASE_DIFFICULTY_TIME;
 		diffucultyScale++;
+		// set the modifiers to match the difficulty level
+		spawnModifier += static_cast<float>(1.0 / (1.5 * diffucultyScale * diffucultyScale));
+		speedModifier += static_cast<float>(1.0 / (diffucultyScale * diffucultyScale));
 	}
 
 	return;
@@ -116,7 +119,7 @@ void game::gameLoop(double delta) {
 void game::init() {
 
 	// initialize random seed
-	std::srand(std::time(0));
+	std::srand(static_cast<unsigned int>(std::time(0)));
 
 	// initialize variables
 	this->score = 0;
@@ -126,6 +129,8 @@ void game::init() {
 	this->gameOver = false;
 	this->diffucultyScale = 1;
 	this->difficultyCounter = constants::BASE_DIFFICULTY_TIME;
+	this->spawnModifier = 1.0;
+	this->speedModifier = 1.0;
 
 	// add a background and push it to the sprite vector
 	sprite * background = new sprite("assets/BG.png");
@@ -304,11 +309,11 @@ void game::spawnMissile() {
 		x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;	// take margins into account
 
 		// add a missile to the game
-		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png");
+		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png", speedModifier);
+		LOG(speedModifier);
 
 		// reset the spawn counter
-		missileSpawnCounter = constants::BASE_SPAWN_TIME/diffucultyScale;
-
+		missileSpawnCounter = static_cast<int>(constants::BASE_SPAWN_TIME / spawnModifier);
 		// add the missile to the vector
 		sprites.push_back(temp);
 
@@ -335,9 +340,9 @@ void game::handleCollision() {
 				// remove the pointer from the vector
 				sprites.erase(sprites.begin() + i - 1);
 				// apply damage to the player
-				if (hero->takeDamage(1)) {	// the player is alive
-											// TEMPORARY DEBUG CODE
-					std::cout << "HEALTH" << hero->getHealth() << std::endl;
+				if (hero->takeDamage(1)) {
+					// if the player is still alive, only earn half the points from that missile 
+					score += 5;
 				}
 				// the player is dead
 				else {
@@ -443,7 +448,10 @@ void game::menuUpdate() {
 				select();
 			} break;
 			case SDLK_ESCAPE: {				// return to the game if the user quits the menu
-				pause = false;
+				// make sure that it isn't the game over menu to return to game
+				if (!gameOver) {
+					pause = false;
+				}
 				// reset the selected menu item
 				selected = 0;
 			} break;

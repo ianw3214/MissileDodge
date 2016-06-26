@@ -54,14 +54,14 @@ void player::update(SDL_Surface* gSurface, double delta) {
 
 	// add to the players x coordinates if keys are pressed
 	if (leftDown && !rightDown) {
-		this->rect.x -= speed * delta;
+		this->rect.x -= static_cast<int>(speed * delta);
 		// make sure to leave a margin from the side
 		if(rect.x < 10){
 			this->rect.x = 10;
 		}
 	}
 	if (rightDown && !leftDown) {
-		this->rect.x += speed * delta;
+		this->rect.x += static_cast<int>(speed * delta);
 		// leave a margin
 		if (rect.x > (constants::SCREEN_WIDTH - playerConstants::WIDTH - 10)) {
 			this->rect.x = constants::SCREEN_WIDTH - playerConstants::WIDTH - 10;
@@ -75,12 +75,12 @@ void player::update(SDL_Surface* gSurface, double delta) {
 			// set the ymove variable to the desired velocity
 			yMove = playerConstants::BASE_JUMP_VELOCITY;
 			// reset the jump counter
-			jumpCounter = playerConstants::BASE_JUMP_TIME;
+			jumpCounter = playerConstants::BASE_JUMP_COOLDOWN;
 		}
 	}
 
 	// update the y coordinates of the player
-	this->rect.y -= yMove*delta;
+	this->rect.y -= static_cast<int>(yMove * delta);
 	// make sure it doesn't go beneath the ground
 	if (this->rect.y > (constants::GROUND_LEVEL-playerConstants::HEIGHT)) {
 		// set the y to the ground level
@@ -88,7 +88,7 @@ void player::update(SDL_Surface* gSurface, double delta) {
 		// set ymove to 0
 	}
 	// apply gravity
-	yMove -= constants::GRAVITY*delta;
+	yMove -= static_cast<int>(constants::GRAVITY * delta);
 	// decrement the jump counter
 	if (jumpCounter>0) {
 		jumpCounter--;

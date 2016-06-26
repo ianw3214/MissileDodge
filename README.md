@@ -48,8 +48,8 @@ If any errors occur, please open an issue on the repository.
   * ~~Game Class~~
   * ~~Battle Intro/Countdown~~
   * ~~Randomize fall speeds~~
-  * Difficulty increase
-    * Missile speed
+  * ~~Difficulty increase~~
+    * ~~Missile speed~~
     * ~~Missile spawn rate~~
   * Power-ups
     * ~~Health~~

@@ -33,7 +33,8 @@ public:
 
 private:
 	// variables to keep track of player stats
-	int speed, health;
+	unsigned int speed;
+	int health;
 	bool invincible;
 	// variables to handle game logic
 	bool leftDown, rightDown, spaceDown;

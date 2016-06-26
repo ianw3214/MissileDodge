@@ -49,14 +49,16 @@ private:
 	void menuUpdate();			// update function for the pause menu
 	void select();				// function that triggers when enter or space is hit on pause menu
 	void menuRender();			// function that renders menu elements when paused
-	int selected;				// integer to hold current menu selection
+	unsigned int selected;		// integer to hold current menu selection
 
 	// game variables
 	int difficultyCounter;
 	int diffucultyScale;
-	int score;		// int to keep track of points
-	bool pause, quit;		// flag to see if the game should be stopped or exited
-	SDL_Event e;	// SDL event handler
+	float spawnModifier;
+	float speedModifier;
+	int score;		
+	bool pause, quit;			// flag to see if the game should be stopped or exited
+	SDL_Event e;				// SDL event handler
 	int missileSpawnCounter;	// integer to keep track of when to spawn missiles.
 	Uint32 cTime, lTime;		// integers to keep track of time difference
 	bool gameOver;				// boolean to keep track of whether the user has lost

@@ -13,13 +13,13 @@ class missile : public sprite {
 
 public:
 	// inherit constructors
-	missile(std::string s) : sprite(s) {
+	missile(std::string s, float t) : sprite(s) {
 		// intialize missile
-		init(0,0);
+		init(0, 0, t);
 	};
-	missile(int x, int y, std::string s) : sprite(x, y, s) {
+	missile(int x, int y, std::string s, float t) : sprite(x, y, s) {
 		// intialize missile
-		init(x,y);
+		init(x, y, t);
 	};
 	// getter function
 	int getSpeed();
@@ -29,6 +29,6 @@ public:
 private:
 
 	int speed;
-	void init(int, int);
+	void init(int, int, float);
 
 };
