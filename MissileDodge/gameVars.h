@@ -49,7 +49,7 @@ namespace constants {
 	// number to put in counter for spawning objects
 	constexpr int BASE_SPAWN_TIME = 50;
 	// number to put in counter for difficulty scaling
-	constexpr int BASE_DIFFICULTY_TIME = 200;
+	constexpr int BASE_DIFFICULTY_TIME = 2000;
 
 }
 // namespace for player constants

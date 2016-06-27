@@ -52,7 +52,7 @@ If any errors occur, please open an issue on the repository.
   * ~~Difficulty increase~~
     * ~~Missile speed~~
     * ~~Missile spawn rate~~
-  * Power-ups
+  * ~~Power-ups~~
     * ~~Health~~
     * ~~Speed~~
     * ~~Invincibility~~

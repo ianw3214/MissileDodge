@@ -29,6 +29,8 @@ void game::startGame() {
 
 	// start the boon spawning timer
 	SDL_TimerID boonSpawnTimer = SDL_AddTimer(1000, boonTimer, this);
+	// start the difficulty increase timer
+	SDL_TimerID difficultyIncreaseTimer = SDL_AddTimer(constants::BASE_DIFFICULTY_TIME, difficultyTimer, this);
 
 	// start the game loop
 	while (!quit) {	// keep looping as long as the player doesn't quit
@@ -62,7 +64,9 @@ void game::startGame() {
 
 	}
 
+	// remove the timer once the game finishes
 	SDL_RemoveTimer(boonSpawnTimer);
+	SDL_RemoveTimer(difficultyIncreaseTimer);
 
 	return;
 
@@ -103,19 +107,6 @@ void game::gameLoop(double delta) {
 	// update game sprites
 	updateSprites(delta);
 
-	// update difficulty
-	if (difficultyCounter > 0) {
-		difficultyCounter--;
-	}
-	else {
-		LOG(diffucultyScale);
-		difficultyCounter = constants::BASE_DIFFICULTY_TIME;
-		diffucultyScale++;
-		// set the modifiers to match the difficulty level
-		spawnModifier += static_cast<float>(1.0 / (1.5 * diffucultyScale * diffucultyScale));
-		speedModifier += static_cast<float>(1.0 / (diffucultyScale * diffucultyScale));
-	}
-
 	return;
 
 }
@@ -129,8 +120,7 @@ void game::init() {
 	this->pause = false;
 	this->missileSpawnCounter = constants::BASE_SPAWN_TIME;
 	this->gameOver = false;
-	this->diffucultyScale = 1;
-	this->difficultyCounter = constants::BASE_DIFFICULTY_TIME;
+	this->difficultyScale = 1;
 	this->spawnModifier = 1.0;
 	this->speedModifier = 1.0;
 
@@ -572,6 +562,28 @@ Uint32 game::boonTimer(Uint32 time, void * ptr) {
 		}
 	}
 
+	return time;
+
+}
+
+Uint32 game::difficultyTimer(Uint32 time, void * ptr) {
+
+	/*	increase the difficulty of the game by increasing the difficulty scale
+		changes the modifiers of missile speed and spawn rate to increase difficulty
+		TODO: Add boss fights at certain difficulty scales to make game more challenging
+		
+	*/
+		
+	// get the pointer for the game 
+	game * cGame = (game*)ptr;
+
+	cGame->difficultyScale++;
+
+	// set the modifiers to match the difficulty level
+	cGame->spawnModifier += static_cast<float>(1.0 / (1.5 * cGame->difficultyScale * cGame->difficultyScale));
+	cGame->speedModifier += static_cast<float>(1.0 / (cGame->difficultyScale * cGame->difficultyScale));
+
+	// set the difficulty to increase again at the same interval
 	return time;
 
 }

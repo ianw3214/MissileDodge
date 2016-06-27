@@ -53,8 +53,7 @@ private:
 	unsigned int selected;		// integer to hold current menu selection
 
 	// game variables
-	int difficultyCounter;
-	int diffucultyScale;
+	int difficultyScale;
 	float spawnModifier;
 	float speedModifier;
 	int score;		
@@ -81,5 +80,6 @@ private:
 
 	// timer functions
 	static Uint32 boonTimer(Uint32, void *);
+	static Uint32 difficultyTimer(Uint32, void *);
 
 };
