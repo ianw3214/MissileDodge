@@ -66,7 +66,7 @@ namespace playerConstants {
 // namespace for missile constants
 namespace missileConstants {
 	// size of missile
-	constexpr int WIDTH = 40;
+	constexpr int WIDTH = 24;
 	constexpr int HEIGHT = 80;
 	// speed of missile that calculations are based off of
 	constexpr int BASE_SPEED = 500;

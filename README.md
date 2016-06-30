@@ -18,8 +18,13 @@ If any errors occur, please open an issue on the repository.
   * Break down update function in game class to smaller parts
   * Change player sprite when boon is activated
   * Adjust main.cpp to better match the new game state system
-  * Improve logic behind difficulty scaling
-  * Change missile spawning rates to coordinate to time instead of frames
+  * ~~Improve logic behind difficulty scaling~~
+  * ~~Change missile spawning rates to coordinate to time instead of frames~~
+
+***
+
+##BUGS:
+  * Pause menu having multiple countdowns after selecting the resume option 
 
 ***
 
@@ -62,6 +67,10 @@ If any errors occur, please open an issue on the repository.
 3. Misc
   * GUI
   * Sprite Animation
+    * Hero Animation
+    * Missile Animation
+    * Boon Animation
+    * Background Animation
   * High Score
   * ~~Game Over~~
   * ~~Menu~~
@@ -76,9 +85,9 @@ If any errors occur, please open an issue on the repository.
 ### ASSETS
 1. Art
   * Sprite
-    * Hero
-    * Missiles
-    * Hearts (In Progress)
+    * ~~Hero~~
+    * ~~Missiles~~
+    * Health Bar (In Progress)
     * Background
   * Splash Art
   * Logo
