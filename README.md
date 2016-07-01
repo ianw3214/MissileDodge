@@ -61,7 +61,7 @@ If any errors occur, please open an issue on the repository.
     * ~~Health~~
     * ~~Speed~~
     * ~~Invincibility~~
-  * Missile types
+  * Missile types (In Progress)
   * Implement Custom Fonts
   * Sprite sheet loading
 3. Misc

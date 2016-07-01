@@ -31,6 +31,8 @@ void game::startGame() {
 	SDL_TimerID boonSpawnTimer = SDL_AddTimer(1000, boonTimer, this);
 	// start the difficulty increase timer
 	SDL_TimerID difficultyIncreaseTimer = SDL_AddTimer(constants::BASE_DIFFICULTY_TIME, difficultyTimer, this);
+	// start the missile spawning timer
+	SDL_TimerID missileSpawnTimer = SDL_AddTimer(constants::BASE_SPAWN_TIME, missileSpawner, this);
 
 	// start the game loop
 	while (!quit) {	// keep looping as long as the player doesn't quit
@@ -67,6 +69,7 @@ void game::startGame() {
 	// remove the timer once the game finishes
 	SDL_RemoveTimer(boonSpawnTimer);
 	SDL_RemoveTimer(difficultyIncreaseTimer);
+	SDL_RemoveTimer(missileSpawnTimer);
 
 	return;
 
@@ -77,9 +80,6 @@ void game::gameLoop(double delta) {
 
 	// clear the screen at the beginning of each loop
 	SDL_FillRect(gSurface, nullptr, SDL_MapRGB(gSurface->format, 255, 255, 255));
-
-	// missile spawning function
-	spawnMissile();
 
 	// handle events on queue
 	while (SDL_PollEvent(&e) != 0) {
@@ -118,7 +118,6 @@ void game::init() {
 	this->score = 0;
 	this->quit = false;
 	this->pause = false;
-	this->missileSpawnCounter = constants::BASE_SPAWN_TIME;
 	this->gameOver = false;
 	this->difficultyScale = 1;
 	this->spawnModifier = 1.0;
@@ -298,35 +297,6 @@ void game::renderSprites() {
 
 }
 
-// function to handle missile spawning
-void game::spawnMissile() {
-
-	// spawn a missile if the counter reaches 0
-	if (missileSpawnCounter == 0) {
-
-		// variable to calculate offest for missile spawning
-		int x_offset;
-
-		// randomize the offset to a random number between the screen sizes
-		x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;	// take margins into account
-
-		// add a missile to the game
-		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png", speedModifier);
-		LOG(speedModifier);
-
-		// reset the spawn counter
-		missileSpawnCounter = static_cast<int>(constants::BASE_SPAWN_TIME / spawnModifier);
-		// add the missile to the vector
-		sprites.push_back(temp);
-
-	}
-	// decrement the spawn counter
-	missileSpawnCounter--;
-
-	return;
-
-}
-
 // function that handles collisions between the hero and missiles
 void game::handleCollision() {
 
@@ -339,25 +309,53 @@ void game::handleCollision() {
 			// go through all the different types of collisions
 			switch (sprites[i - 1]->getType()) {
 			case MISSILE: {
+				missile * temp = dynamic_cast<missile*>(sprites[i - 1]);
+
+				switch (temp->getMissileType()) {
+
+				case GAS: {
+					// temporary instakill the player
+					// apply damage to the player
+					if (hero->takeDamage(3)) {
+						// if the player is still alive, only earn half the points from that missile 
+						score += 5;
+					}	// the player is dead
+					else {
+						// set the game over flag to be true
+						gameOver = true;
+						// reset the menu items
+						menuItems.clear();
+						// add the new ones for game over
+						menuItems.push_back({ sprite(300, 200, "assets/TEXT/PLAY_AGAIN.png"), sprite(300, 200, "assets/TEXT/PLAY_AGAIN_SELECTED.png") });
+						menuItems.push_back({ sprite(300, 350, "assets/TEXT/QUIT.png"), sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png") });
+						// pause the game
+						pause = true;
+					}
+				} break;
+				// have the default behave like a normal missile
+				case NORMAL: 
+				default: {
+					// apply damage to the player
+					if (hero->takeDamage(1)) {
+						// if the player is still alive, only earn half the points from that missile 
+						score += 5;
+					}	// the player is dead
+					else {
+						// set the game over flag to be true
+						gameOver = true;
+						// reset the menu items
+						menuItems.clear();
+						// add the new ones for game over
+						menuItems.push_back({ sprite(300, 200, "assets/TEXT/PLAY_AGAIN.png"), sprite(300, 200, "assets/TEXT/PLAY_AGAIN_SELECTED.png") });
+						menuItems.push_back({ sprite(300, 350, "assets/TEXT/QUIT.png"), sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png") });
+						// pause the game
+						pause = true;
+					}
+				} break;
+
+				}
 				// remove the pointer from the vector
 				sprites.erase(sprites.begin() + i - 1);
-				// apply damage to the player
-				if (hero->takeDamage(1)) {
-					// if the player is still alive, only earn half the points from that missile 
-					score += 5;
-				}
-				// the player is dead
-				else {
-					// set the game over flag to be true
-					gameOver = true;
-					// reset the menu items
-					menuItems.clear();
-					// add the new ones for game over
-					menuItems.push_back({ sprite(300, 200, "assets/TEXT/PLAY_AGAIN.png"), sprite(300, 200, "assets/TEXT/PLAY_AGAIN_SELECTED.png") });
-					menuItems.push_back({ sprite(300, 350, "assets/TEXT/QUIT.png"), sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png") });
-					// pause the game
-					pause = true;
-				}
 
 			} break;
 			case BOON: {
@@ -577,13 +575,52 @@ Uint32 game::difficultyTimer(Uint32 time, void * ptr) {
 	// get the pointer for the game 
 	game * cGame = (game*)ptr;
 
-	cGame->difficultyScale++;
+	// change the difficulty only if the game isn't paused
+	if (!cGame->pause) {
+		cGame->difficultyScale++;
 
-	// set the modifiers to match the difficulty level
-	cGame->spawnModifier += static_cast<float>(1.0 / (1.5 * cGame->difficultyScale * cGame->difficultyScale));
-	cGame->speedModifier += static_cast<float>(1.0 / (cGame->difficultyScale * cGame->difficultyScale));
+		// set the modifiers to match the difficulty level
+		cGame->spawnModifier += static_cast<float>(1.0 / (1.5 * cGame->difficultyScale * cGame->difficultyScale));
+		cGame->speedModifier += static_cast<float>(1.0 / (cGame->difficultyScale * cGame->difficultyScale));
+	}
 
 	// set the difficulty to increase again at the same interval
+	return time;
+
+}
+
+Uint32 game::missileSpawner(Uint32 time, void *ptr) {
+
+	// get the pointer for the game
+	game * cGame = (game*)ptr;
+
+	// only spawn missiles if the game isn't paused
+	if (!cGame->pause) {
+		// variable to calculate offest for missile spawning
+		int x_offset;
+
+		// randomize the offset to a random number between the screen sizes
+		x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;	// take margins into account
+
+		missile * temp = new missile(x_offset, -20, "assets/TEMP.png", cGame->speedModifier, NORMAL);
+
+		// add the missile to the vector
+		cGame->sprites.push_back(temp);
+
+		// use a random number key to decide if a gas missile should be spawned
+		int key = rand() % 2;
+
+		// 1 in 10 chance to spawn a gas missile
+		if (key == 0) {
+			// same code as above except a change in missile type
+			int x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;
+			missile * temp = new missile(x_offset, -20, "assets/TEMP.png", cGame->speedModifier, GAS);
+			cGame->sprites.push_back(temp);
+		}
+
+	}
+
+	// spawn another missile at the same interval
 	return time;
 
 }

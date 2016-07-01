@@ -59,7 +59,6 @@ private:
 	int score;		
 	bool pause, quit;			// flag to see if the game should be stopped or exited
 	SDL_Event e;				// SDL event handler
-	int missileSpawnCounter;	// integer to keep track of when to spawn missiles.
 	Uint32 cTime, lTime;		// integers to keep track of time difference
 	bool gameOver;				// boolean to keep track of whether the user has lost
 
@@ -67,7 +66,6 @@ private:
 	void init();			// initialization function
 	void updateSprites(double);	// sprite logic update function
 	void renderSprites();	// sprite render function
-	void spawnMissile();	// missile spawning logic
 	void handleCollision();	// collision detection function
 	void countDown();		// function to transition into gameplay
 
@@ -81,5 +79,6 @@ private:
 	// timer functions
 	static Uint32 boonTimer(Uint32, void *);
 	static Uint32 difficultyTimer(Uint32, void *);
+	static Uint32 missileSpawner(Uint32, void *);
 
 };

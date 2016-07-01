@@ -33,10 +33,10 @@ protected:
 	// type of sprite
 	types type;
 
-private:
-
 	// SDL surface to contain image of sprite
 	SDL_Surface * img;
+
+private:
 
 	// initialize function
 	void init(int, int, std::string);
