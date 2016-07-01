@@ -15,6 +15,7 @@
 #include "player.h"
 #include "missile.h"
 #include "boon.h"
+#include "gameOverMenu.h"
 #include "gameVars.h"
 
 class game {
@@ -53,6 +54,7 @@ private:
 	unsigned int selected;		// integer to hold current menu selection
 
 	// game variables
+	bool gameOver;
 	int difficultyScale;
 	float spawnModifier;
 	float speedModifier;
@@ -60,7 +62,6 @@ private:
 	bool pause, quit;			// flag to see if the game should be stopped or exited
 	SDL_Event e;				// SDL event handler
 	Uint32 cTime, lTime;		// integers to keep track of time difference
-	bool gameOver;				// boolean to keep track of whether the user has lost
 
 	// game functions
 	void init();			// initialization function

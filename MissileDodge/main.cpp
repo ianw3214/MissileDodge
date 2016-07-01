@@ -24,8 +24,8 @@ void close(SDL_Window*);
 // entry point
 int main(int argc, char* argv[]) {
 
-	// integer to hold the state of the game
-	int gameState = 0;
+	// initialize the game state to a menu
+	state gameState = MENU;
 	
 	// intialize randomization seed
 	srand(static_cast<int>(time(nullptr)));
@@ -39,31 +39,23 @@ int main(int argc, char* argv[]) {
 	// initialize the SDL window and screen surface
 	init(&window, &screenSurface);
 
-	// make a menu
-	menu * mainMenu = new menu(window, screenSurface);
-
-	// start a game if the user wants to play
-	if (mainMenu->getFlag() == GAME) {
-
-		// start a new game
-		game * battle = new game(window, screenSurface);
-		battle->startGame();
-
-		// see what the player wants to do 
-		while (battle->getFlag() != QUIT) {
-			switch (battle->getFlag()) {
-			case GAME:
-				// start a new game if the flag is 0
-				battle = new game(window, screenSurface);
-				battle->startGame();
-				break;
-			}
+	while (gameState != QUIT) {
+		switch (gameState) {
+		case GAME:{
+			// start a new game if the game goes into a game state
+			game * battle = new game(window, screenSurface);
+			battle->startGame();
+			gameState = battle->getFlag();
+		} break;
+		case MENU:{
+			// go to the menu if the game goes into a menu state
+			menu * mainMenu = new menu(window, screenSurface);
+			gameState = mainMenu->getFlag();
+		} break;
 		}
-
 	}
 
-
-	// call the SDL exit function
+	// exit all SDL subsystems
 	close(window);
 
 	return 0;

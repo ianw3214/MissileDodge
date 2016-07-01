@@ -1,7 +1,12 @@
-#include "menu.h"
+#include "gameOverMenu.h"
+
+/*	TODO:
+	- show high score in end screen
+	- show time player stayed alive for
+*/
 
 // constructor
-menu::menu(SDL_Window* iWindow, SDL_Surface* iSurface) {
+gameOverMenu::gameOverMenu(SDL_Window* iWindow, SDL_Surface* iSurface) {
 
 	// set the window and surface
 	this->gWindow = iWindow;
@@ -15,7 +20,7 @@ menu::menu(SDL_Window* iWindow, SDL_Surface* iSurface) {
 
 		// clear the screen at the beginning of each loop
 		SDL_FillRect(gSurface, nullptr, SDL_MapRGB(gSurface->format, 0, 0, 0));
-		
+
 		// call the update function
 		update();
 
@@ -27,22 +32,27 @@ menu::menu(SDL_Window* iWindow, SDL_Surface* iSurface) {
 }
 
 // getter function
-state menu::getFlag() {
+state gameOverMenu::getFlag() {
 	return this->menuState;
 }
 
 // intitialize menu elements
-void menu::init() {
+void gameOverMenu::init() {
 
 	// initialize sprites
 	sprite * normal = new sprite(10, 20, "assets/TEXT/START.png");
 	sprite * hover = new sprite(10, 20, "assets/TEXT/START_SELECTED.png");
-	menuItem start = { *normal, *hover};
+	menuItem start = { *normal, *hover };
 	menuItems.push_back(start);
 
-	normal = new sprite(10, 120, "assets/TEXT/QUIT.png");
-	hover = new sprite(10, 120, "assets/TEXT/QUIT_SELECTED.png");
-	menuItem quit = { *normal, *hover};
+	normal = new sprite(10, 120, "assets/TEXT/MENU.png");
+	hover = new sprite(10, 120, "assets/TEXT/MENU_SELECTED.png");
+	menuItem menu = {*normal, *hover};
+	menuItems.push_back(menu);
+
+	normal = new sprite(10, 220, "assets/TEXT/QUIT.png");
+	hover = new sprite(10, 220, "assets/TEXT/QUIT_SELECTED.png");
+	menuItem quit = { *normal, *hover };
 	menuItems.push_back(quit);
 
 	// initialize menu background
@@ -56,7 +66,7 @@ void menu::init() {
 }
 
 // update function
-void menu::update() {
+void gameOverMenu::update() {
 
 	// get the inputs from the user
 	while (SDL_PollEvent(&e) != 0) {
@@ -93,7 +103,7 @@ void menu::update() {
 				break;
 			}
 		}
-		
+
 	}
 
 	// render the background
@@ -118,10 +128,10 @@ void menu::update() {
 }
 
 // function called upon user pressing enter
-void menu::select() {
+void gameOverMenu::select() {
 
 	/*	- set flag depending on current selected
-		- exit the menu loop if play or quit
+	- exit the menu loop if play or quit
 	*/
 
 	// see what item is currently selected
@@ -132,12 +142,17 @@ void menu::select() {
 		quit = true;
 		break;
 	case 1:
+		// quit the game and return to the main menu
+		menuState = MENU;
+		quit = true;
+		break;
+	case 2:
 		// quit the game and dont go into battle
 		menuState = QUIT;
 		quit = true;
 		break;
 	}
-
+	LOG(selected);
 	return;
 
 }

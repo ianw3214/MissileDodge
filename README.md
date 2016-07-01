@@ -25,6 +25,7 @@ If any errors occur, please open an issue on the repository.
 
 ##BUGS:
   * Pause menu having multiple countdowns after selecting the resume option 
+  * Game randomly crashes ( suspected error with missiles and temp.png) 
 
 ***
 
@@ -61,7 +62,10 @@ If any errors occur, please open an issue on the repository.
     * ~~Health~~
     * ~~Speed~~
     * ~~Invincibility~~
-  * Missile types (In Progress)
+  * Missile types
+    * ~~Normal Missile~~
+    * ~~Gas Missile~~
+    * Fire Missile
   * Implement Custom Fonts
   * Sprite sheet loading
 3. Misc
@@ -76,6 +80,7 @@ If any errors occur, please open an issue on the repository.
   * ~~Menu~~
   * ~~Game State System~~
   * ~~Pause Menu~~
+  * ~~Death Menu~~
   * Options
     * Music/Sound Volume
     * Key Bindings

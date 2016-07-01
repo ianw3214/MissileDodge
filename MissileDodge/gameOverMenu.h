@@ -8,11 +8,11 @@
 #include "sprite.h"
 #include "gameVars.h"
 
-class menu {
+class gameOverMenu {
 
 public:
 	// constructor
-	menu(SDL_Window*, SDL_Surface*);
+	gameOverMenu(SDL_Window*, SDL_Surface*);
 	// getter function
 	state getFlag();
 

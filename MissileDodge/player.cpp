@@ -179,6 +179,16 @@ void player::boonHandler(boonTypes type) {
 	return;
 }
 
+// function that makes the player slower from a gas missile
+void player::slowDown() {
+
+	this->speed *= missileConstants::gasMissile::SPEED_MULTIPLIER;
+	SDL_TimerID temp = SDL_AddTimer(missileConstants::gasMissile::DURATION, condition_slow, this);
+
+	return;
+	
+}
+
 // function to initialize values for the missile
 void player::init(int x, int y) {
 
@@ -199,11 +209,11 @@ void player::init(int x, int y) {
 
 }
 
+// timer functions
 Uint32 player::boon_invincible(Uint32 interval, void * ptr) {
 
 	player * temp = (player*)ptr;
 	temp->invincible = false;
-	LOG("NOT INVINCIBLE");
 
 	return 0;
 
@@ -213,8 +223,15 @@ Uint32 player::boon_speed(Uint32 interval, void * ptr) {
 
 	player * temp = (player*)ptr;
 	temp->speed = playerConstants::BASE_SPEED;
-	LOG(temp->speed);
 
 	return 0;
 
+}
+
+Uint32 player::condition_slow(Uint32 interval, void * ptr) {
+
+	player * temp = (player*)ptr;
+	temp->speed = playerConstants::BASE_SPEED;
+
+	return 0;
 }

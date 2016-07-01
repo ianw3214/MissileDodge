@@ -82,6 +82,8 @@ namespace missileConstants {
 		constexpr int WIDTH = 30;
 		constexpr int HEIGHT = 60;
 		constexpr int BASE_SPEED = 300;
+		constexpr float SPEED_MULTIPLIER = 0.4f;
+		constexpr int DURATION = 3000;
 	}
 }
 // namespace for boon constants

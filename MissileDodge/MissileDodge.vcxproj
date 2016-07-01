@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="boon.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameOverMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="missile.cpp" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="boon.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gameOverMenu.h" />
     <ClInclude Include="gameVars.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="missile.h" />

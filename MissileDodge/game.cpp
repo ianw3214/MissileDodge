@@ -66,6 +66,12 @@ void game::startGame() {
 
 	}
 
+	// if the game was quit because the player died, show the death menu
+	if (gameOver) {
+		gameOverMenu * gMenu = new gameOverMenu(gWindow, gSurface);
+		this->flag = gMenu->getFlag();
+	}
+
 	// remove the timer once the game finishes
 	SDL_RemoveTimer(boonSpawnTimer);
 	SDL_RemoveTimer(difficultyIncreaseTimer);
@@ -314,23 +320,8 @@ void game::handleCollision() {
 				switch (temp->getMissileType()) {
 
 				case GAS: {
-					// temporary instakill the player
-					// apply damage to the player
-					if (hero->takeDamage(3)) {
-						// if the player is still alive, only earn half the points from that missile 
-						score += 5;
-					}	// the player is dead
-					else {
-						// set the game over flag to be true
-						gameOver = true;
-						// reset the menu items
-						menuItems.clear();
-						// add the new ones for game over
-						menuItems.push_back({ sprite(300, 200, "assets/TEXT/PLAY_AGAIN.png"), sprite(300, 200, "assets/TEXT/PLAY_AGAIN_SELECTED.png") });
-						menuItems.push_back({ sprite(300, 350, "assets/TEXT/QUIT.png"), sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png") });
-						// pause the game
-						pause = true;
-					}
+					// call the slow down function when the hero is hit by a gas missile
+					hero->slowDown();
 				} break;
 				// have the default behave like a normal missile
 				case NORMAL: 
@@ -342,14 +333,9 @@ void game::handleCollision() {
 					}	// the player is dead
 					else {
 						// set the game over flag to be true
-						gameOver = true;
-						// reset the menu items
-						menuItems.clear();
-						// add the new ones for game over
-						menuItems.push_back({ sprite(300, 200, "assets/TEXT/PLAY_AGAIN.png"), sprite(300, 200, "assets/TEXT/PLAY_AGAIN_SELECTED.png") });
-						menuItems.push_back({ sprite(300, 350, "assets/TEXT/QUIT.png"), sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png") });
-						// pause the game
-						pause = true;
+						// go to the death menu when when the game is over
+						this->gameOver = true;
+						quit = true;
 					}
 				} break;
 
@@ -439,10 +425,7 @@ void game::menuUpdate() {
 				select();
 			} break;
 			case SDLK_ESCAPE: {				// return to the game if the user quits the menu
-				// make sure that it isn't the game over menu to return to game
-				if (!gameOver) {
-					pause = false;
-				}
+				pause = false;
 				// reset the selected menu item
 				selected = 0;
 			} break;
@@ -457,26 +440,6 @@ void game::menuUpdate() {
 
 // function called upon user pressing enter
 void game::select() {
-
-	// if the menu is the gameover menu
-	if (gameOver) {
-		switch (selected) {
-		case 0:		// PLAY AGAIN
-			flag = GAME;
-			// quit the game loop
-			quit = true;
-			break;
-		case 1:		// QUIT GAME
-			// quit the game
-			quit = true;
-			flag = QUIT;
-			break;
-		}
-
-		// exit the function
-		return;
-
-	}
 
 	// if function runs to here then the game isn't over yet
 	// see what item is currently selected
@@ -608,7 +571,7 @@ Uint32 game::missileSpawner(Uint32 time, void *ptr) {
 		cGame->sprites.push_back(temp);
 
 		// use a random number key to decide if a gas missile should be spawned
-		int key = rand() % 2;
+		int key = rand() % 10;
 
 		// 1 in 10 chance to spawn a gas missile
 		if (key == 0) {

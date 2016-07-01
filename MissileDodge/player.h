@@ -30,6 +30,7 @@ public:
 	void setKeysNone();
 	void heal(int);
 	void boonHandler(boonTypes);
+	void slowDown();
 
 private:
 	// variables to keep track of player stats
@@ -46,5 +47,6 @@ private:
 	// timer functions for boon handling
 	static Uint32 boon_invincible(Uint32, void *);
 	static Uint32 boon_speed(Uint32, void *);
+	static Uint32 condition_slow(Uint32, void *);
 
 };
