@@ -31,6 +31,12 @@ enum boonTypes {
 	INVINCIBLE,
 	SPEED
 };
+// enumeration to keep track of types of missiles
+enum missileTypes {
+	NORMAL,
+	// gas poisons the player to move slower
+	GAS
+};
 // namespace that contains all the constants that the game needs
 namespace constants {
 
@@ -47,9 +53,9 @@ namespace constants {
 	// base score unit
 	constexpr int BASE_SCORE = 10;
 	// number to put in counter for spawning objects
-	constexpr int BASE_SPAWN_TIME = 50;
+	constexpr int BASE_SPAWN_TIME = 900;
 	// number to put in counter for difficulty scaling
-	constexpr int BASE_DIFFICULTY_TIME = 2000;
+	constexpr int BASE_DIFFICULTY_TIME = 5000;
 
 }
 // namespace for player constants
@@ -70,6 +76,13 @@ namespace missileConstants {
 	constexpr int HEIGHT = 80;
 	// speed of missile that calculations are based off of
 	constexpr int BASE_SPEED = 500;
+
+	// seperate namespace for different missile type
+	namespace gasMissile {
+		constexpr int WIDTH = 30;
+		constexpr int HEIGHT = 60;
+		constexpr int BASE_SPEED = 300;
+	}
 }
 // namespace for boon constants
 namespace boonConstants {

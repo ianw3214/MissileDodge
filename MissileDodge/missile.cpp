@@ -2,6 +2,7 @@
 
 // getter function
 int missile::getSpeed() { return this->speed; }
+missileTypes missile::getMissileType() { return this->missileType; }
 
 // function that updates the missile every frame
 void missile::update(SDL_Surface* gSurface, double delta) {
@@ -14,16 +15,34 @@ void missile::update(SDL_Surface* gSurface, double delta) {
 }
 
 // function to initialize values for the missile
-void missile::init(int x, int y, float speedModifier) {
-
-	// initialize speed with random modifier
-	this->speed = static_cast<int>(missileConstants::BASE_SPEED * speedModifier + std::rand() % 300);
-	
-	// initialize missile rect
-	this->rect = { x, y, missileConstants::WIDTH, missileConstants::HEIGHT };
+void missile::init(int x, int y, float speedModifier, missileTypes mT) {
 	
 	// intialize sprite type
 	type = MISSILE;
+
+	// initialize missile type
+	missileType = mT;
+
+	// change missile graphics depending on missile type
+	switch (missileType) {
+	case GAS: {
+		// initialize image, rect, and speed with random modifier with gas missile stats
+		img = IMG_Load("assets/GASMISSILE.png");
+		this->rect = { x, y, missileConstants::gasMissile::WIDTH, missileConstants::gasMissile::HEIGHT };
+		this->speed = static_cast<int>(missileConstants::gasMissile::BASE_SPEED * speedModifier + std::rand() % 300);
+	} break;
+	case NORMAL: // have normal and default be the same so if an unknown input is entered it just outputs a normal missile
+	default: {
+		// initialize image, rect, and speed with random modifier
+		img = IMG_Load("assets/MISSILE.png");
+		this->rect = { x, y, missileConstants::WIDTH, missileConstants::HEIGHT };
+		this->speed = static_cast<int>(missileConstants::BASE_SPEED * speedModifier + std::rand() % 300);
+	} break;
+	}
+	// output if the image failes to load
+	if (!img) {	
+		std::cout << "Failed to load image, SDL_image ERROR : " << IMG_GetError() << std::endl;
+	}
 
 	return;
 
