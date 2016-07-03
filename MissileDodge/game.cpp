@@ -102,7 +102,7 @@ void game::gameLoop(double delta) {
 			hero->setKeysNone();
 		}
 		else {
-			// call the event handler for each sprite
+			// call the event handler for sprites if the game is not paused
 			hero->eventHandler(e);
 		}
 	}
@@ -134,37 +134,20 @@ void game::init() {
 	sprites.push_back(background);
 
 	// initialize menu text
-	sprite * normal = new sprite(300, 200, "assets/TEXT/RESUME.png");
-	sprite * hover = new sprite(300, 200, "assets/TEXT/RESUME_SELECTED.png");
-	menuItem resume = { *normal, *hover };
-	menuItems.push_back(resume);
+	menuItems.push_back({ sprite(300, 200, "assets/TEXT/RESUME.png"), sprite(300, 200, "assets/TEXT/RESUME_SELECTED.png") });
+	menuItems.push_back({ sprite(300, 250, "assets/TEXT/QUIT.png"), sprite(300, 250, "assets/TEXT/QUIT_SELECTED.png") });
 
-	normal = new sprite(300, 350, "assets/TEXT/QUIT.png");
-	hover = new sprite(300, 350, "assets/TEXT/QUIT_SELECTED.png");
-	menuItem quit = { *normal, *hover };
-	menuItems.push_back(quit);
-
-	// initialize countdown number text
-	sprite * num = new sprite("assets/TEXT/0.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/1.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/2.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/3.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/4.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/5.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/6.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/7.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/8.png");
-	numSprites.push_back(*num);
-	num = new sprite("assets/TEXT/9.png");
-	numSprites.push_back(*num);
+	// initialize number text
+	numSprites.push_back(sprite("assets/TEXT/0.png"));
+	numSprites.push_back(sprite("assets/TEXT/1.png"));
+	numSprites.push_back(sprite("assets/TEXT/2.png"));
+	numSprites.push_back(sprite("assets/TEXT/3.png"));
+	numSprites.push_back(sprite("assets/TEXT/4.png"));
+	numSprites.push_back(sprite("assets/TEXT/5.png"));
+	numSprites.push_back(sprite("assets/TEXT/6.png"));
+	numSprites.push_back(sprite("assets/TEXT/7.png"));
+	numSprites.push_back(sprite("assets/TEXT/8.png"));
+	numSprites.push_back(sprite("assets/TEXT/9.png"));
 
 	// add a hero to the game
 	hero = new player(200, (constants::GROUND_LEVEL-playerConstants::HEIGHT), "assets/HERO.png");
@@ -445,10 +428,9 @@ void game::select() {
 	// see what item is currently selected
 	switch (selected) {
 	case 0:
-		// enter a countdown
-		countDown();
 		// resume the game and unpause
-		this->pause = false;	
+		this->pause = false;
+		LOG(this->pause);
 		// reset current time and last time
 		cTime = SDL_GetTicks();
 		lTime = cTime;
@@ -565,7 +547,7 @@ Uint32 game::missileSpawner(Uint32 time, void *ptr) {
 		// randomize the offset to a random number between the screen sizes
 		x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;	// take margins into account
 
-		missile * temp = new missile(x_offset, -20, "assets/TEMP.png", cGame->speedModifier, NORMAL);
+		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png", cGame->speedModifier, NORMAL);
 
 		// add the missile to the vector
 		cGame->sprites.push_back(temp);
@@ -577,7 +559,7 @@ Uint32 game::missileSpawner(Uint32 time, void *ptr) {
 		if (key == 0) {
 			// same code as above except a change in missile type
 			int x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;
-			missile * temp = new missile(x_offset, -20, "assets/MISSILE.png", cGame->speedModifier, GAS);
+			missile * temp = new missile(x_offset, -20, "assets/GASMISSILE.png", cGame->speedModifier, GAS);
 			cGame->sprites.push_back(temp);
 		}
 

@@ -45,13 +45,13 @@ void gameOverMenu::init() {
 	menuItem start = { *normal, *hover };
 	menuItems.push_back(start);
 
-	normal = new sprite(10, 120, "assets/TEXT/MENU.png");
-	hover = new sprite(10, 120, "assets/TEXT/MENU_SELECTED.png");
+	normal = new sprite(10, 70, "assets/TEXT/MENU.png");
+	hover = new sprite(10, 70, "assets/TEXT/MENU_SELECTED.png");
 	menuItem menu = {*normal, *hover};
 	menuItems.push_back(menu);
 
-	normal = new sprite(10, 220, "assets/TEXT/QUIT.png");
-	hover = new sprite(10, 220, "assets/TEXT/QUIT_SELECTED.png");
+	normal = new sprite(10, 120, "assets/TEXT/QUIT.png");
+	hover = new sprite(10, 120, "assets/TEXT/QUIT_SELECTED.png");
 	menuItem quit = { *normal, *hover };
 	menuItems.push_back(quit);
 

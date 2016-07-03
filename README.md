@@ -24,7 +24,7 @@ If any errors occur, please open an issue on the repository.
 ***
 
 ##BUGS:
-  * Pause menu having multiple countdowns after selecting the resume option 
+  * ~~Pause menu having multiple countdowns after selecting the resume option~~ 
   * Game randomly crashes ( suspected error with missiles and temp.png) 
 
 ***

@@ -36,9 +36,9 @@ void menu::init() {
 
 	// initialize sprites
 	menuItems.push_back({ sprite(10, 20, "assets/TEXT/START.png"), sprite(10, 20, "assets/TEXT/START_SELECTED.png") });
-	menuItems.push_back({ sprite(10, 120, "assets/TEXT/CONTROLS.png"), sprite(10, 120, "assets/TEXT/CONTROLS_SELECTED.png") });
-	menuItems.push_back({ sprite(10, 220, "assets/TEXT/OPTIONS.png"), sprite(10, 220, "assets/TEXT/OPTIONS_SELECTED.png") });
-	menuItems.push_back({ sprite(10, 320, "assets/TEXT/QUIT.png"), sprite(10, 320, "assets/TEXT/QUIT_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 70, "assets/TEXT/CONTROLS.png"), sprite(10,  70, "assets/TEXT/CONTROLS_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 120, "assets/TEXT/OPTIONS.png"), sprite(10, 120, "assets/TEXT/OPTIONS_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 170, "assets/TEXT/QUIT.png"), sprite(10, 170, "assets/TEXT/QUIT_SELECTED.png") });
 
 	// initialize menu background
 	menuBG = new sprite("assets/MENU_BG.png");
