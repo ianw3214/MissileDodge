@@ -17,7 +17,7 @@ If any errors occur, please open an issue on the repository.
   * ~~Improve game logic behind boons and boon duration~~
   * Break down update function in game class to smaller parts
   * Change player sprite when boon is activated
-  * Adjust main.cpp to better match the new game state system
+  * ~~Adjust main.cpp to better match the new game state system~~
   * ~~Improve logic behind difficulty scaling~~
   * ~~Change missile spawning rates to coordinate to time instead of frames~~
 

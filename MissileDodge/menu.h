@@ -16,6 +16,14 @@ public:
 	// getter function
 	state getFlag();
 
+protected:
+
+	enum menuStates {
+		MAIN,
+		OPTIONS,
+		CONTROLS
+	};
+
 private:
 
 	// structure to store different text for menus
@@ -32,11 +40,15 @@ private:
 	std::vector<menuItem> menuItems;
 	// menu background sprite
 	sprite * menuBG;
+	// other sprite elements for menu
+	sprite * controlSheet;
 
 	// initialize function
 	void init();
 	// update function
 	void update();
+	// function that renders the menu elements onto the screen
+	void render();
 	// function that determines logic upon select key press
 	void select();
 
@@ -45,7 +57,9 @@ private:
 	SDL_Event e;
 
 	// used to determine what the player wants to do next
-	state menuState;
+	state flag;
+	// flag to determine the current state of the menu
+	menuStates menuState;
 	// boolean to determine when to quit the menu
 	bool quit;
 

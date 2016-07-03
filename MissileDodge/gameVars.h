@@ -56,7 +56,7 @@ namespace constants {
 	constexpr int BASE_SPAWN_TIME = 900;
 	// number to put in counter for difficulty scaling
 	constexpr int BASE_DIFFICULTY_TIME = 5000;
-
+	 
 }
 // namespace for player constants
 namespace playerConstants {

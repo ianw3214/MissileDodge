@@ -28,29 +28,27 @@ menu::menu(SDL_Window* iWindow, SDL_Surface* iSurface) {
 
 // getter function
 state menu::getFlag() {
-	return this->menuState;
+	return this->flag;
 }
 
 // intitialize menu elements
 void menu::init() {
 
 	// initialize sprites
-	sprite * normal = new sprite(10, 20, "assets/TEXT/START.png");
-	sprite * hover = new sprite(10, 20, "assets/TEXT/START_SELECTED.png");
-	menuItem start = { *normal, *hover};
-	menuItems.push_back(start);
-
-	normal = new sprite(10, 120, "assets/TEXT/QUIT.png");
-	hover = new sprite(10, 120, "assets/TEXT/QUIT_SELECTED.png");
-	menuItem quit = { *normal, *hover};
-	menuItems.push_back(quit);
+	menuItems.push_back({ sprite(10, 20, "assets/TEXT/START.png"), sprite(10, 20, "assets/TEXT/START_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 120, "assets/TEXT/CONTROLS.png"), sprite(10, 120, "assets/TEXT/CONTROLS_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 220, "assets/TEXT/OPTIONS.png"), sprite(10, 220, "assets/TEXT/OPTIONS_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 320, "assets/TEXT/QUIT.png"), sprite(10, 320, "assets/TEXT/QUIT_SELECTED.png") });
 
 	// initialize menu background
 	menuBG = new sprite("assets/MENU_BG.png");
+	// intiialize other menu elements
+	controlSheet = new sprite(400, 50, "assets/TEXT/CONTROL_SHEET.png");
 
 	// initialize menu variables
 	this->selected = 0;
-	this->menuState = GAME;
+	this->flag = GAME;
+	this->menuState = MAIN;
 	this->quit = false;
 
 }
@@ -63,7 +61,7 @@ void menu::update() {
 		// if the user quits
 		if (e.type == SDL_QUIT) {
 			// end the game
-			menuState = QUIT;
+			flag = QUIT;
 			this->quit = true;
 		}
 		// if the user presses a key
@@ -96,10 +94,35 @@ void menu::update() {
 		
 	}
 
+	// call the render function to show the sprites
+	render();
+
+	return;
+
+}
+
+// function that renders elements from the menu to the screen
+void menu::render() {
+
 	// render the background
 	menuBG->render(gSurface);
 
-	// update the sprites
+	// render the right side of the screen depending on the state of the menu
+	switch (menuState) {
+
+	case MAIN: {
+
+	} break;
+	case CONTROLS: {
+		controlSheet->render(gSurface);
+	} break;
+	case OPTIONS: {
+
+	} break;
+
+	}
+
+	// render the menu options
 	for (unsigned int i = 0; i < menuItems.size(); i++) {
 		// if the current loop is the selected item
 		if (selected == i) {
@@ -112,8 +135,6 @@ void menu::update() {
 			menuItems.at(i).normal.render(gSurface);
 		}
 	}
-
-	return;
 
 }
 
@@ -128,12 +149,20 @@ void menu::select() {
 	switch (selected) {
 	case 0:
 		// start game by quitting and setting play flag to true
-		menuState = GAME;
+		flag = GAME;
 		quit = true;
 		break;
 	case 1:
+		// go to the control page of the menu
+		menuState = CONTROLS;
+		break;
+	case 2:
+		// go to the options page of the menu
+		menuState = OPTIONS;
+		break;
+	case 3:
 		// quit the game and dont go into battle
-		menuState = QUIT;
+		flag = QUIT;
 		quit = true;
 		break;
 	}

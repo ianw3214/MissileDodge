@@ -577,7 +577,7 @@ Uint32 game::missileSpawner(Uint32 time, void *ptr) {
 		if (key == 0) {
 			// same code as above except a change in missile type
 			int x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;
-			missile * temp = new missile(x_offset, -20, "assets/TEMP.png", cGame->speedModifier, GAS);
+			missile * temp = new missile(x_offset, -20, "assets/MISSILE.png", cGame->speedModifier, GAS);
 			cGame->sprites.push_back(temp);
 		}
 
