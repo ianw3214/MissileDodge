@@ -25,7 +25,8 @@ If any errors occur, please open an issue on the repository.
 
 ##BUGS:
   * ~~Pause menu having multiple countdowns after selecting the resume option~~ 
-  * Game randomly crashes ( suspected error with missiles and temp.png) 
+  * Game randomly crashes ( suspected error with missiles and temp.png)
+  * Words from menu still show up on screen faintly after game has started 
 
 ***
 
@@ -105,6 +106,10 @@ If any errors occur, please open an issue on the repository.
     * Missiles
     * Explosions
     * Tweens
+  * Effects
+    * ~~Boon Effects~~
+    * Condition Effects
+    * Ambient Effects
 2. Music/Sound
   * Background music
   * Sound effects

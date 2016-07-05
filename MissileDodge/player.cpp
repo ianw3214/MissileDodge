@@ -235,6 +235,16 @@ bool player::render(SDL_Surface * gSurface) {
 		success = false;
 	}
 
+	// render boons on top of player sprite
+	if (invincible) {
+		sprite * temp = new sprite(rect.x + 50, rect.y-10, "assets/INVINCIBLE_EFFECT.png");
+		temp->render(gSurface);
+	}
+	if (speed > playerConstants::BASE_SPEED) {
+		sprite * temp = new sprite(rect.x-5, rect.y-10, "assets/SPEED_EFFECT.png");
+		temp->render(gSurface);
+	}
+
 	// return the success boolean
 	return success;
 
