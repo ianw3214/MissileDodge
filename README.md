@@ -71,7 +71,7 @@ If any errors occur, please open an issue on the repository.
 3. Misc
   * GUI
   * Sprite Animation
-    * Hero Animation
+    * Hero Animation (In Progress)
     * Missile Animation
     * Boon Animation
     * Background Animation

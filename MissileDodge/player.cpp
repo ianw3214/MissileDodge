@@ -54,6 +54,8 @@ void player::update(SDL_Surface* gSurface, double delta) {
 
 	// add to the players x coordinates if keys are pressed
 	if (leftDown && !rightDown) {
+		// update animation state
+		cState = LEFT;
 		this->rect.x -= static_cast<int>(speed * delta);
 		// make sure to leave a margin from the side
 		if(rect.x < 10){
@@ -61,6 +63,8 @@ void player::update(SDL_Surface* gSurface, double delta) {
 		}
 	}
 	if (rightDown && !leftDown) {
+		// update animation state
+		cState = RIGHT;
 		this->rect.x += static_cast<int>(speed * delta);
 		// leave a margin
 		if (rect.x > (constants::SCREEN_WIDTH - playerConstants::WIDTH - 10)) {
@@ -202,10 +206,37 @@ void player::init(int x, int y) {
 	// initialize player rect
 	this->rect = { x, y, playerConstants::WIDTH, playerConstants::HEIGHT };
 
+	// initialize copy rectangles dimensions
+	SS_rect.w = playerConstants::WIDTH;
+	SS_rect.h = playerConstants::HEIGHT;
+	// initialize state of player animation to left
+	cState = LEFT;
+
 	// initialize sprite type
 	type = PLAYER;
 
+	// start sprite update timer
+	spriteUpdateTimer = SDL_AddTimer(30, spriteUpdate, this);
+
 	return;
+
+}
+
+// override the render function from sprite class
+bool player::render(SDL_Surface * gSurface) {
+
+	// success flag
+	bool success = true;
+
+	// if the function failed
+	if (SDL_BlitSurface(img, &SS_rect, gSurface, &rect) < 0) {
+		// output the error
+		std::cout << "Image unable to blit to surface, SDL_image ERROR : " << IMG_GetError() << std::endl;
+		success = false;
+	}
+
+	// return the success boolean
+	return success;
 
 }
 
@@ -234,4 +265,34 @@ Uint32 player::condition_slow(Uint32 interval, void * ptr) {
 	temp->speed = playerConstants::BASE_SPEED;
 
 	return 0;
+}
+
+Uint32 player::spriteUpdate(Uint32 interval, void * ptr) {
+	// get a reference to the player
+	player * temp = (player*)ptr;
+
+	// set the animation frame depending on the state of the hero
+	switch (temp->cState) {
+	case LEFT: {
+		temp->SS_rect.x = 0;
+		temp->SS_rect.y = 0;
+	} break;
+	case RIGHT: {
+		temp->SS_rect.x = playerConstants::WIDTH;
+		temp->SS_rect.y = 0;
+	} break;
+	}
+
+	// update again at the same interval
+	return interval;
+}
+
+// wait for all the player timers to finish to avoid multithreading problems
+void player::waitTimer() {
+
+	// player animation state update timer
+	SDL_RemoveTimer(spriteUpdateTimer);
+
+	return;
+
 }

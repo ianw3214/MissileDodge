@@ -76,6 +76,7 @@ void game::startGame() {
 	SDL_RemoveTimer(boonSpawnTimer);
 	SDL_RemoveTimer(difficultyIncreaseTimer);
 	SDL_RemoveTimer(missileSpawnTimer);
+	hero->waitTimer();
 
 	return;
 
@@ -150,7 +151,7 @@ void game::init() {
 	numSprites.push_back(sprite("assets/TEXT/9.png"));
 
 	// add a hero to the game
-	hero = new player(200, (constants::GROUND_LEVEL-playerConstants::HEIGHT), "assets/HERO.png");
+	hero = new player(200, (constants::GROUND_LEVEL-playerConstants::HEIGHT), "assets/HERO_SS.png");
 
 	// default flag to quit
 	this->flag = QUIT;
