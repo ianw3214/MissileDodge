@@ -63,4 +63,7 @@ private:
 	// boolean to determine when to quit the menu
 	bool quit;
 
+	// fade in / fade out functions
+	void fade(int);
+
 };

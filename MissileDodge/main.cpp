@@ -5,7 +5,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <time.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -20,15 +19,11 @@
 bool init(SDL_Window**, SDL_Surface**);
 void close(SDL_Window*);
 
-
 // entry point
 int main(int argc, char* argv[]) {
 
 	// initialize the game state to a menu
 	state gameState = MENU;
-	
-	// intialize randomization seed
-	srand(static_cast<int>(time(nullptr)));
 
 	// SDL window to refer to
 	SDL_Window* window = nullptr;
@@ -70,7 +65,7 @@ bool init(SDL_Window** window, SDL_Surface** surface) {
 	bool success = false;
 
 	// Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0) {	// if SDL failed to initialize
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {	// if SDL failed to initialize
 		// print the error to the console
 		std::cout << "SDL could not initialize, SDL ERROR: " << SDL_GetError() << std::endl;
 		success = false;				// set the initialization flag to false

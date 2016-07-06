@@ -156,6 +156,8 @@ void game::init() {
 	// default flag to quit
 	this->flag = QUIT;
 
+	return;
+
 }
 
 // function to handle sprite logic and update graphics each frame
@@ -368,6 +370,9 @@ void game::countDown() {
 		SDL_Delay(990);
 	}
 
+	// remove any keys pressed from event queue during countdown
+	SDL_FlushEvent(SDL_KEYDOWN);
+
 	return;
 
 }
@@ -468,9 +473,12 @@ void game::menuRender() {
 }
 
 // timer functions
-Uint32 game::boonTimer(Uint32 time, void * ptr) {
+Uint32 game::boonTimer(Uint32 interval, void * ptr) {
 
 	game * cGame = (game*)ptr;
+	
+	// new randomization seed
+	srand(time(0));
 
 	// only spawn boons if the game is not paused
 	if (!cGame->pause) {
@@ -506,7 +514,7 @@ Uint32 game::boonTimer(Uint32 time, void * ptr) {
 		}
 	}
 
-	return time;
+	return interval;
 
 }
 

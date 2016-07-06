@@ -57,6 +57,9 @@ namespace constants {
 	// number to put in counter for difficulty scaling
 	constexpr int BASE_DIFFICULTY_TIME = 5000;
 	 
+	// time in milliseconds for fading transitions
+	constexpr unsigned int BASE_FADE_TIME = 500;
+
 }
 // namespace for player constants
 namespace playerConstants {
