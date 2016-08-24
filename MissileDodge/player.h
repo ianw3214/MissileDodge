@@ -53,8 +53,12 @@ private:
 	bool leftDown, rightDown, spaceDown;
 	int jumpCounter, yMove;
 	int invincibleCounter;
+
 	// init function
 	void init(int, int);
+
+	// sprite to handle player shadow
+	sprite * shadow;
 
 	// sprite sheet variables
 	SDL_Rect SS_rect;	// keeps track of which part of the sprite sheet to copy

@@ -27,8 +27,10 @@ menu::menu(SDL_Window* iWindow, SDL_Surface* iSurface) {
 
 	}
 
-	// fade out to next game state
-	fade(1);
+	// fade out as long as the user didnt quit
+	if (flag != QUIT) {
+		fade(1);
+	}
 
 }
 

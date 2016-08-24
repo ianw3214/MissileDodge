@@ -20,6 +20,9 @@ state game::getFlag() {
 // function that runs the game
 void game::startGame() {
 
+	// fade in transition
+	fade(0);
+
 	// countdown into the game
 	countDown();
 
@@ -68,6 +71,8 @@ void game::startGame() {
 
 	// if the game was quit because the player died, show the death menu
 	if (gameOver) {
+		// fade out into the death menu
+		fade(1);
 		gameOverMenu * gMenu = new gameOverMenu(gWindow, gSurface);
 		this->flag = gMenu->getFlag();
 	}
@@ -576,5 +581,51 @@ Uint32 game::missileSpawner(Uint32 time, void *ptr) {
 
 	// spawn another missile at the same interval
 	return time;
+
+}
+
+// fade in / fade out functions that takes a parameter of 0 or 1 for in / out
+void game::fade(int key) {
+
+	// time variables to help fade in function stay within a time frame
+	unsigned int bTick, cTick;
+	unsigned int time = constants::BASE_FADE_TIME;
+
+	// black image to cover the screen with
+	SDL_Surface * temp;
+	temp = IMG_Load("assets/BLACK.png");
+	if (!temp) {	// if the image failed to load
+					// output the error
+		std::cout << "Failed to load image, SDL_image ERROR : " << IMG_GetError() << std::endl;
+	}
+
+	// update the alpha values depending on the difference in time elapsed
+	bTick = SDL_GetTicks();
+	cTick = bTick;
+	while ((cTick - bTick) < time) {
+
+		// render the base menu first
+		renderSprites();
+
+		// set the alpha depenidng on time elapsed
+		// if key is 0, fade in; if key is 1, fade out
+		if (key == 0) {
+			SDL_SetSurfaceAlphaMod(temp, 255 - ((float)cTick - (float)bTick) / (float)time * 255);
+		}
+		if (key == 1) {
+			SDL_SetSurfaceAlphaMod(temp, ((float)cTick - (float)bTick) / (float)time * 255);
+		}
+		if (SDL_BlitSurface(temp, nullptr, gSurface, nullptr) < 0) {
+			// output the error
+			std::cout << "Image unable to blit to surface, SDL_image ERROR : " << IMG_GetError() << std::endl;
+		}
+
+		SDL_UpdateWindowSurface(gWindow);
+
+		// update the current tick value
+		cTick = SDL_GetTicks();
+	}
+
+	return;
 
 }

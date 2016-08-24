@@ -39,6 +39,8 @@ private:
 	void update();
 	// function that determines logic upon select key press
 	void select();
+	// function that renders screen elements
+	void render();
 
 	// menu variables
 	unsigned int selected;
@@ -48,5 +50,8 @@ private:
 	state menuState;
 	// boolean to determine when to quit the menu
 	bool quit;
+
+	// fade in / fade out functions that takes a parameter of 0 or 1 for in / out
+	void fade(int key);
 
 };

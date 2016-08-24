@@ -98,16 +98,14 @@ void player::update(SDL_Surface* gSurface, double delta) {
 		jumpCounter--;
 	}
 
-	/*
-	// update invincible counter
-	if (invincibleCounter > 0) {
-		invincibleCounter--;
-		if (invincibleCounter == 0) {
-			LOG("NOT INVINCIBLE");
-			this->invincible = false;
-		}
+	// update shadow position
+	if (cState == LEFT) {
+		shadow->setPos(this->rect.x, (constants::GROUND_LEVEL-6));
 	}
-	*/
+	else if (cState == RIGHT) {
+		shadow->setPos((this->rect.x+8), (constants::GROUND_LEVEL-6));
+	}
+
 	return;
 
 }
@@ -215,6 +213,9 @@ void player::init(int x, int y) {
 	// initialize sprite type
 	type = PLAYER;
 
+	// initialize a shadow for the player
+	shadow = new sprite(this->rect.x, (constants::GROUND_LEVEL-6), "assets/SHADOW.png");
+
 	// start sprite update timer
 	spriteUpdateTimer = SDL_AddTimer(30, spriteUpdate, this);
 
@@ -224,6 +225,9 @@ void player::init(int x, int y) {
 
 // override the render function from sprite class
 bool player::render(SDL_Surface * gSurface) {
+
+	// render the player shadow first to put it behind player
+	shadow->render(gSurface);
 
 	// success flag
 	bool success = true;

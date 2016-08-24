@@ -82,4 +82,7 @@ private:
 	static Uint32 difficultyTimer(Uint32, void *);
 	static Uint32 missileSpawner(Uint32, void *);
 
+	// fade in / fade out functions
+	void fade(int);
+
 };
