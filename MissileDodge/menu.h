@@ -41,7 +41,8 @@ private:
 	// menu background sprite
 	sprite * menuBG;
 	// other sprite elements for menu
-	sprite * controlSheet;
+	sprite * title;				// sprite to hold the title for the menu
+	sprite * controlSheet;		// sprite to show controls when controls option is selected
 
 	// initialize function
 	void init();

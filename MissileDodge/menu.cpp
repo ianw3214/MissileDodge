@@ -43,14 +43,15 @@ state menu::getFlag() {
 void menu::init() {
 
 	// initialize sprites
-	menuItems.push_back({ sprite(10, 20, "assets/TEXT/START.png"), sprite(10, 20, "assets/TEXT/START_SELECTED.png") });
-	menuItems.push_back({ sprite(10, 70, "assets/TEXT/CONTROLS.png"), sprite(10,  70, "assets/TEXT/CONTROLS_SELECTED.png") });
-	menuItems.push_back({ sprite(10, 120, "assets/TEXT/OPTIONS.png"), sprite(10, 120, "assets/TEXT/OPTIONS_SELECTED.png") });
-	menuItems.push_back({ sprite(10, 170, "assets/TEXT/QUIT.png"), sprite(10, 170, "assets/TEXT/QUIT_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 400, "assets/TEXT/START.png"), sprite(10, 400, "assets/TEXT/START_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 450, "assets/TEXT/CONTROLS.png"), sprite(10,  450, "assets/TEXT/CONTROLS_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 500, "assets/TEXT/OPTIONS.png"), sprite(10, 500, "assets/TEXT/OPTIONS_SELECTED.png") });
+	menuItems.push_back({ sprite(10, 550, "assets/TEXT/QUIT.png"), sprite(10, 550, "assets/TEXT/QUIT_SELECTED.png") });
 
 	// initialize menu background
 	menuBG = new sprite("assets/MENU_BG.png");
 	// intiialize other menu elements
+	title = new sprite(270, 20, "assets/TITLE.png");
 	controlSheet = new sprite(400, 50, "assets/TEXT/CONTROL_SHEET.png");
 
 	// initialize menu variables
@@ -97,6 +98,11 @@ void menu::update() {
 			case SDLK_SPACE:
 				select();
 				break;
+			case SDLK_ESCAPE:
+				// if the user presses escape, go to default menu state
+				menuState = MAIN;
+				selected = 0;
+				break;
 			}
 		}
 		
@@ -119,9 +125,11 @@ void menu::render() {
 	switch (menuState) {
 
 	case MAIN: {
-
+		// render the title
+		title->render(gSurface);
 	} break;
 	case CONTROLS: {
+		// render the controls sprite if the user is in the controls option
 		controlSheet->render(gSurface);
 	} break;
 	case OPTIONS: {
