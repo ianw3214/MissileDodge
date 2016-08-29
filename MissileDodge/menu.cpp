@@ -52,13 +52,21 @@ void menu::init() {
 	menuBG = new sprite("assets/MENU_BG.png");
 	// intiialize other menu elements
 	title = new sprite(270, 20, "assets/TITLE.png");
-	controlSheet = new sprite(400, 50, "assets/TEXT/CONTROL_SHEET.png");
+	controlSheet = new sprite(0, 20, "assets/TEXT/CONTROL_SHEET.png");
+	returnText = new sprite(450, 585, "assets/TEXT/ESCAPE.png");
 
 	// initialize menu variables
 	this->selected = 0;
 	this->flag = GAME;
 	this->menuState = MAIN;
 	this->quit = false;
+
+	// initialize random seed
+	srand(time(nullptr));
+
+	// start star creating timer
+	stars = {};
+	SDL_TimerID missileSpawnTimer = SDL_AddTimer(1000, createStar, this);
 
 }
 
@@ -120,20 +128,32 @@ void menu::render() {
 
 	// render the background
 	menuBG->render(gSurface);
+	// render the title
+	title->render(gSurface);
+
+	// render the stars
+	for (int i = stars.size() - 1; i >= 0; i--) {
+		if ( stars.at(i)->isDoneAnimation ) {
+			stars.erase( stars.begin() + i );
+		}
+		else {
+			stars.at(i)->render(gSurface);
+		}
+	}
 
 	// render the right side of the screen depending on the state of the menu
 	switch (menuState) {
 
 	case MAIN: {
-		// render the title
-		title->render(gSurface);
+
 	} break;
 	case CONTROLS: {
 		// render the controls sprite if the user is in the controls option
 		controlSheet->render(gSurface);
+		returnText->render(gSurface);
 	} break;
 	case OPTIONS: {
-
+		returnText->render(gSurface);
 	} break;
 
 	}
@@ -230,5 +250,17 @@ void menu::fade(int key) {
 	}
 
 	return;
+
+}
+
+Uint32 menu::createStar(Uint32 time, void * ptr) {
+
+	menu * temp = (menu*)ptr;
+
+	star * tempStar = new star("assets/star_sheet.png");
+	// add the new star to the stars vector
+	temp->stars.push_back(tempStar);
+
+	return time;
 
 }

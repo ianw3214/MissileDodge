@@ -4,9 +4,11 @@
 #include <vector>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <ctime>
 
 #include "sprite.h"
 #include "gameVars.h"
+#include "star.h"
 
 class menu {
 
@@ -43,6 +45,7 @@ private:
 	// other sprite elements for menu
 	sprite * title;				// sprite to hold the title for the menu
 	sprite * controlSheet;		// sprite to show controls when controls option is selected
+	sprite * returnText;
 
 	// initialize function
 	void init();
@@ -66,5 +69,9 @@ private:
 
 	// fade in / fade out functions
 	void fade(int);
+
+	// variables for creating background stars
+	std::vector<star*> stars;
+	static Uint32 createStar(Uint32, void *);
 
 };
