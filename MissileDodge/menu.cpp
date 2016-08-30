@@ -60,6 +60,7 @@ void menu::init() {
 	this->flag = GAME;
 	this->menuState = MAIN;
 	this->quit = false;
+	this->showText = true;
 
 	// initialize random seed
 	srand(time(nullptr));
@@ -67,6 +68,7 @@ void menu::init() {
 	// start star creating timer
 	stars = {};
 	SDL_TimerID missileSpawnTimer = SDL_AddTimer(1000, createStar, this);
+	SDL_TimerID textShowTimer = SDL_AddTimer(600, textTimer, this);
 
 }
 
@@ -150,10 +152,10 @@ void menu::render() {
 	case CONTROLS: {
 		// render the controls sprite if the user is in the controls option
 		controlSheet->render(gSurface);
-		returnText->render(gSurface);
+		if (showText) { returnText->render(gSurface); }
 	} break;
 	case OPTIONS: {
-		returnText->render(gSurface);
+		if (showText) { returnText->render(gSurface); }
 	} break;
 
 	}
@@ -253,6 +255,7 @@ void menu::fade(int key) {
 
 }
 
+// function that creates background stars
 Uint32 menu::createStar(Uint32 time, void * ptr) {
 
 	menu * temp = (menu*)ptr;
@@ -260,6 +263,23 @@ Uint32 menu::createStar(Uint32 time, void * ptr) {
 	star * tempStar = new star("assets/star_sheet.png");
 	// add the new star to the stars vector
 	temp->stars.push_back(tempStar);
+
+	return time;
+
+}
+
+// function that flashes text on a timer
+Uint32 menu::textTimer(Uint32 time, void * ptr) {
+
+	menu * temp = (menu*)ptr;
+
+	// change the state of show text boolean
+	if (temp->showText) {
+		temp->showText = false;
+	}
+	else {
+		temp->showText = true;
+	}
 
 	return time;
 

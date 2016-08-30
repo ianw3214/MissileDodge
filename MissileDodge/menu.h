@@ -74,4 +74,8 @@ private:
 	std::vector<star*> stars;
 	static Uint32 createStar(Uint32, void *);
 
+	// flashing text variables
+	bool showText;
+	static Uint32 textTimer(Uint32, void *);
+
 };
