@@ -70,6 +70,7 @@ void gameOverMenu::init() {
 	this->selected = 0;
 	this->menuState = GAME;
 	this->quit = false;
+	this->fading = true;
 
 }
 
@@ -84,34 +85,35 @@ void gameOverMenu::update() {
 			menuState = QUIT;
 			this->quit = true;
 		}
+		if(!fading){
 		// if the user presses a key
-		if (e.type == SDL_KEYDOWN) {
-			switch (e.key.keysym.sym) {
-				// if the user pressese a down button
-			case SDLK_s:
-			case SDLK_DOWN:
-				// if the current selected item is less than the total amount of items
-				if (selected < (menuItems.size() - 1)) {
-					// add one to selected
-					selected++;
+			if (e.type == SDL_KEYDOWN) {
+				switch (e.key.keysym.sym) {
+					// if the user pressese a down button
+				case SDLK_s:
+				case SDLK_DOWN:
+					// if the current selected item is less than the total amount of items
+					if (selected < (menuItems.size() - 1)) {
+						// add one to selected
+						selected++;
+					}
+					break;
+					// if the user presses an up button
+				case SDLK_w:
+				case SDLK_UP:
+					// if the current selected item is higher than 0
+					if (selected > 0) {
+						// minus one to selected
+						selected--;
+					}
+					break;
+				case SDLK_RETURN:
+				case SDLK_SPACE:
+					select();
+					break;
 				}
-				break;
-				// if the user presses an up button
-			case SDLK_w:
-			case SDLK_UP:
-				// if the current selected item is higher than 0
-				if (selected > 0) {
-					// minus one to selected
-					selected--;
-				}
-				break;
-			case SDLK_RETURN:
-			case SDLK_SPACE:
-				select();
-				break;
 			}
 		}
-
 	}
 
 	render();
@@ -214,6 +216,9 @@ void gameOverMenu::fade(int key) {
 		// update the current tick value
 		cTick = SDL_GetTicks();
 	}
+
+	// change the fading flag
+	fading = false;
 
 	return;
 

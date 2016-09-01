@@ -3,6 +3,7 @@
 // getter functions
 int player::getHealth() { return this->health; }
 bool player::getInvincibility() { return this->invincible; }
+bool player::getSpeedBoost() { return this->speedBoost; }
 
 //function that calls for every update
 void player::eventHandler(SDL_Event e) {
@@ -165,14 +166,15 @@ void player::boonHandler(boonTypes type) {
 	case INVINCIBLE: {
 		// turn the hero invincible and set a timer to revert to normal
 		this->invincible = true;
-		LOG("INVINCIBLE");
+		invincibleBoonCount++;
 		SDL_TimerID temp = SDL_AddTimer( boonConstants::DURATION, boon_invincible, this);
 	} break;
 
 	case SPEED: {
 		// turn the hero invincible and set a timer to revert to normal
-		this->speed *= boonConstants::BASE_SPEED_MULTIPLIER;
-		LOG(speed);
+		this->speed = boonConstants::SPEED_BOOST;
+		speedBoost = true;
+		speedBoonCount++;
 		SDL_TimerID temp = SDL_AddTimer(boonConstants::DURATION, boon_speed, this);
 	} break;
 
@@ -198,7 +200,9 @@ void player::init(int x, int y) {
 	this->speed = playerConstants::BASE_SPEED;
 	this->health = playerConstants::BASE_HEALTH;
 	this->invincible = false;
-	this->invincibleCounter = 0;
+	this->speedBoonCount = 0;			// counters to keep track of how many boons of each type are active simultaniously
+	this->invincibleBoonCount = 0;
+	this->speedBoost = false;
 	// initialize jump counter
 	jumpCounter = 0;
 	// initialize player rect
@@ -258,8 +262,13 @@ bool player::render(SDL_Surface * gSurface) {
 Uint32 player::boon_invincible(Uint32 interval, void * ptr) {
 
 	player * temp = (player*)ptr;
-	temp->invincible = false;
 
+	// take 1 off the boon count and if it is 0 then stop the invincibility
+	temp->invincibleBoonCount -= 1;
+	if (temp->invincibleBoonCount == 0) {
+		temp->invincible = false;
+	}
+	
 	return 0;
 
 }
@@ -267,7 +276,13 @@ Uint32 player::boon_invincible(Uint32 interval, void * ptr) {
 Uint32 player::boon_speed(Uint32 interval, void * ptr) {
 
 	player * temp = (player*)ptr;
-	temp->speed = playerConstants::BASE_SPEED;
+
+	// take 1 off the boon count and if it is 0 then return to normal speed
+	temp->speedBoonCount -= 1;
+	if (temp->speedBoonCount == 0) {
+		temp->speedBoost = false;
+		temp->speed = playerConstants::BASE_SPEED;
+	}
 
 	return 0;
 

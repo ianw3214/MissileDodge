@@ -130,8 +130,6 @@ void menu::render() {
 
 	// render the background
 	menuBG->render(gSurface);
-	// render the title
-	title->render(gSurface);
 
 	// render the stars
 	for (int i = stars.size() - 1; i >= 0; i--) {
@@ -173,6 +171,9 @@ void menu::render() {
 			menuItems.at(i).normal.render(gSurface);
 		}
 	}
+
+	// render the title
+	title->render(gSurface);
 
 }
 

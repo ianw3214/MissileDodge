@@ -14,7 +14,6 @@ void star::init() {
 	
 	// intialize sprite rect
 	this->rect = {rand()%constants::SCREEN_WIDTH, rand() % constants::SCREEN_HEIGHT, TILE_WIDTH, TILE_HEIGHT };
-	std::cout << rand()%5 << std::endl;
 	// initialize animation rect
 	ss_star.w = TILE_WIDTH;
 	ss_star.h = TILE_HEIGHT;

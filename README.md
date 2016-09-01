@@ -16,7 +16,7 @@ If any errors occur, please open an issue on the repository.
   * ~~Organize collision function to match function name~~
   * ~~Improve game logic behind boons and boon duration~~
   * Break down update function in game class to smaller parts
-  * Change player sprite when boon is activated
+  * ~~Change player sprite when boon is activated~~
   * ~~Adjust main.cpp to better match the new game state system~~
   * ~~Improve logic behind difficulty scaling~~
   * ~~Change missile spawning rates to coordinate to time instead of frames~~
@@ -25,9 +25,9 @@ If any errors occur, please open an issue on the repository.
 
 ##BUGS:
   * ~~Pause menu having multiple countdowns after selecting the resume option~~ 
-  * Game randomly crashes ( suspected error with missiles and temp.png)
   * ~~Words from menu still show up on screen faintly after game has started~~
   * key presses during transitions are registered
+  * ~~Boons would immediately expire when aquired during another boon~~
 
 ***
 
@@ -97,6 +97,11 @@ If any errors occur, please open an issue on the repository.
     * Health Bar (In Progress)
     * Background
   * Splash Art
+  * Menu
+    * title (In Progress)
+    * ~~options~~
+    * ~~controls~~
+    * settings
   * Logo
   * Icon
   * Font

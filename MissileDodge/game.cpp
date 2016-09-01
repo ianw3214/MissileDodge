@@ -312,7 +312,9 @@ void game::handleCollision() {
 
 				case GAS: {
 					// call the slow down function when the hero is hit by a gas missile
-					hero->slowDown();
+					if (!hero->getSpeedBoost()) {		// make sure the hero is not in the middle of a speed boost
+						hero->slowDown();
+					}
 				} break;
 				// have the default behave like a normal missile
 				case NORMAL: 
@@ -488,8 +490,8 @@ Uint32 game::boonTimer(Uint32 interval, void * ptr) {
 	// only spawn boons if the game is not paused
 	if (!cGame->pause) {
 		// have a 1 in 10 change to spawn boons every second
-		int randomKey = rand() % 10;
-		if (randomKey == 0) {
+		int spawnKey = rand() % 10;
+		if (spawnKey==5) {
 			// randomly decide the type of boon to spawn
 			int key = rand() % 3;
 			// randomly decide the x coordinate
@@ -511,7 +513,7 @@ Uint32 game::boonTimer(Uint32 interval, void * ptr) {
 				cGame->sprites.push_back(speed);
 			} break;
 			default: {
-				LOG("HI");
+				LOG("THIS IS NOT SUPPOSED TO HAPPEN :(");
 			} break;
 
 			}

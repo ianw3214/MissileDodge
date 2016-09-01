@@ -27,6 +27,7 @@ public:
 	// getter function
 	int getHealth();
 	bool getInvincibility();
+	bool getSpeedBoost();
 
 	// class functions
 	void eventHandler(SDL_Event);
@@ -52,7 +53,8 @@ private:
 	// variables to handle game logic
 	bool leftDown, rightDown, spaceDown;
 	int jumpCounter, yMove;
-	int invincibleCounter;
+	int speedBoonCount, invincibleBoonCount;
+	bool speedBoost;
 
 	// init function
 	void init(int, int);

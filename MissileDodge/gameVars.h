@@ -45,7 +45,7 @@ namespace constants {
 	constexpr int SCREEN_HEIGHT = 600;
 
 	constexpr int GRAVITY = 1200;
-	constexpr int GROUND_LEVEL = 450;
+	constexpr int GROUND_LEVEL = 500;
 
 	constexpr int FONT_HEIGHT = 60;
 	constexpr int FONT_WIDTH = 40;
@@ -101,5 +101,5 @@ namespace boonConstants {
 	// other constants
 	constexpr int BOON_SPEED = 200;
 	constexpr int BASE_HEAL = 2;
-	constexpr float BASE_SPEED_MULTIPLIER = 1.8f;
+	constexpr int SPEED_BOOST = 900;
 }
