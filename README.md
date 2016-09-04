@@ -99,7 +99,7 @@ If any errors occur, please open an issue on the repository.
   * Splash Art
   * Menu
     * title (In Progress)
-    * ~~options~~
+    * ~~background~~
     * ~~controls~~
     * settings
   * Logo

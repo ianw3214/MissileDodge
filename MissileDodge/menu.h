@@ -43,6 +43,7 @@ private:
 	// menu background sprite
 	sprite * menuBG;
 	// other sprite elements for menu
+	sprite * border;			// sprite to hold the text border sprite
 	sprite * title;				// sprite to hold the title for the menu
 	sprite * controlSheet;		// sprite to show controls when controls option is selected
 	sprite * returnText;

@@ -52,7 +52,8 @@ void menu::init() {
 	menuBG = new sprite("assets/MENU_BG.png");
 	// intiialize other menu elements
 	title = new sprite(270, 20, "assets/TITLE.png");
-	controlSheet = new sprite(0, 20, "assets/TEXT/CONTROL_SHEET.png");
+	border = new sprite(0, 0, "assets/BORDER.png");
+	controlSheet = new sprite(0, 0, "assets/TEXT/CONTROL_SHEET.png");
 	returnText = new sprite(450, 585, "assets/TEXT/ESCAPE.png");
 
 	// initialize menu variables
@@ -130,6 +131,9 @@ void menu::render() {
 
 	// render the background
 	menuBG->render(gSurface);
+
+	// render the text border
+	border->render(gSurface);
 
 	// render the stars
 	for (int i = stars.size() - 1; i >= 0; i--) {
