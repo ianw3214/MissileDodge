@@ -53,6 +53,5 @@ private:
 
 	// fade in / fade out functions that takes a parameter of 0 or 1 for in / out
 	void fade(int key);
-	bool fading;	// function to make sure the inputs dont register during transitions
 
 };

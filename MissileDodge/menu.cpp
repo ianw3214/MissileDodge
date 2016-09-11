@@ -32,9 +32,6 @@ menu::menu(SDL_Window* iWindow, SDL_Surface* iSurface) {
 		fade(1);
 	}
 
-	// clean up music resources
-	Mix_FreeChunk(wave);
-
 }
 
 // getter function
@@ -234,6 +231,13 @@ void menu::fade(int key) {
 	// time variables to help fade in function stay within a time frame
 	unsigned int bTick, cTick;
 	unsigned int time = constants::BASE_FADE_TIME;
+
+	// if the menu is fading out, fade out the music as well
+	if (key == 1) {
+		Mix_FadeOutMusic(700);
+		// clean up music resources
+		Mix_FreeChunk(wave);
+	}
 
 	// black image to cover the screen with
 	SDL_Surface * temp;

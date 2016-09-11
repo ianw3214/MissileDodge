@@ -70,7 +70,6 @@ void gameOverMenu::init() {
 	this->selected = 0;
 	this->menuState = GAME;
 	this->quit = false;
-	this->fading = true;
 
 }
 
@@ -85,33 +84,31 @@ void gameOverMenu::update() {
 			menuState = QUIT;
 			this->quit = true;
 		}
-		if(!fading){
 		// if the user presses a key
-			if (e.type == SDL_KEYDOWN) {
-				switch (e.key.keysym.sym) {
-					// if the user pressese a down button
-				case SDLK_s:
-				case SDLK_DOWN:
-					// if the current selected item is less than the total amount of items
-					if (selected < (menuItems.size() - 1)) {
-						// add one to selected
-						selected++;
-					}
-					break;
-					// if the user presses an up button
-				case SDLK_w:
-				case SDLK_UP:
-					// if the current selected item is higher than 0
-					if (selected > 0) {
-						// minus one to selected
-						selected--;
-					}
-					break;
-				case SDLK_RETURN:
-				case SDLK_SPACE:
-					select();
-					break;
+		if (e.type == SDL_KEYDOWN) {
+			switch (e.key.keysym.sym) {
+				// if the user pressese a down button
+			case SDLK_s:
+			case SDLK_DOWN:
+				// if the current selected item is less than the total amount of items
+				if (selected < (menuItems.size() - 1)) {
+					// add one to selected
+					selected++;
 				}
+				break;
+				// if the user presses an up button
+			case SDLK_w:
+			case SDLK_UP:
+				// if the current selected item is higher than 0
+				if (selected > 0) {
+					// minus one to selected
+					selected--;
+				}
+				break;
+			case SDLK_RETURN:
+			case SDLK_SPACE:
+				select();
+				break;
 			}
 		}
 	}
@@ -128,7 +125,6 @@ void gameOverMenu::select() {
 	/*	- set flag depending on current selected
 	- exit the menu loop if play or quit
 	*/
-
 	// see what item is currently selected
 	switch (selected) {
 	case 0:
@@ -147,7 +143,7 @@ void gameOverMenu::select() {
 		quit = true;
 		break;
 	}
-	LOG(selected);
+	
 	return;
 
 }
@@ -217,8 +213,15 @@ void gameOverMenu::fade(int key) {
 		cTick = SDL_GetTicks();
 	}
 
-	// change the fading flag
-	fading = false;
+	// clear the event buffer after fading in/out
+	SDL_Event e;
+	while (SDL_PollEvent(&e)) {
+		if (e.type == SDL_QUIT) {
+			// end the game
+			menuState = QUIT;
+			this->quit = true;
+		}
+	}
 
 	return;
 

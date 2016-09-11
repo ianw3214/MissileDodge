@@ -26,7 +26,7 @@ If any errors occur, please open an issue on the repository.
 ##BUGS:
   * ~~Pause menu having multiple countdowns after selecting the resume option~~ 
   * ~~Words from menu still show up on screen faintly after game has started~~
-  * key presses during transitions are registered
+  * ~~key presses during transitions are registered~~
   * ~~Boons would immediately expire when aquired during another boon~~
 
 ***
