@@ -13,6 +13,9 @@
 
 // define the path to all music files
 #define music_menu "assets/MUSIC/MENU.wav"
+#define music_game "assets/MUSIC/GAME.wav"
+
+#define sfx_menu_change "assets/MUSIC/MENU_CHANGE.wav"
 
 // enumeration for game state
 enum state {

@@ -161,6 +161,15 @@ void game::init() {
 	// default flag to quit
 	this->flag = QUIT;
 
+	// audio intialization
+	wave = Mix_LoadWAV(music_game);
+	if (wave == nullptr) {
+		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
+	}
+	if (Mix_PlayChannel(-1, wave, -1) == -1) {
+		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
+	}
+
 	return;
 
 }
@@ -592,6 +601,13 @@ void game::fade(int key) {
 	// time variables to help fade in function stay within a time frame
 	unsigned int bTick, cTick;
 	unsigned int time = constants::BASE_FADE_TIME;
+
+	// if the menu is fading out, fade out the music as well
+	if (key == 1) {
+		Mix_FadeOutMusic(1000);
+		// clean up music resources
+		Mix_FreeChunk(wave);
+	}
 
 	// black image to cover the screen with
 	SDL_Surface * temp;

@@ -10,6 +10,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_thread.h>
+#include <SDL_mixer.h>
 
 #include "sprite.h"
 #include "player.h"
@@ -84,5 +85,8 @@ private:
 
 	// fade in / fade out functions
 	void fade(int);
+
+	// music variables
+	Mix_Chunk *wave;
 
 };

@@ -68,8 +68,6 @@ If any errors occur, please open an issue on the repository.
     * ~~Normal Missile~~
     * ~~Gas Missile~~
     * Fire Missile
-  * Implement Custom Fonts
-  * Sprite sheet loading
 3. Misc
   * GUI
   * Sprite Animation
@@ -96,7 +94,7 @@ If any errors occur, please open an issue on the repository.
     * ~~Missiles~~
     * Health Bar (In Progress)
     * Background
-  * Splash Art
+  * ~~Splash Art~~
   * Menu
     * title (In Progress)
     * ~~background~~
@@ -104,11 +102,9 @@ If any errors occur, please open an issue on the repository.
     * settings
   * Logo
   * Icon
-  * Font
-    * ~~Numbers~~
-    * Text
+  * Text (In Progress)
   * Animations
-    * Hero
+    * ~~Hero~~
     * Missiles
     * Explosions
     * Tweens
@@ -118,8 +114,9 @@ If any errors occur, please open an issue on the repository.
     * Ambient Effects
 2. Audio
   * ~~Menu music~~
-  * Background music
-  * Sound effects
+  * ~~Background music~~
+  * Death Screen music
+  * Sound effects (In Progress)
 
 ### EXPORT
   * Installer with NSIS

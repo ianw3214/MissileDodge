@@ -105,6 +105,8 @@ void menu::update() {
 				if (selected < (menuItems.size() - 1)) {
 					// add one to selected
 					selected++;
+					// play the sound effect for key press
+					playSound(0);
 				}
 				break;
 				// if the user presses an up button
@@ -114,6 +116,8 @@ void menu::update() {
 				if (selected > 0) {
 					// minus one to selected
 					selected--;
+					// play the sound effect for key press
+					playSound(0);
 				}
 				break;
 			case SDLK_RETURN:
@@ -124,6 +128,8 @@ void menu::update() {
 				// if the user presses escape, go to default menu state
 				menuState = MAIN;
 				selected = 0;
+				// play the sound effect for key press
+				playSound(0);
 				break;
 			}
 		}
@@ -305,5 +311,30 @@ Uint32 menu::textTimer(Uint32 time, void * ptr) {
 	}
 
 	return time;
+
+}
+
+// function that plays music sound effects
+void menu::playSound(int key) {
+	LOG("TEST")
+	// SDL_Mixer variable to hold the music file
+	Mix_Chunk *tempWave = nullptr;
+	// load music based on input
+	switch (key) {
+	case 0: {
+		tempWave = Mix_LoadWAV(sfx_menu_change);
+	} break;
+	}
+	// check to see if the music successfully loaded
+	if (tempWave == nullptr) {
+		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
+		return;
+	}
+	// play the music file
+	LOG("TEST2")
+	if (Mix_PlayChannel(-1, tempWave, 0) == -1) {
+		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
+	}
+	return;
 
 }

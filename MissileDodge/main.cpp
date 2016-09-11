@@ -99,12 +99,11 @@ bool init(SDL_Window** window, SDL_Surface** surface) {
 			}
 
 			// initialize mixer(audio) loading
-			if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
+			if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
 				std::cout << "SDL_Mixer could not initialize, SDL_mixer ERROR : " << Mix_GetError() << std::endl;
 				// set the initialization flag to false
 				success = false;
 			}
-
 		}
 	}
 

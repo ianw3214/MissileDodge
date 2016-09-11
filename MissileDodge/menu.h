@@ -82,5 +82,6 @@ private:
 
 	// music variables
 	Mix_Chunk *wave;
+	void playSound(int);
 
 };
