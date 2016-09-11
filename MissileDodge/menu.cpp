@@ -32,6 +32,9 @@ menu::menu(SDL_Window* iWindow, SDL_Surface* iSurface) {
 		fade(1);
 	}
 
+	// clean up music resources
+	Mix_FreeChunk(wave);
+
 }
 
 // getter function
@@ -70,6 +73,17 @@ void menu::init() {
 	stars = {};
 	SDL_TimerID missileSpawnTimer = SDL_AddTimer(1000, createStar, this);
 	SDL_TimerID textShowTimer = SDL_AddTimer(600, textTimer, this);
+
+	// audio intialization
+	wave = Mix_LoadWAV(music_menu);
+	if (wave == nullptr) {
+		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
+	}
+	if (Mix_PlayChannel(-1, wave, -1) == -1) {
+		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
+	}
+
+	return;
 
 }
 

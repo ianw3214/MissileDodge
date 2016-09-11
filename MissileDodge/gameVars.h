@@ -11,6 +11,9 @@
 #define LOG(x)
 #endif
 
+// define the path to all music files
+#define music_menu "assets/MUSIC/MENU.wav"
+
 // enumeration for game state
 enum state {
 	MENU,

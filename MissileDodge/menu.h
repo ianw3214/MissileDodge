@@ -4,6 +4,7 @@
 #include <vector>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <ctime>
 
 #include "sprite.h"
@@ -78,5 +79,8 @@ private:
 	// flashing text variables
 	bool showText;
 	static Uint32 textTimer(Uint32, void *);
+
+	// music variables
+	Mix_Chunk *wave;
 
 };

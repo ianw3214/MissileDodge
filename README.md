@@ -116,7 +116,8 @@ If any errors occur, please open an issue on the repository.
     * ~~Boon Effects~~
     * Condition Effects
     * Ambient Effects
-2. Music/Sound
+2. Audio
+  * ~~Menu music~~
   * Background music
   * Sound effects
 

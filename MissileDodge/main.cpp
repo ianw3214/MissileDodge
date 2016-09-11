@@ -32,26 +32,32 @@ int main(int argc, char* argv[]) {
 	SDL_Surface * screenSurface = nullptr;
 
 	// initialize the SDL window and screen surface
-	init(&window, &screenSurface);
+	// only play the game if all SDL subsystems start correctly
+	if (init(&window, &screenSurface)) {
 
-	while (gameState != QUIT) {
-		switch (gameState) {
-		case GAME:{
-			// start a new game if the game goes into a game state
-			game * battle = new game(window, screenSurface);
-			battle->startGame();
-			gameState = battle->getFlag();
-		} break;
-		case MENU:{
-			// go to the menu if the game goes into a menu state
-			menu * mainMenu = new menu(window, screenSurface);
-			gameState = mainMenu->getFlag();
-		} break;
+		while (gameState != QUIT) {
+			switch (gameState) {
+			case GAME: {
+				// start a new game if the game goes into a game state
+				game * battle = new game(window, screenSurface);
+				battle->startGame();
+				gameState = battle->getFlag();
+			} break;
+			case MENU: {
+				// go to the menu if the game goes into a menu state
+				menu * mainMenu = new menu(window, screenSurface);
+				gameState = mainMenu->getFlag();
+			} break;
+			}
 		}
-	}
 
-	// exit all SDL subsystems
-	close(window);
+		// exit all SDL subsystems
+		close(window);
+
+	}
+	else {
+		std::cout << "Something went wrong, game quiting..." << std::endl;
+	}
 
 	return 0;
 
@@ -62,7 +68,7 @@ int main(int argc, char* argv[]) {
 bool init(SDL_Window** window, SDL_Surface** surface) {
 
 	// Initialization flag
-	bool success = false;
+	bool success = true;
 
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {	// if SDL failed to initialize
@@ -91,6 +97,14 @@ bool init(SDL_Window** window, SDL_Surface** surface) {
 				// get the window surface
 				*surface = SDL_GetWindowSurface(*window);
 			}
+
+			// initialize mixer(audio) loading
+			if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
+				std::cout << "SDL_Mixer could not initialize, SDL_mixer ERROR : " << Mix_GetError() << std::endl;
+				// set the initialization flag to false
+				success = false;
+			}
+
 		}
 	}
 
@@ -105,6 +119,9 @@ void close(SDL_Window* window) {
 	// Destroy the window
 	SDL_DestroyWindow(window);
 	window = nullptr;
+
+	// quit SDL_mixer
+	Mix_CloseAudio();
 
 	// Quit SDL subsystems
 	SDL_Quit();
