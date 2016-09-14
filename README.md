@@ -20,6 +20,7 @@ If any errors occur, please open an issue on the repository.
   * ~~Adjust main.cpp to better match the new game state system~~
   * ~~Improve logic behind difficulty scaling~~
   * ~~Change missile spawning rates to coordinate to time instead of frames~~
+  * Have music/sound options carry over from game states to other game states
 
 ***
 
@@ -82,7 +83,7 @@ If any errors occur, please open an issue on the repository.
   * ~~Pause Menu~~
   * ~~Death Menu~~
   * Options
-    * Music/Sound Volume
+    * ~~Music/Sound Volume~~
     * Key Bindings
   * Intro Screen
   * Loading Screen

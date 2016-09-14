@@ -47,7 +47,13 @@ private:
 	sprite * border;			// sprite to hold the text border sprite
 	sprite * title;				// sprite to hold the title for the menu
 	sprite * controlSheet;		// sprite to show controls when controls option is selected
-	sprite * returnText;
+	sprite * returnText;		// sprite to show the flashing text at bottom
+	sprite * musicIcon;			// sprite to hold settings icon for music
+	sprite * soundIcon;			// sprite to show sound icon for music
+	sprite * musicDescription;	// sprite to show music key description
+	sprite * soundDescription;	// sprite to show sound key description
+	std::vector<sprite*> optionIconMusic;	// vector of option sprites for music
+	std::vector<sprite*> optionIconSound;	// vector of option sprites for music
 
 	// initialize function
 	void init();
@@ -69,6 +75,10 @@ private:
 	// boolean to determine when to quit the menu
 	bool quit;
 
+	// integers to keep track of game settings
+	int musicLevel;
+	int soundLevel;
+
 	// fade in / fade out functions
 	void fade(int);
 
@@ -83,5 +93,8 @@ private:
 	// music variables
 	Mix_Chunk *wave;
 	void playSound(int);
+	void addMusicVolume();
+	void addSoundVolume();
+	void changeVolume();
 
 };

@@ -43,6 +43,7 @@ enum missileTypes {
 	// gas poisons the player to move slower
 	GAS
 };
+
 // namespace that contains all the constants that the game needs
 namespace constants {
 

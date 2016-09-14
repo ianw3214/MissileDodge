@@ -55,6 +55,16 @@ void menu::init() {
 	border = new sprite(0, 0, "assets/BORDER.png");
 	controlSheet = new sprite(0, 0, "assets/TEXT/CONTROL_SHEET.png");
 	returnText = new sprite(450, 585, "assets/TEXT/ESCAPE.png");
+	musicIcon = new sprite(30, 40, "assets/ICON_MUSIC.png");
+	soundIcon = new sprite(30, 120, "assets/ICON_SFX.png");
+	musicDescription = new sprite(60, 105, "assets/TEXT/musicDescription.png");
+	soundDescription = new sprite(60, 185, "assets/TEXT/soundDescription.png");
+	optionIconMusic.push_back(new sprite(100, 40, "assets/SETTINGS_1.png"));
+	optionIconMusic.push_back(new sprite(100, 40, "assets/SETTINGS_2.png"));
+	optionIconMusic.push_back(new sprite(100, 40, "assets/SETTINGS_3.png"));
+	optionIconSound.push_back(new sprite(100, 120, "assets/SETTINGS_1.png"));
+	optionIconSound.push_back(new sprite(100, 120, "assets/SETTINGS_2.png"));
+	optionIconSound.push_back(new sprite(100, 120, "assets/SETTINGS_3.png"));
 
 	// initialize menu variables
 	this->selected = 0;
@@ -62,6 +72,9 @@ void menu::init() {
 	this->menuState = MAIN;
 	this->quit = false;
 	this->showText = true;
+	// 2 is the max volume for music/sound
+	this->musicLevel = 2;
+	this->soundLevel = 2;
 
 	// initialize random seed
 	srand(time(nullptr));
@@ -76,7 +89,7 @@ void menu::init() {
 	if (wave == nullptr) {
 		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
 	}
-	if (Mix_PlayChannel(-1, wave, -1) == -1) {
+	if (Mix_PlayChannel(2, wave, -1) == -1) {
 		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
 	}
 
@@ -131,6 +144,12 @@ void menu::update() {
 				// play the sound effect for key press
 				playSound(0);
 				break;
+			case SDLK_1: {
+				addMusicVolume();
+			}break;
+			case SDLK_2: {
+				addSoundVolume();
+			}break;
 			}
 		}
 		
@@ -174,6 +193,12 @@ void menu::render() {
 		if (showText) { returnText->render(gSurface); }
 	} break;
 	case OPTIONS: {
+		musicIcon->render(gSurface);
+		soundIcon->render(gSurface);
+		musicDescription->render(gSurface);
+		soundDescription->render(gSurface);
+		optionIconMusic[musicLevel]->render(gSurface);
+		optionIconSound[soundLevel]->render(gSurface);
 		if (showText) { returnText->render(gSurface); }
 	} break;
 
@@ -332,9 +357,69 @@ void menu::playSound(int key) {
 	}
 	// play the music file
 	LOG("TEST2")
-	if (Mix_PlayChannel(-1, tempWave, 0) == -1) {
+	if (Mix_PlayChannel(1, tempWave, 0) == -1) {
 		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
 	}
+	return;
+
+}
+
+// function that changes the volumes for each channel
+void menu::changeVolume() {
+
+	// music is on channel 2
+	switch (musicLevel) {
+	case 2:
+		Mix_Volume(2, 128);
+		break;
+	case 1:
+		Mix_Volume(2, 64);
+		break;
+	default:
+		Mix_Volume(2, 0);
+	} 
+	// sound effects are on channel 1
+	switch (soundLevel) {
+	case 2:
+		Mix_Volume(1, 128);
+		break;
+	case 1:
+		Mix_Volume(1, 64);
+		break;
+	default:
+		Mix_Volume(1, 0);
+	}
+
+	return;
+
+}
+
+void menu::addMusicVolume() {
+
+	playSound(0);
+	if (menuState == OPTIONS) {
+		musicLevel--;
+	}
+	if (musicLevel < 0) {
+		musicLevel = 2;	// 2 is the max music level
+	}
+	changeVolume();
+
+	return;
+
+}
+
+void menu::addSoundVolume() {
+
+	playSound(0);
+	if (menuState == OPTIONS) {
+		soundLevel--;
+	}
+	if (soundLevel < 0) {
+		soundLevel = 2;	// 2 is the max music level
+	}
+	changeVolume();
+
 	return;
 
 }

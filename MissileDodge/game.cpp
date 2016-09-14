@@ -166,7 +166,7 @@ void game::init() {
 	if (wave == nullptr) {
 		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
 	}
-	if (Mix_PlayChannel(-1, wave, -1) == -1) {
+	if (Mix_PlayChannel(2, wave, -1) == -1) {
 		std::cout << "Music was not able to be played, Error: " << Mix_GetError() << std::endl;
 	}
 
