@@ -26,11 +26,21 @@ public:
 	missileTypes getMissileType();
 	// class functions
 	void update(SDL_Surface*, double);
+	// override render function from sprite class
+	bool render(SDL_Surface*);
 
 private:
 
 	int speed;
 	void init(int, int, float, missileTypes mT);
 	missileTypes missileType;
+
+	// sprite sheet variables
+	SDL_Rect SS_rect;	// keeps track of which part of the sprite sheet to copy
+	int spriteFrame;	// keeps track of the current animation state of the sprite
+	SDL_TimerID spriteUpdateTimer;
+
+	// timer for sprite state update 
+	static Uint32 spriteUpdate(Uint32, void *);
 
 };

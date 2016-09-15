@@ -396,8 +396,8 @@ void menu::changeVolume() {
 
 void menu::addMusicVolume() {
 
-	playSound(0);
 	if (menuState == OPTIONS) {
+		playSound(0);
 		musicLevel--;
 	}
 	if (musicLevel < 0) {
@@ -411,8 +411,8 @@ void menu::addMusicVolume() {
 
 void menu::addSoundVolume() {
 
-	playSound(0);
 	if (menuState == OPTIONS) {
+		playSound(0);
 		soundLevel--;
 	}
 	if (soundLevel < 0) {

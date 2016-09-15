@@ -74,6 +74,8 @@ If any errors occur, please open an issue on the repository.
   * Sprite Animation
     * Hero Animation (In Progress)
     * Missile Animation
+      * ~~Normal Missiles~~
+      * Gas Missiles
     * Boon Animation
     * Background Animation
   * High Score
@@ -84,9 +86,12 @@ If any errors occur, please open an issue on the repository.
   * ~~Death Menu~~
   * Options
     * ~~Music/Sound Volume~~
+    * Fullscreen
     * Key Bindings
   * Intro Screen
   * Loading Screen
+  * Hero temporary invincibility after taking damage
+  * Slow Motion movement for a little bit after death
 
 ### ASSETS
 1. Art

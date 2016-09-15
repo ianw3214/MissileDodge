@@ -85,7 +85,9 @@ namespace missileConstants {
 	constexpr int WIDTH = 24;
 	constexpr int HEIGHT = 80;
 	// speed of missile that calculations are based off of
-	constexpr int BASE_SPEED = 500;
+	constexpr int BASE_SPEED = 350;
+	// the amount of sprites in the missile spritesheet
+	constexpr int MAX_FRAMES = 4;
 
 	// seperate namespace for different missile type
 	namespace gasMissile {
@@ -94,6 +96,7 @@ namespace missileConstants {
 		constexpr int BASE_SPEED = 300;
 		constexpr float SPEED_MULTIPLIER = 0.4f;
 		constexpr int DURATION = 3000;
+		constexpr int MAX_FRAMES = 1;
 	}
 }
 // namespace for boon constants
@@ -103,7 +106,7 @@ namespace boonConstants {
 	constexpr int HEIGHT = 40;
 
 	// boon duration in milliseconds
-	constexpr Uint32 DURATION = 3000;
+	constexpr Uint32 DURATION = 5000;
 
 	// other constants
 	constexpr int BOON_SPEED = 200;

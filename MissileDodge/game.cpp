@@ -235,7 +235,15 @@ void game::renderSprites() {
 
 	// loop through the sprites vector and render each one
 	for (unsigned int i = 0; i < sprites.size(); i++) {
-		sprites[i]->render(gSurface);
+		switch (sprites[i]->getType()) {
+		case MISSILE:{
+			// change the type of sprite to missile to call the missile render instead of sprite render
+			missile * temp = dynamic_cast<missile*>(sprites[i]);
+			temp->render(gSurface);
+		} break;
+		default:
+			sprites[i]->render(gSurface);
+		}
 	}
 
 	// render the hearts according to player health
@@ -550,7 +558,7 @@ Uint32 game::difficultyTimer(Uint32 time, void * ptr) {
 		cGame->difficultyScale++;
 
 		// set the modifiers to match the difficulty level
-		cGame->spawnModifier += static_cast<float>(1.0 / (1.5 * cGame->difficultyScale * cGame->difficultyScale));
+		cGame->spawnModifier += static_cast<float>(1.0 / (1.2 * cGame->difficultyScale * cGame->difficultyScale));
 		cGame->speedModifier += static_cast<float>(1.0 / (cGame->difficultyScale * cGame->difficultyScale));
 	}
 
