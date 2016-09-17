@@ -135,7 +135,7 @@ If any errors occur, please open an issue on the repository.
 
 ## POSSIBLE ADD-ONS
 * Levels
-* Lasers
+* ~~Lasers~~
 * Boss fights
 * Intro music
 * Loading Screen

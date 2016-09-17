@@ -218,7 +218,15 @@ void game::updateSprites(double delta) {
 				}
 
 			} break;
-
+			case LASER: {
+				// dynamic cast from sprite to laser class
+				laser * temp = dynamic_cast<laser*>(sprites[i-1]);
+				// remove the laser from the game if its done playing
+				if (temp->isFinished()) {
+					sprites.erase(sprites.begin()+i-1);
+					LOG("DONE")
+				}
+			} break;
 			}
 		}
 	}
@@ -241,6 +249,11 @@ void game::renderSprites() {
 			missile * temp = dynamic_cast<missile*>(sprites[i]);
 			temp->render(gSurface);
 		} break;
+		case LASER: {
+			// change the type of sprite to laser to call the laser render instead of sprite render
+			laser * temp = dynamic_cast<laser*>(sprites[i]);
+			temp->render(gSurface);
+		}break;
 		default:
 			sprites[i]->render(gSurface);
 		}
@@ -340,8 +353,8 @@ void game::handleCollision() {
 					if (hero->takeDamage(1)) {
 						// if the player is still alive, only earn half the points from that missile 
 						score += 5;
-					}	// the player is dead
-					else {
+					}	
+					else {	// the player is dead
 						// set the game over flag to be true
 						// go to the death menu when when the game is over
 						this->gameOver = true;
@@ -359,6 +372,24 @@ void game::handleCollision() {
 				boon * temp = dynamic_cast<boon*>(sprites[i - 1]);
 				hero->boonHandler(dynamic_cast<boon*>(sprites[i - 1])->getBoonType());
 				sprites.erase(sprites.begin() + i - 1);
+			} break;
+			case LASER: {
+				laser * temp = dynamic_cast<laser*>(sprites[i - 1]);
+				// make sure the laser is firing and hasnt already damaged the player
+				if (!(temp->getDamagedPlayer()) && temp->isFiring()) {
+					// apply damage to the player
+					if (hero->takeDamage(1)) {
+						// if the player is still alive, only earn half the points from that missile 
+						temp->setDamagedPlayerTrue();
+						score += 5;
+					}
+					else {	// the player is dead
+							// set the game over flag to be true
+							// go to the death menu when when the game is over
+						this->gameOver = true;
+						quit = true;
+					}
+				}
 			} break;
 			}
 		}		
@@ -560,6 +591,11 @@ Uint32 game::difficultyTimer(Uint32 time, void * ptr) {
 		// set the modifiers to match the difficulty level
 		cGame->spawnModifier += static_cast<float>(1.0 / (1.2 * cGame->difficultyScale * cGame->difficultyScale));
 		cGame->speedModifier += static_cast<float>(1.0 / (cGame->difficultyScale * cGame->difficultyScale));
+		
+		if (cGame->difficultyScale == 5) {
+			// start the boon spawning timer
+			SDL_TimerID laserSpawnTimer = SDL_AddTimer(5000, laserSpawn, ptr);
+		}
 	}
 
 	// set the difficulty to increase again at the same interval
@@ -601,6 +637,31 @@ Uint32 game::missileSpawner(Uint32 time, void *ptr) {
 	// spawn another missile at the same interval
 	return time;
 
+}
+
+Uint32 game::laserSpawn(Uint32 time, void * ptr) {
+
+	// get the pointer for the game
+	game * cGame = (game*)ptr;
+
+	// LOG("TEST")
+
+	// only spawn missiles if the game isn't paused
+	if (!cGame->pause) {
+		// variable to calculate offest for missile spawning
+		int y_offset;
+
+		// randomize the offset to a random number between the screen sizes
+		y_offset = rand() % (constants::GROUND_LEVEL);	// take margins into account
+
+		laser * temp = new laser(0, y_offset, "assets/LASER_SS.png");
+
+		// add the missile to the vector
+		cGame->sprites.push_back(temp);
+	}
+
+	// spawn another laser beam at the same interval
+	return time;
 }
 
 // fade in / fade out functions that takes a parameter of 0 or 1 for in / out

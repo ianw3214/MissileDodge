@@ -29,7 +29,8 @@ enum types {
 	MISSILE,
 	PLAYER,
 	HEART,
-	BOON
+	BOON,
+	LASER
 };
 // enumeration to seperate the types of boons
 enum boonTypes {
@@ -77,7 +78,7 @@ namespace playerConstants {
 	constexpr int BASE_HEALTH = 3;
 	// constants for jumping
 	constexpr int BASE_JUMP_VELOCITY = 600;
-	constexpr int BASE_JUMP_COOLDOWN = 60;
+	constexpr int BASE_JUMP_COOLDOWN = 700;
 }
 // namespace for missile constants
 namespace missileConstants {
@@ -112,4 +113,16 @@ namespace boonConstants {
 	constexpr int BOON_SPEED = 200;
 	constexpr int BASE_HEAL = 2;
 	constexpr int SPEED_BOOST = 900;
+}
+// namespace for laser constants
+namespace laserConstants {
+	// size of laser tiles
+	constexpr int WIDTH = 800;
+	constexpr int HEIGHT = 80;
+
+	// frames to pause at
+	constexpr int PAUSE_FRAME_1 = 5;
+	constexpr int PAUSE_FRAME_2 = 10;
+	constexpr int PAUSE_FRAME_3 = 16;
+	constexpr int MAX_FRAMES = 16;
 }

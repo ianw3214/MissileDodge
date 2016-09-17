@@ -75,12 +75,14 @@ void player::update(SDL_Surface* gSurface, double delta) {
 	
 	// handle the jump for the player
 	if (spaceDown) {
-		// if the counter is 0, let the player jump
-		if (jumpCounter == 0) {
-			// set the ymove variable to the desired velocity
+		// if there is no jumping cool down currently
+		if (!jumpCoolDown) {
+			// set the jumping cool down to true
+			jumpCoolDown = true;
+			// add the jumping velocity to the player 
 			yMove = playerConstants::BASE_JUMP_VELOCITY;
-			// reset the jump counter
-			jumpCounter = playerConstants::BASE_JUMP_COOLDOWN;
+			// start the timer to end the jumping cooldown
+			SDL_TimerID missileSpawnTimer = SDL_AddTimer(playerConstants::BASE_JUMP_COOLDOWN, jump_cooldown, this);
 		}
 	}
 
@@ -94,10 +96,6 @@ void player::update(SDL_Surface* gSurface, double delta) {
 	}
 	// apply gravity
 	yMove -= static_cast<int>(constants::GRAVITY * delta);
-	// decrement the jump counter
-	if (jumpCounter>0) {
-		jumpCounter--;
-	}
 
 	// update shadow position
 	if (cState == LEFT) {
@@ -203,8 +201,7 @@ void player::init(int x, int y) {
 	this->speedBoonCount = 0;			// counters to keep track of how many boons of each type are active simultaniously
 	this->invincibleBoonCount = 0;
 	this->speedBoost = false;
-	// initialize jump counter
-	jumpCounter = 0;
+	this->jumpCoolDown = false;
 	// initialize player rect
 	this->rect = { x, y, playerConstants::WIDTH, playerConstants::HEIGHT };
 
@@ -294,6 +291,18 @@ Uint32 player::condition_slow(Uint32 interval, void * ptr) {
 	temp->speed = playerConstants::BASE_SPEED;
 
 	return 0;
+}
+
+// timer for jumping cooldown
+Uint32 player::jump_cooldown(Uint32, void* ptr) {
+	
+	// get the reference of the player object
+	player * temp = (player*)ptr;
+
+	temp->jumpCoolDown = false;
+
+	return 0;
+
 }
 
 Uint32 player::spriteUpdate(Uint32 interval, void * ptr) {

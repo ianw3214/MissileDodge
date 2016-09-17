@@ -52,9 +52,10 @@ private:
 	bool invincible;
 	// variables to handle game logic
 	bool leftDown, rightDown, spaceDown;
-	int jumpCounter, yMove;
+	int yMove;
 	int speedBoonCount, invincibleBoonCount;
 	bool speedBoost;
+	bool jumpCoolDown;	
 
 	// init function
 	void init(int, int);
@@ -71,6 +72,9 @@ private:
 	static Uint32 boon_invincible(Uint32, void *);
 	static Uint32 boon_speed(Uint32, void *);
 	static Uint32 condition_slow(Uint32, void *);
+
+	// timer for jumping cooldown
+	static Uint32 jump_cooldown(Uint32, void*);
 
 	// timer for sprite state update 
 	static Uint32 spriteUpdate(Uint32, void *);

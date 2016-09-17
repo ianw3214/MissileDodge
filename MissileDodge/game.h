@@ -16,6 +16,7 @@
 #include "player.h"
 #include "missile.h"
 #include "boon.h"
+#include "laser.h"
 #include "gameOverMenu.h"
 #include "gameVars.h"
 
@@ -82,6 +83,7 @@ private:
 	static Uint32 boonTimer(Uint32, void *);
 	static Uint32 difficultyTimer(Uint32, void *);
 	static Uint32 missileSpawner(Uint32, void *);
+	static Uint32 laserSpawn(Uint32, void*);
 
 	// fade in / fade out functions
 	void fade(int);
