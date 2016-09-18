@@ -139,6 +139,8 @@ void game::init() {
 	sprite * background = new sprite("assets/BG.png");
 	sprites.push_back(background);
 
+	// initialize menu background
+	menuBackground = new sprite(250, 100, "assets/PAUSE_BACKGROUND.png");
 	// initialize menu text
 	menuItems.push_back({ sprite(300, 200, "assets/TEXT/RESUME.png"), sprite(300, 200, "assets/TEXT/RESUME_SELECTED.png") });
 	menuItems.push_back({ sprite(300, 250, "assets/TEXT/QUIT.png"), sprite(300, 250, "assets/TEXT/QUIT_SELECTED.png") });
@@ -509,6 +511,9 @@ void game::select() {
 // function that renders menu text
 void game::menuRender() {
 
+	// render the menu background
+	menuBackground->render(gSurface);
+
 	// loop through all the menu items
 	for (unsigned int i = 0; i < menuItems.size(); i++) {
 		// if the current loop is the selected item
@@ -616,7 +621,7 @@ Uint32 game::missileSpawner(Uint32 time, void *ptr) {
 		// randomize the offset to a random number between the screen sizes
 		x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;	// take margins into account
 
-		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png", cGame->speedModifier, NORMAL);
+		missile * temp = new missile(x_offset, -20, "assets/MISSILE.png", cGame->speedModifier, &cGame->pause, NORMAL);
 
 		// add the missile to the vector
 		cGame->sprites.push_back(temp);
@@ -628,7 +633,7 @@ Uint32 game::missileSpawner(Uint32 time, void *ptr) {
 		if (key == 0) {
 			// same code as above except a change in missile type
 			int x_offset = rand() % (constants::SCREEN_WIDTH - 20) + 10;
-			missile * temp = new missile(x_offset, -20, "assets/GASMISSILE.png", cGame->speedModifier, GAS);
+			missile * temp = new missile(x_offset, -20, "assets/GASMISSILE.png", cGame->speedModifier, &cGame->pause, GAS);
 			cGame->sprites.push_back(temp);
 		}
 
@@ -654,7 +659,7 @@ Uint32 game::laserSpawn(Uint32 time, void * ptr) {
 		// randomize the offset to a random number between the screen sizes
 		y_offset = rand() % (constants::GROUND_LEVEL);	// take margins into account
 
-		laser * temp = new laser(0, y_offset, "assets/LASER_SS.png");
+		laser * temp = new laser(0, y_offset, "assets/LASER_SS.png", &cGame->pause);
 
 		// add the missile to the vector
 		cGame->sprites.push_back(temp);

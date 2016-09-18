@@ -12,13 +12,13 @@ class laser : public sprite {
 
 public:
 	// inherit constructors
-	laser(std::string s) : sprite(s) {
+	laser(std::string s, bool* b) : sprite(s) {
 		// initialize player
-		init(0, 0);
+		init(0, 0, b);
 	};
-	laser(int x, int y, std::string s) : sprite(x, y, s) {
+	laser(int x, int y, std::string s, bool* b) : sprite(x, y, s) {
 		// initialize player
-		init(x, y);
+		init(x, y, b);
 	};
 	
 	// getter/setter functions
@@ -32,12 +32,13 @@ public:
 private:
 
 	// init function
-	void init(int, int);
+	void init(int, int, bool*);
 
 	// class variables
 	bool firing;		// boolean that tells the game if the laser is firing or not
 	bool finished;		// boolean that tells the game if the sprite is done playing
 	bool damagedPlayer;
+	bool * isPaused;
 
 	// sprite sheet variables
 	SDL_Rect SS_rect;	// keeps track of which part of the sprite sheet to copy

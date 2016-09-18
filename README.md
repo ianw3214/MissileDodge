@@ -4,6 +4,16 @@ Game created in C++ with SDL
 
 ***
 
+#PROJECT DISCONTINUED
+I started making this game to help me learn SDL, and after four months with 
+it I feel like I have learned more than enough. Yes, the game is still unfinished in some
+parts, but it is redundant to finish those because I have already learned the concepts from
+other parts in the game. Because of this, I am no longer going to be working on this game
+and will start making new and better games based on the knowledge that I have gained 
+through this first experience!
+
+***
+
 ##DOWNLOAD/INSTALLATION:
 To play the game, download the repository and delete everything except for the build folder.
 Simply run the exe in the build folder and the game should start!

@@ -140,12 +140,13 @@ void player::setKeysNone() {
 // function that restores player health
 void player::heal(int inp) {
 
-	this->health += inp;
-
 	// if the resultant health is higher than base health
-	if (this->health > playerConstants::BASE_HEALTH) {
+	if (this->health + inp > playerConstants::BASE_HEALTH) {
 		// set the health to the max
 		this->health = playerConstants::BASE_HEALTH;
+	}
+	else {
+		this->health += inp;
 	}
 
 	return;

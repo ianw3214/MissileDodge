@@ -62,7 +62,7 @@ void sprite::init(int x, int y, std::string path) {
 
 	// load the image from the path for the sprite
 	img = IMG_Load(path.c_str());
-	if (!img) {	// if the image failed to load
+	if (!img) {	// if  the image failed to load
 				// output the error
 		std::cout << "Failed to load image: " << path << ", SDL_image ERROR : " << IMG_GetError() << std::endl;
 	}

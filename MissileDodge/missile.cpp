@@ -15,7 +15,7 @@ void missile::update(SDL_Surface* gSurface, double delta) {
 }
 
 // function to initialize values for the missile
-void missile::init(int x, int y, float speedModifier, missileTypes mT) {
+void missile::init(int x, int y, float speedModifier, bool * paused, missileTypes mT) {
 	
 	// intialize sprite type
 	type = MISSILE;
@@ -25,6 +25,8 @@ void missile::init(int x, int y, float speedModifier, missileTypes mT) {
 
 	// initialize missile variables
 	this->spriteFrame = 0;
+	// have a pointer to the game pause variable to know if the sprite sheet should update
+	this->gamePaused = paused;
 
 	// change missile graphics depending on missile type
 	switch (missileType) {
@@ -81,29 +83,34 @@ Uint32 missile::spriteUpdate(Uint32 interval, void * ptr) {
 	// get a reference to the player
 	missile * temp = (missile*)ptr;
 
-	// increase one to the sprite frame
-	temp->spriteFrame++;
+	// only update the sprite if the game is paused
+	if (!*(temp->gamePaused)) {
 
-	// set the animation frame depending on the state of the hero
-	switch (temp->missileType) {
-	case NORMAL: {
-		// reset the sprite loop if it is at the end of the sprite sheet
-		if (temp->spriteFrame >= missileConstants::MAX_FRAMES) {
-			temp->spriteFrame = 0;
+		// increase one to the sprite frame
+		temp->spriteFrame++;
+
+		// set the animation frame depending on the state of the hero
+		switch (temp->missileType) {
+		case NORMAL: {
+			// reset the sprite loop if it is at the end of the sprite sheet
+			if (temp->spriteFrame >= missileConstants::MAX_FRAMES) {
+				temp->spriteFrame = 0;
+			}
+			temp->SS_rect.x = missileConstants::WIDTH * temp->spriteFrame;
+			temp->SS_rect.y = 0;
+		} break;
+		case GAS: {
+			// reset the sprite loop if it is at the end of the sprite sheet
+			if (temp->spriteFrame >= missileConstants::gasMissile::MAX_FRAMES) {
+				temp->spriteFrame = 0;
+			}
+			temp->SS_rect.x = 0;
+			temp->SS_rect.y = 0;
+		} break;
 		}
-		temp->SS_rect.x = missileConstants::WIDTH * temp->spriteFrame;
-		temp->SS_rect.y = 0;
-	} break;
-	case GAS: {
-		// reset the sprite loop if it is at the end of the sprite sheet
-		if (temp->spriteFrame >= missileConstants::gasMissile::MAX_FRAMES) {
-			temp->spriteFrame = 0;
-		}
-		temp->SS_rect.x = 0;
-		temp->SS_rect.y = 0;
-	} break;
+
 	}
-
+	
 	// update again at the same interval
 	return interval;
 }

@@ -50,6 +50,7 @@ private:
 
 	// vector to hold the items in the pause menu
 	std::vector<menuItem> menuItems;
+	sprite * menuBackground;
 	void menuUpdate();			// update function for the pause menu
 	void select();				// function that triggers when enter or space is hit on pause menu
 	void menuRender();			// function that renders menu elements when paused
